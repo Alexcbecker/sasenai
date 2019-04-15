@@ -1,0 +1,66 @@
+.d-flex{
+margin-top:22px;
+margin-left:180px;
+}
+
+.im{
+position: absolute;
+width: 100%; 
+height: 100%;	
+}
+.lb{
+font-size:small;
+margin-top:26px;	
+}
+.btn-light{
+	
+margin-top:34px;
+background-color:black;
+}
+
+.btn{
+
+width:330px;
+background-color:#00A7E1;	
+}
+
+.cont{
+position:absolute;
+top: 65%;
+left: 50%;
+transform: translate(-50%,-50%);
+
+
+
+
+    
+
+}
+
+.user{
+position: absolute;	
+height: 120px;
+width: 120px;
+top:-140px;
+left:120px;
+}
+
+.border-top{
+position:absolute;	
+height:200px;
+width: 200px;
+top:-80px;
+}
+
+.input-group{
+	
+
+width:330px;	
+}
+.input-group-prepend span {
+    width: 50px;
+	
+    background-color: #00A7E1;
+    color: #fff;
+    border: 0 !important;
+}

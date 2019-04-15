@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../css/login_screen.css">
+	
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+	
+	
+<script type='text/javascript' src='../js/login_cpf_validation.js'>
+</script>
+</head>
+<body>
+	
+<img src="../images/bg_login.jpg"  class="im" />
+
+		
+
+
+	
+<div class='borda'>
+
+<div class='cont'>
+
+		<img src="../images/logo_fito.png"  class="user" />
+<form>			
+	<div class="input-group form-group">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fas fa-user"></i></span>
+		</div>
+			<input type="text" class="form-control" placeholder="CPF" id='cpf' required>
+	</div>
+
+	<div class="input-group form-group">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fas fa-key"></i></span>
+		</div>
+			<input type="password" class="form-control" placeholder="Senha" required  >
+	</div>
+						
+			<button type="submit" value='login' class="btn btn-light" onclick="validarCPF()">Login</button>
+						
+	<div class="d-flex justify-content-center">
+			<a href="#">Esqueceu sua senha?</a>
+	</div>
+</form>			
+	
+</div>
+
+</div>
+
+</body>
+</html>
