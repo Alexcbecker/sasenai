@@ -27,6 +27,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Visualizar campanhas e metas</a>
       </li>
-
+</ul>
   </div>
 </nav>
