@@ -33,7 +33,7 @@
     <div class="container">
 
         <div class="borda" style=" margin-top:3%;">
-            <form>
+            <form action="upload_imagem.php" method="post" enctype="multipart/form-data">
                 <h1>Cadastro de Itens</h1>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Nome do item</label>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-md">Cadastrar item</button>
+                    <button type="submit" class="btn btn-primary btn-md">Cadastrar item</button>
                     <button type="button" class="btn btn-primary btn-md">Cancelar</button>
 
                 </div>
