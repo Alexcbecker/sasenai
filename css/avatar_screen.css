@@ -5,7 +5,8 @@
 	display: block;
 }
 
-.canvasAvatar {
+.divAvatar {
+	position: relative;
 	float: left;
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -48,4 +49,42 @@
 	.imgItems {
 		height: 100%;
 		max-width: 100%;
+	}
+
+	[class*="imgAvatar-"]{
+		position:absolute;
+		height: 100%;
+		max-width: 100%;
+	}
+
+	.imgAvatar-background {
+		z-index: 1;
+	}
+
+	.imgAvatar-body {
+		z-index: 2;
+	}
+
+	.imgAvatar-feet {
+		z-index: 3;
+	}
+
+	.imgAvatar-legs {
+		z-index: 4;
+	}
+
+	.imgAvatar-torso {
+		z-index: 5;
+	}
+
+	.imgAvatar-hair {
+		z-index: 6;
+	}
+
+	.imgAvatar-headgear {
+		z-index: 7;
+	}
+
+	.imgAvatar-accessories {
+		z-index: 8;
 	}
