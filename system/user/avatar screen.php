@@ -67,6 +67,9 @@
 								<div class="tab-content" id="myTabContent">
 									<div class="tab-pane fade show active" id="hair" role="tabpanel" aria-labelledby="hair-tab">
 										<div class="wrapperInventory" id="head">
+										<?php foreach($arrayHairItems as $key => $value) {?>
+
+										<?php } ?>
 											<div class="box">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
