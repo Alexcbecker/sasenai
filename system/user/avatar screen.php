@@ -18,6 +18,7 @@
 
 <body>
 	<?php include_once("navbar_usuario.php"); ?>
+	<?php include_once("avatar_screen_database.php"); ?>
 
 	<div class="container">
 		<div class="row">
