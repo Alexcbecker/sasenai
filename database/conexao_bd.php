@@ -6,4 +6,3 @@ if(!$con){
     die("Erro no banco de dados");
 }
 ?>
-
