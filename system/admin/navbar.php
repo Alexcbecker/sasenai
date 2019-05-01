@@ -48,7 +48,7 @@ include "../../database/autenticacao/sessaovalidate.php";
             Campanhas
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Cadastro de campanha</a>
+            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
             <a class="dropdown-item" href="#">Editar campanha</a>
             <a class="dropdown-item" href="#">visualizar campanhas</a>
           </div>
