@@ -14,11 +14,11 @@ include "../../database/autenticacao/sessaovalidate.php";
 
    <form>
 
-   <nav  class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
+     <nav  class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
 
 
-        <a class="navbar-brand" href="#">
-        <img src="https://abrilsuperinteressante.files.wordpress.com/2017/02/capa-gatos.png" width="30" height="30" class="dinline-block align-top" alt="random image">
+        <a class="navbar-brand" href="navbar_usuario.php?folder=&file=avatar_screen.html">
+        <img src="../../images/image_login/logo_fito.png" width="31" height="31" class="dinline-block align-top" alt="random image">
         Olá <?php echo $_SESSION['nome']; ?>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,5 +48,20 @@ include "../../database/autenticacao/sessaovalidate.php";
     </nav>
 
 </form>
+<div class="container-fluid">
+<div class="row justify-content">
+  <div class="col-12">
+    <?php
+    if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
+      if (@include $_GET['folder']."/".$_GET['file']) {
+
+      }
+    }else{
+header("Location: navbar_usuario.php?folder=&file=avatar_screen.html");
+    }
+    ?>
+  </div>
+  </div>
+</div>
 </body>
 </html>

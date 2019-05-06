@@ -16,7 +16,7 @@ include "../../database/autenticacao/sessaovalidate.php";
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
         <a class="navbar-brand" href="#">
-            <img src="https://abrilsuperinteressante.files.wordpress.com/2017/02/capa-gatos.png" width="30" height="30" class="dinline-block align-top" alt="random image">
+            <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
              Olá <?php echo $_SESSION['nome']; ?>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
