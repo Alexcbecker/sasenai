@@ -1,4 +1,16 @@
 <?php
+$nomeItemDigital= $_POST['nomeItemDigital'];
+$valorItemDigital= $_POST['valorItemDigital'];
+$mensagem = "";
+$status   = "danger";
+$link     = "../navbar.php?folder=items&file=tela_cadastro_item.php";
+
+if($nomeItemDigital == ""){
+
+  $mensagem = "Nome não preenchido!";
+}else if($valorItemDigital == ""){
+  $mensagem = "Valor não preenchida!";
+}else{
  include("../../../database/conexao_bd.php");
  include("../../../database/funcoes_base_crud.php");
 
@@ -20,12 +32,15 @@
      echo "Sorry, your file was not uploaded.";
  } else {
      if (move_uploaded_file($_FILES["imagemItemDigital"]["tmp_name"], $target_file)) {
-         echo "The file ". basename( $_FILES["imagemItemDigital"]["name"]). " has been uploaded.";
-         $nomeItemDigital = $_POST["nomeItemDigital"];
-         $valorItemDigital = $_POST["valorItemDigital"];
-         $inserirItem = mysql_insert("INSERT INTO `itens`(`id`, `nome`, `valor`, `tipo`, `status`, `caminho`) VALUES (NULL,'$nomeItemDigital',$valorItemDigital,2,0,'$target_file')");
+
+       $inserirItem = mysql_insert("INSERT INTO `itens`(`id`, `nome`, `valor`, `tipo`, `status`, `caminho`) VALUES (NULL,'$nomeItemDigital',$valorItemDigital,2,0,'$target_file')");
+         $status= "success";
+         $mensagem="Item cadastrado com sucesso!";
+
      } else {
-         echo "Sorry, there was an error uploading your file.";
+        $mensagem="Imagem não adicionada!";
      }
  }
+ }
+ header("Location: ".$link."&mensagem=".$mensagem."&status=".$status);
  ?>
