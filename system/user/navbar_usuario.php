@@ -56,7 +56,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 
         }
       }else{
-        header("Location: navbar_usuario.php?folder=&file=avatar_screen.html");
+        header("Location: navbar_usuario.php?folder=&file=avatar_screen.php");
       }
       ?>
     </div>
