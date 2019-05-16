@@ -2,23 +2,23 @@
 function mysql_insert($insert){
 //retorno devem ser quantas linhas foram afetadas
     global $con;
-    $dados = mysqli_query($con,$insert) or die(mysqli_error());
-        
+    $dados = mysqli_query($con,$insert) ;
+
     $inseriu = mysqli_affected_rows($con);
-        
+
     mysqli_close($con);
     return $inseriu;
 }
-    
+
 function mysql_select($select){
 //retorno deve ser um array
     global $con;
-    $dados = mysqli_query($con,$select) or die(mysqli_error());
+    $dados = mysqli_query($con,$select) ;
 
     $selecionou = mysqli_affected_rows($con);
     $arrestudante = array();
     while($linha = mysqli_fetch_array($dados,MYSQLI_ASSOC)){
-        array_push($arrestudante,$linha);    
+        array_push($arrestudante,$linha);
     }
     mysqli_close($con);
     return $arrestudante;

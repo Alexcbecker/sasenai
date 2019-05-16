@@ -1,0 +1,26 @@
+
+.box{
+  position: absolute;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+  width: 300px;
+  padding: 20px;
+	letter-spacing:1px;
+	box-shadow: 0 15px 25px rgba(00,00,00,.5);
+	border-radius: 10px;
+  background-color: #ffffff;
+  }
+
+  img {
+    position: relative;
+
+    padding: 2%;
+
+  }
+  .container img {
+    position: relative;
+
+    max-width: 15%;
+    max-height:15%;
+  }

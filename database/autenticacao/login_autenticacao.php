@@ -1,29 +1,76 @@
 <?php
-  include "conect_login.php"; 
-  include "database.php";
-  //recebendo variaveis
-  $p_cpf = $_POST['cpf'];
-  $p_senha = $_POST['senha'];
 
- // var_dump($_POST);
- 
- $buscaUsuario = mysql_select("SELECT * FROM colaboradores WHERE cpf={$p_cpf} AND senha={$p_senha}");
-  var_dump($buscaUsuario[0]['email']);
+
+$cpf  = $_POST["cpf"];
+$senha    = $_POST["senha"];
+$mensagem = "";
+$status   = "danger";
+$link     = "../../index.php";
+
+if($cpf == ""){
+
+  $mensagem = "CPF não preenchido";
+}else if($senha == ""){
+  $mensagem = "Senha não preenchida";
+}else{
+
+  include "../conexao_bd.php";
+  include "../funcoes_base_crud.php";
+  $buscaUsuario = mysql_select("SELECT * FROM colaboradores WHERE cpf=".$cpf." AND senha='".$senha."'");
+
+
+
  if(!empty($buscaUsuario)){
-     session_start();
-     
+
+
      if($buscaUsuario[0]['tipo']==1){
-         header('Location: ../nav-bares/navbar.php');
+        session_start();
+      $_SESSION['nome'] = $buscaUsuario[0]['nome'];
+      $_SESSION['cpf']  = $buscaUsuario[0]['cpf'];
+
+      $_SESSION['id_sessao']  = session_id();
+
+      $link = "../../system/admin/navbar.php";
      }else if($buscaUsuario[0]['tipo']==2){
-         header('Location: ../nav-bares/navbar_lider.php');
+        session_start();
+      $_SESSION['id_sessao']  = session_id();
+      $_SESSION['nome']       = $buscaUsuario[0]['nome'];
+      $_SESSION['email']      = $buscaUsuario[0]['email'];
+      $_SESSION['senha']      = $buscaUsuario[0]['senha'];
+      $_SESSION['cpf']        = $buscaUsuario[0]['cpf'];
+      $_SESSION['nome']       = $buscaUsuario[0]['nome'];
+      $_SESSION['tipo']       = $buscaUsuario[0]['tipo'];
+      $_SESSION['sexo']       = $buscaUsuario[0]['sexo'];
+      $_SESSION['pontos']     = $buscaUsuario[0]['pontos'];
+      $_SESSION['creditos']   = $buscaUsuario[0]['creditos'];
+      $_SESSION['grupos_id']  = $buscaUsuario[0]['grupos_id'];
+      $_SESSION['status']     = $buscaUsuario[0]['status'];
+
+
+      $link = "../../system/user/navbar_lider.php";
      }else if($buscaUsuario[0]['tipo']==3){
-         header('Location: ../nav-bares/navbar_usuario.php');
+        session_start();
+        $_SESSION['id_sessao']  = session_id();
+        $_SESSION['nome']       = $buscaUsuario[0]['nome'];
+        $_SESSION['email']      = $buscaUsuario[0]['email'];
+        $_SESSION['senha']      = $buscaUsuario[0]['senha'];
+        $_SESSION['cpf']        = $buscaUsuario[0]['cpf'];
+        $_SESSION['nome']       = $buscaUsuario[0]['nome'];
+        $_SESSION['tipo']       = $buscaUsuario[0]['tipo'];
+        $_SESSION['sexo']       = $buscaUsuario[0]['sexo'];
+        $_SESSION['pontos']     = $buscaUsuario[0]['pontos'];
+        $_SESSION['creditos']   = $buscaUsuario[0]['creditos'];
+        $_SESSION['grupos_id']  = $buscaUsuario[0]['grupos_id'];
+        $_SESSION['status']     = $buscaUsuario[0]['status'];
+
+      $link = "../../system/user/navbar_usuario.php";
      }else{
-         die("Erro de tipo de usuário");
+        $mensagem = "usuario ou senha incorreto";
      }
-     //echo "CPF encontrado.";
- }else{
-     echo "CPF ou senha incorretos.";
- }
-  
-?>
+  }
+
+
+}
+header("Location: ".$link."?mensagem=".$mensagem."&status=".$status);
+
+ ?>
