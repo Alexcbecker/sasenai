@@ -1,7 +1,8 @@
 
 
 <?php
-include "../../database/autenticacao/sessaovalidate.php";
+include "../../admin/users/admin.html";
+
 ?>
 
 <html>
@@ -19,6 +20,8 @@ include "../../database/autenticacao/sessaovalidate.php";
 
       <a class="navbar-brand" href="#">
         <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top"
+      <a class="navbar-brand" href=navbar.php?folder=admin&file=amdin.html">
+        <img src="https://abrilsuperinteressante.files.wordpress.com/2017/02/capa-gatos.png" width="30" height="30" class="dinline-block align-top"
         alt="random image"> Olá <?php echo $_SESSION['nome']; ?>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
