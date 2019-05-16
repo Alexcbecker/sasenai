@@ -1,10 +1,12 @@
 <?php
+
+$id  = $_POST['id'];
 $nomeItemDigital       = $_POST['nomeItemDigital'];
 $valorItemDigital      = $_POST['valorItemDigital'];
 $quantidadeItemDigital = $_POST['quantidadeItemDigital'];
 $mensagem = "";
 $status   = "danger";
-$link     = "../navbar.php?folder=items&file=tela_cadastro_item.php";
+$link     = "../navbar.php?folder=items&file=tela_editar_item.php";
 
 if($nomeItemDigital == ""){
 
@@ -34,8 +36,9 @@ if($nomeItemDigital == ""){
  } else {
      if (move_uploaded_file($_FILES["imagemItemDigital"]["tmp_name"], $target_file)) {
 $target_file = substr($target_file, 3, 1111);
-       $inserirItem = mysql_insert("INSERT INTO `itens`(`id`, `nome`, `valor`, `tipo`, `status`, `quantidade`, `caminho`) VALUES (NULL,'$nomeItemDigital',$valorItemDigital,2,0, $quantidadeItemDigital,'$target_file')");
-         $status= "success";
+       $inserirItem = mysql_insert("UPDATE `itens` SET `nome`='$nomeItemDigital',`valor`='$valorItemDigital',`caminho`='$target_file',`quantidade`='$quantidadeItemDigital' WHERE id='$id'");
+
+        $status= "success";
          $mensagem="Item cadastrado com sucesso!";
 
      } else {

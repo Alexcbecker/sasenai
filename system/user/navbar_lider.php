@@ -28,13 +28,13 @@ include "../../database/autenticacao/sessaovalidate.php";
                     <a class="nav-link" href="#">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">campanhas e metas</a>
+                    <a class="nav-link" href="#">campanhas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">ranking da equipe</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="../../database/autenticacao/logout.php">Logout</a>
+                  <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
                 </li>
             </ul>
 

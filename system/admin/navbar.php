@@ -37,9 +37,8 @@ include "../../database/autenticacao/sessaovalidate.php";
             Metas
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Cadastro de meta</a>
-            <a class="dropdown-item" href="#">Editar meta</a>
-            <a class="dropdown-item" href="#">Visualizar metas</a>
+            <a class="dropdown-item" href="navbar.php?folder=goals&file=cadastro_metas.php">Cadastro de meta</a>
+            <a class="dropdown-item" href="navbar.php?folder=goals&file=tela_editar_meta.php">Editar meta</a>
           </div>
 
           <li class="nav-item dropdown">
@@ -50,7 +49,6 @@ include "../../database/autenticacao/sessaovalidate.php";
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
             <a class="dropdown-item" href="#">Editar campanha</a>
-            <a class="dropdown-item" href="#">visualizar campanhas</a>
           </div>
 
           <li class="nav-item dropdown">
@@ -60,8 +58,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=items&file=tela_cadastro_item.php">Cadastro de item</a>
-            <a class="dropdown-item" href="#">Editar item</a>
-            <a class="dropdown-item" href="#">visualizar itens</a>
+            <a class="dropdown-item" href="navbar.php?folder=items&file=tela_editar_item.php">Editar item</a>
           </div>
 
           <li class="nav-item dropdown">
@@ -72,13 +69,12 @@ include "../../database/autenticacao/sessaovalidate.php";
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
             <a class="dropdown-item" href="#">Editar grupo</a>
-            <a class="dropdown-item" href="#">visualizar grupos</a>
           </div>
 
 
 
           <li class="nav-item active">
-            <a class="nav-link" href="../../database/autenticacao/logout.php">Logout</a>
+            <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
           </li>
         </ul>
       </div>
