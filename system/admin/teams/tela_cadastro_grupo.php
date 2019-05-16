@@ -1,12 +1,11 @@
 <html>
 
 <head>
+<meta charset="utf-8">
 
-  
   <link href="../../css/componente_multiselecao.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
-
 
 </head>
 
@@ -43,7 +42,7 @@
             </div>
 
             <div  class="form-group">
-            <label  for="exampleFormControlInput1">Usuarios:</label>
+            <label  for="exampleFormControlInput1">Usuários:</label>
             <select id="multiple" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
                 <option></option>
                 <option>Option One</option>
@@ -59,7 +58,7 @@
 
         <div>
             <button type="button" class="btn btn-primary btn-md">Cadastrar Time</button>
-            <button type="button" class="btn btn-primary btn-md">Cancelar</button>
+            <button type="button" class="btn btn-danger btn-md">Cancelar</button>
 
         </div>
         </form>

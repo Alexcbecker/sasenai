@@ -16,12 +16,12 @@ function mysql_select($select){
     $dados = mysqli_query($con,$select) ;
 
     $selecionou = mysqli_affected_rows($con);
-    $arrestudante = array();
+    $arreyselect = array();
     while($linha = mysqli_fetch_array($dados,MYSQLI_ASSOC)){
-        array_push($arrestudante,$linha);
+        array_push($arreyselect,$linha);
     }
     mysqli_close($con);
-    return $arrestudante;
+    return $arreyselect;
 }
 
 

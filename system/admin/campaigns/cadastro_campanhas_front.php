@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta charset="utf-8">
   <link href="../../css/componente_multiselecao.css" rel="stylesheet">
 
   <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
@@ -14,25 +15,12 @@
 
 
       <form>
-        <h1>CADASTRO DE CAMPANHAS</h1>
+        <h1>Cadastra de campanha</h1>
         <div class="form-group">
           <label for="exampleFormControlInput1">Nome da campanha</label>
           <input type="text" class="form-control" name="nome_campanha" id="nome_campanha" placeholder="De um nome a campanha">
         </div>
-        <div  class="form-group">
-          <label  for="exampleFormControlInput1">Metas</label>
-          <select id="multiple" class="form-control form-control-chosen" data-placeholder="Selecione a meta" multiple>
-            <option></option>
-            <option>Meta One</option>
-            <option>Meta Two</option>
-            <option>Meta Three</option>
-            <option>Meta Four</option>
-            <option>Meta Five</option>
-            <option>Meta Six</option>
-            <option>Meta Seven</option>
-            <option>Meta Eight</option>
-          </select>
-        </div>
+
         <div class="custom-control custom-radio custom-control-inline">
           <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
           <label class="custom-control-label" for="customRadioInline1">Quantidade</label>
@@ -43,7 +31,7 @@
         </div>
         <div  class="form-group">
           <label  for="exampleFormControlInput1">Grupos</label>
-          <select id="multiple" class="form-control form-control-chosen" data-placeholder="Selecione o Grupo" multiple>
+          <select id="multiple_grupo" name="grupo" onclick="grupo_ou_colaborador()" class="form-control form-control-chosen" data-placeholder="Selecione o Grupo" multiple>
             <option></option>
             <option>Grupos One</option>
             <option>Grupos Two</option>
@@ -57,7 +45,7 @@
         </div>
         <div  class="form-group">
           <label  for="exampleFormControlInput1">Colaboradores</label>
-          <select id="multiple" class="form-control form-control-chosen" data-placeholder="Selecione o colaborador" multiple>
+          <select id="multiple_colaborador" name="colaborador" onclick="grupo_ou_colaborador()" class="form-control form-control-chosen" data-placeholder="Selecione o colaborador" multiple>
             <option></option>
             <option>Colaboradores One</option>
             <option>Colaboradores Two</option>
@@ -80,7 +68,7 @@
         <div class="form-row">
           <div class="col">
             <label for="pontuacao"></label>
-            Pontuacao  <input type="text" class="form-control" id="pontuacao" placeholder="pontuacao">
+            Pontuação  <input type="text" class="form-control" id="pontuacao" placeholder="pontuação">
           </div>
           <div class="col">
             <label for="variante_de_pontos"></label>
@@ -88,7 +76,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlTextarea1">Descricao</label>
+          <label for="exampleFormControlTextarea1">Descrição</label>
           <textarea class="form-control" id="descricao" rows="3"></textarea>
         </div>
         <div>
