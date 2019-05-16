@@ -17,7 +17,7 @@ include "../../database/autenticacao/sessaovalidate.php";
      <nav  class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
 
 
-        <a class="navbar-brand" href="navbar_usuario.php?folder=&file=avatar_screen.html">
+        <a class="navbar-brand" href="navbar_usuario.php?folder=&file=avatar_screen.php">
         <img src="../../images/image_login/logo_fito.png" width="31" height="31" class="dinline-block align-top" alt="random image">
         Olá <?php echo $_SESSION['nome']; ?>
         </a>
@@ -47,7 +47,6 @@ include "../../database/autenticacao/sessaovalidate.php";
         </div>
     </nav>
 
-</form>
 <div class="container-fluid">
   <div class="row justify-content">
     <div class="col-12">
@@ -57,11 +56,13 @@ include "../../database/autenticacao/sessaovalidate.php";
 
         }
       }else{
-        header("Location: navbar_usuario.php?folder=&file=avatar_screen.html");
+        header("Location: navbar_usuario.php?folder=&file=avatar_screen.php");
       }
       ?>
     </div>
   </div>
 </div>
+
+</form>
 </body>
 </html>

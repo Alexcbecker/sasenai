@@ -15,7 +15,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="navbar_lider.php?folder=&file=avatar_screen.php">
             <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
              Olá <?php echo $_SESSION['nome']; ?>
         </a>
@@ -47,6 +47,20 @@ include "../../database/autenticacao/sessaovalidate.php";
             </span>
         </div>
     </nav>
+
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <?php
+        if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
+          if (@include $_GET['folder']."/".$_GET['file']) {
+
+          }
+        }else{
+
+        }
+        ?>
+      </div>
+    </div>
 
 </form>
 </body>
