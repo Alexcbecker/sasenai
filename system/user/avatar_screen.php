@@ -15,15 +15,16 @@
 				<div class="row">
 					<div class="col-5">
 						<div class="divAvatar">
-							<img class="imgAvatar-background" src="../../images/items/background/bg01.png">
-							<img class="imgAvatar-body" src="../../images/items/body/body01.png">
-							<img class="imgAvatar-feet" src="../../images/items/feet/feet01.png">
-							<img class="imgAvatar-legs" src="../../images/items/legs/legs01.png">
-							<img class="imgAvatar-torso" src="../../images/items/torso/torso01.png">
-							<img class="imgAvatar-hair" src="../../images/items/hair/hair01.png">
-							<img class="imgAvatar-headgear" src="../../images/items/headgear/hg01.png">
-							<img class="imgAvatar-accessories" src="../../images/items/accessories/acc01.png">
+							<img id="imgAvatar-background" class="imgAvatar-background" src="../../images/items/background/bg01.png">
+							<img id="imgAvatar-body" class="imgAvatar-body" src="../../images/items/body/body01.png">
+							<img id="imgAvatar-feet" class="imgAvatar-feet" src="../../images/items/feet/feet01.png">
+							<img id="imgAvatar-legs" class="imgAvatar-legs" src="../../images/items/legs/legs01.png">
+							<img id="imgAvatar-torso" class="imgAvatar-torso" src="../../images/items/torso/torso01.png">
+							<img id="imgAvatar-hair" class="imgAvatar-hair" src="../../images/items/hair/hair01.png">
+							<img id="imgAvatar-headgear" class="imgAvatar-headgear" src="../../images/items/headgear/hg01.png">
+							<img id="imgAvatar-accessories" class="imgAvatar-accessories" src="../../images/items/accessories/acc01.png">
 						</div>
+						<button type="button" class="btn btn-primary saveAvatar">Salvar avatar</button>
 					</div>
 					<div class="col-7">
 						<div class="row">
