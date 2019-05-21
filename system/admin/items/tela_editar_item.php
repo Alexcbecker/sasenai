@@ -13,7 +13,7 @@
       include "../../database/conexao_bd.php";
 
 
-       $sql_sel =  "SELECT id, nome, valor, caminho, quantidade FROM itens";
+       $sql_sel =  "SELECT id, nome, valor, caminho, quantidade FROM itens WHERE tipo=2";
 
 
 
@@ -109,6 +109,7 @@
             <input type="file" accept="image/x-png,image/jpeg" name="imagemItemDigital" class="form-control" id="recipient-imagem">
           </div>
           <input type="hidden" name="id" id="id">
+          <input type="hidden" name="imagem" id="imagem">
 
       </div>
       <?php
@@ -142,6 +143,8 @@ modal.find('#id').val(id)
 modal.find('#recipient-nome').val(nome)
 modal.find('#recipient-valor').val(valor)
 modal.find('#recipient-quantidade').val(quantidade)
+modal.find('#imagem').val(imagem)
+
 })
 </script>
 
