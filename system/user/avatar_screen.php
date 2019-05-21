@@ -15,6 +15,9 @@
 				<div class="row">
 					<div class="col-5">
 						<div class="divAvatar">
+						<?php foreach($equipedItens as $equips) {?>
+							<img class="imgItems" src="../../<?php echo $equips['caminho']?>">
+						<?php } ?>
 							<img id="imgAvatar-background" class="imgAvatar-background" src="../../images/items/background/bg01.png">
 							<img id="imgAvatar-body" class="imgAvatar-body" src="../../images/items/body/body01.png">
 							<img id="imgAvatar-feet" class="imgAvatar-feet" src="../../images/items/feet/feet01.png">
@@ -162,7 +165,7 @@
 			<div class="col-lg-3 col-md-12">
 				Rank
 				<div class="rank">
-
+					
 				</div>
 			</div>
 		</div>
