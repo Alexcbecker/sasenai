@@ -1,6 +1,16 @@
 <html>
 <head>
   <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+  <script>
+
+  $(document).ready(function () {
+    $('.custom-file-input').on('change', function () {
+      let fileName = $(this).val().split('\\').pop();
+      $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+
+  });
+  </script>
 </head>
 <body>
   <div class="container">

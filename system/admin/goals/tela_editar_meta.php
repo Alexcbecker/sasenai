@@ -31,6 +31,7 @@
 
         <div class="borda" style=" margin-top:3%;">
           <h1>Editar Itens</h1>
+          <div  style="overflow-y:auto; max-height:500px;">
     <table class="table table-hover">
       <thead  class="thead-dark">
         <tr>
@@ -74,6 +75,7 @@
     <?php
     }
     ?>
+</div>
 </div>
 </div>
 
@@ -153,7 +155,7 @@ modal.find('#recipient-pontos').val(pontos)
         </button>
       </div>
       <div class="modal-body">
-        <p>Você realmente deseja excluir o item <?php echo $user['name'];?></p>
+        <p>Você realmente deseja excluir a meta <?php echo $user['name'];?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
