@@ -32,6 +32,30 @@ $(document).ready(function(){
 	$("#removeAccessories").click(function(){
 		$("#imgAvatar-accessories").hide();
 	});
+
+	$(".box").click(function(){
+		debugger;
+		var idItem = this.id.substr(2);
+		var tipoItem = this.id.substr(0,1);
+
+
+
+
+
+		$.ajax({
+          url : "avatar_screen_ajax.php",
+          type : 'post',
+          data : {
+                 id : idItem,
+                 tipo : tipoItem
+            },
+        })
+        .done(function(msg){
+        })
+        .fail(function(jqXHR, textStatus, msg){
+            alert(msg);
+        }); 
+	});
 })
 
 function checkVisibility($param) {
@@ -40,8 +64,7 @@ function checkVisibility($param) {
 </script>
 
 <body>
-	<?php include_once("avatar_screen_database.php"); ?>
-
+	<?php include_once("avatar_screen_database.php");?>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-9 col-md-12">
@@ -57,7 +80,7 @@ function checkVisibility($param) {
 							<img id="imgAvatar-headgear" class="imgAvatar-headgear" src="../../<?php echo $equipedItens[6]['caminho']?>">
 							<img id="imgAvatar-accessories" class="imgAvatar-accessories" src="../../<?php echo $equipedItens[7]['caminho']?>">
 						</div>
-						<button type="button" class="btn btn-primary saveAvatar">Salvar avatar</button>
+						<!-- <button type="button" class="btn btn-primary saveAvatar">Salvar avatar</button> -->
 					</div>
 					<div class="col-7">
 						<div class="row">
@@ -95,7 +118,7 @@ function checkVisibility($param) {
 											</div>
 											<?php foreach($itens as $key=>$item) {?>
 												<?php if($item['slot'] == 5) {?>
-													<div class="box" id="hairItem<?php echo $key?>">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item["id"];?>">
 														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
