@@ -26,9 +26,15 @@ include "../../database/autenticacao/sessaovalidate.php";
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Ranking</a>
-          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Usuários
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_cadastro_usuario.php">Cadastro de usuário</a>
+            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_editar_usuario.php">Editar usuário</a>
+          </div>
 
 
           <li class="nav-item dropdown">
@@ -48,7 +54,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
-            <a class="dropdown-item" href="#">Editar campanha</a>
+            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=editar_campanha.php">Editar campanha</a>
           </div>
 
           <li class="nav-item dropdown">
@@ -68,7 +74,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
-            <a class="dropdown-item" href="#">Editar grupo</a>
+            <a class="dropdown-item" href="navbar.php?folder=teams&file=editar_grupo.php">Editar grupo</a>
           </div>
 
 
@@ -81,7 +87,7 @@ include "../../database/autenticacao/sessaovalidate.php";
     </nav>
 
     <div class="row justify-content-center">
-      <div class="col-8">
+      <div class="col-12">
         <?php
         if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
           if (@include $_GET['folder']."/".$_GET['file']) {

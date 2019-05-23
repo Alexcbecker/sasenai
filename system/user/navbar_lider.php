@@ -25,13 +25,13 @@ include "../../database/autenticacao/sessaovalidate.php";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Perfil</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">campanhas</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=lider&file=tela_campanha.php">campanhas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ranking da equipe</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=lider&file=tela_ranking_equipe.php">ranking da equipe</a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
