@@ -68,10 +68,8 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
-            <a class="dropdown-item" href="#">Editar grupo</a>
+            <a class="dropdown-item" href="navbar.php?folder=teams&file=administracao_grupos.php">Editar grupo</a>
           </div>
-
-
 
           <li class="nav-item active">
             <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
