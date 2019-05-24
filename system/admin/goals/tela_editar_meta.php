@@ -30,7 +30,7 @@
     <div class="container">
 
         <div class="borda" style=" margin-top:3%;">
-          <h1>Editar Itens</h1>
+          <h1>Editar Metas</h1>
           <div  style="overflow-y:auto; max-height:500px;">
     <table class="table table-hover">
       <thead  class="thead-dark">
@@ -39,7 +39,7 @@
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
           <th scope="col">Pontos</th>
-          <th scope="col">ações</th>
+          <th scope="col">Ações</th>
 
         </tr>
       </thead>

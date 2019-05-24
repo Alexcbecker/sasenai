@@ -34,6 +34,7 @@ if($cpf == ""){
      }else if($buscaUsuario[0]['tipo']==2){
         session_start();
       $_SESSION['id_sessao']  = session_id();
+      $_SESSION['id']         = $buscaUsuario[0]['id'];
       $_SESSION['nome']       = $buscaUsuario[0]['nome'];
       $_SESSION['email']      = $buscaUsuario[0]['email'];
       $_SESSION['senha']      = $buscaUsuario[0]['senha'];
@@ -51,6 +52,7 @@ if($cpf == ""){
      }else if($buscaUsuario[0]['tipo']==3){
         session_start();
         $_SESSION['id_sessao']  = session_id();
+        $_SESSION['id']         = $buscaUsuario[0]['id'];
         $_SESSION['nome']       = $buscaUsuario[0]['nome'];
         $_SESSION['email']      = $buscaUsuario[0]['email'];
         $_SESSION['senha']      = $buscaUsuario[0]['senha'];
