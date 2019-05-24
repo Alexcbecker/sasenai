@@ -65,13 +65,20 @@ include "../../database/autenticacao/sessaovalidate.php";
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             Grupos
-          </a>
+            </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
             <a class="dropdown-item" href="#">Editar grupo</a>
           </div>
 
-
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Usuarios
+            </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="navbar.php?folder=users&file=tela_cadastro_adm.php">Cadastro de Administrador</a>
+          </div>
 
           <li class="nav-item active">
             <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
