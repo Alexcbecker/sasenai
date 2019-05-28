@@ -37,9 +37,7 @@ $(document).ready(function(){
 		debugger;
 		var idItem = this.id.substr(2);
 		var tipoItem = this.id.substr(0,1);
-
-
-
+		
 
 
 		$.ajax({
