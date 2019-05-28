@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Maio-2019 às 02:47
+-- Tempo de geração: 22/05/2019 às 00:12
 -- Versão do servidor: 5.7.11-log
--- PHP Version: 5.6.15
+-- Versão do PHP: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bd_fito`
+-- Banco de dados: `bd_fito`
 --
 CREATE DATABASE IF NOT EXISTS `bd_fito` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `bd_fito`;
@@ -25,7 +25,7 @@ USE `bd_fito`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `avatares`
+-- Estrutura para tabela `avatares`
 --
 
 CREATE TABLE `avatares` (
@@ -35,7 +35,7 @@ CREATE TABLE `avatares` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `avatares`
+-- Fazendo dump de dados para tabela `avatares`
 --
 
 INSERT INTO `avatares` (`id`, `imagem`, `colaboradores_id`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `avatares` (`id`, `imagem`, `colaboradores_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `avatares_has_itens`
+-- Estrutura para tabela `avatares_has_itens`
 --
 
 CREATE TABLE `avatares_has_itens` (
@@ -55,23 +55,23 @@ CREATE TABLE `avatares_has_itens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `avatares_has_itens`
+-- Fazendo dump de dados para tabela `avatares_has_itens`
 --
 
 INSERT INTO `avatares_has_itens` (`avatares_id`, `itens_id`, `status`) VALUES
-(0000000001, 0000000001, 0),
-(0000000001, 0000000002, 0),
-(0000000001, 0000000003, 0),
-(0000000001, 0000000004, 0),
-(0000000001, 0000000005, 0),
-(0000000001, 0000000006, 0),
-(0000000001, 0000000007, 0),
-(0000000001, 0000000008, 0);
+(0000000001, 0000000001, 1),
+(0000000001, 0000000002, 1),
+(0000000001, 0000000003, 1),
+(0000000001, 0000000004, 1),
+(0000000001, 0000000005, 1),
+(0000000001, 0000000006, 1),
+(0000000001, 0000000007, 1),
+(0000000001, 0000000008, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `campanhas`
+-- Estrutura para tabela `campanhas`
 --
 
 CREATE TABLE `campanhas` (
@@ -87,7 +87,7 @@ CREATE TABLE `campanhas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `campanhas`
+-- Fazendo dump de dados para tabela `campanhas`
 --
 
 INSERT INTO `campanhas` (`id`, `nome`, `descricao`, `tipo`, `bonificacao`, `variante_pontos`, `data_inicial`, `data_final`, `tipo_participantes`) VALUES
@@ -96,7 +96,7 @@ INSERT INTO `campanhas` (`id`, `nome`, `descricao`, `tipo`, `bonificacao`, `vari
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `colaboradores`
+-- Estrutura para tabela `colaboradores`
 --
 
 CREATE TABLE `colaboradores` (
@@ -113,18 +113,18 @@ CREATE TABLE `colaboradores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `colaboradores`
+-- Fazendo dump de dados para tabela `colaboradores`
 --
 
 INSERT INTO `colaboradores` (`id`, `email`, `senha`, `cpf`, `nome`, `tipo`, `sexo`, `pontos`, `creditos`, `status`) VALUES
 (0000000001, 'alexander_becker@estudante.sc.senai.br', '123', '83719976980', 'Administrador', 1, 1, 0, 0, 0),
 (0000000002, 'alexander_becker@estudante.sc.senai.br', '123', '32254530992', 'Líder de Teste 01', 2, 1, 0, 0, 0),
-(0000000003, 'alexander_becker@estudante.sc.senai.br', '123', '90010448918', 'Usuário de Teste 01', 2, 1, 0, 0, 0);
+(0000000003, 'alexander_becker@estudante.sc.senai.br', '123', '90010448918', 'Usuário de Teste 01', 3, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `colaboradores_has_campanhas`
+-- Estrutura para tabela `colaboradores_has_campanhas`
 --
 
 CREATE TABLE `colaboradores_has_campanhas` (
@@ -134,7 +134,7 @@ CREATE TABLE `colaboradores_has_campanhas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `colaboradores_has_campanhas`
+-- Fazendo dump de dados para tabela `colaboradores_has_campanhas`
 --
 
 INSERT INTO `colaboradores_has_campanhas` (`colaboradores_id`, `campanhas_id`, `pontos_desta_campanha`) VALUES
@@ -144,7 +144,7 @@ INSERT INTO `colaboradores_has_campanhas` (`colaboradores_id`, `campanhas_id`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `colaboradores_has_grupos`
+-- Estrutura para tabela `colaboradores_has_grupos`
 --
 
 CREATE TABLE `colaboradores_has_grupos` (
@@ -153,7 +153,7 @@ CREATE TABLE `colaboradores_has_grupos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `colaboradores_has_grupos`
+-- Fazendo dump de dados para tabela `colaboradores_has_grupos`
 --
 
 INSERT INTO `colaboradores_has_grupos` (`colaboradores_id`, `grupos_id`) VALUES
@@ -163,7 +163,7 @@ INSERT INTO `colaboradores_has_grupos` (`colaboradores_id`, `grupos_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `grupos`
+-- Estrutura para tabela `grupos`
 --
 
 CREATE TABLE `grupos` (
@@ -174,7 +174,7 @@ CREATE TABLE `grupos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `grupos`
+-- Fazendo dump de dados para tabela `grupos`
 --
 
 INSERT INTO `grupos` (`id`, `nome`, `status`, `descricao`) VALUES
@@ -183,7 +183,7 @@ INSERT INTO `grupos` (`id`, `nome`, `status`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `itens`
+-- Estrutura para tabela `itens`
 --
 
 CREATE TABLE `itens` (
@@ -198,7 +198,7 @@ CREATE TABLE `itens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `itens`
+-- Fazendo dump de dados para tabela `itens`
 --
 
 INSERT INTO `itens` (`id`, `nome`, `valor`, `tipo`, `status`, `caminho`, `quantidade`, `slot`) VALUES
@@ -214,7 +214,7 @@ INSERT INTO `itens` (`id`, `nome`, `valor`, `tipo`, `status`, `caminho`, `quanti
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `metas`
+-- Estrutura para tabela `metas`
 --
 
 CREATE TABLE `metas` (
@@ -226,7 +226,7 @@ CREATE TABLE `metas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `metas`
+-- Fazendo dump de dados para tabela `metas`
 --
 
 INSERT INTO `metas` (`id`, `nome`, `descricao`, `pontos`, `campanhas_id`) VALUES
@@ -234,11 +234,11 @@ INSERT INTO `metas` (`id`, `nome`, `descricao`, `pontos`, `campanhas_id`) VALUES
 (0000000002, 'Meta de teste 02', 'Esta é uma meta de teste.', 20, 0000000001);
 
 --
--- Indexes for dumped tables
+-- Índices de tabelas apagadas
 --
 
 --
--- Indexes for table `avatares`
+-- Índices de tabela `avatares`
 --
 ALTER TABLE `avatares`
   ADD PRIMARY KEY (`id`),
@@ -247,7 +247,7 @@ ALTER TABLE `avatares`
   ADD KEY `fk_avatares_colaboradores1_idx` (`colaboradores_id`);
 
 --
--- Indexes for table `avatares_has_itens`
+-- Índices de tabela `avatares_has_itens`
 --
 ALTER TABLE `avatares_has_itens`
   ADD PRIMARY KEY (`avatares_id`,`itens_id`),
@@ -255,14 +255,14 @@ ALTER TABLE `avatares_has_itens`
   ADD KEY `fk_avatares_has_itens_avatares1_idx` (`avatares_id`);
 
 --
--- Indexes for table `campanhas`
+-- Índices de tabela `campanhas`
 --
 ALTER TABLE `campanhas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`);
 
 --
--- Indexes for table `colaboradores`
+-- Índices de tabela `colaboradores`
 --
 ALTER TABLE `colaboradores`
   ADD PRIMARY KEY (`id`),
@@ -270,7 +270,7 @@ ALTER TABLE `colaboradores`
   ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`);
 
 --
--- Indexes for table `colaboradores_has_campanhas`
+-- Índices de tabela `colaboradores_has_campanhas`
 --
 ALTER TABLE `colaboradores_has_campanhas`
   ADD PRIMARY KEY (`colaboradores_id`,`campanhas_id`),
@@ -278,7 +278,7 @@ ALTER TABLE `colaboradores_has_campanhas`
   ADD KEY `fk_colaboradores_has_campanhas_colaboradores1_idx` (`colaboradores_id`);
 
 --
--- Indexes for table `colaboradores_has_grupos`
+-- Índices de tabela `colaboradores_has_grupos`
 --
 ALTER TABLE `colaboradores_has_grupos`
   ADD PRIMARY KEY (`colaboradores_id`,`grupos_id`),
@@ -286,7 +286,7 @@ ALTER TABLE `colaboradores_has_grupos`
   ADD KEY `fk_colaboradores_has_grupos_colaboradores1_idx` (`colaboradores_id`);
 
 --
--- Indexes for table `grupos`
+-- Índices de tabela `grupos`
 --
 ALTER TABLE `grupos`
   ADD PRIMARY KEY (`id`),
@@ -294,14 +294,14 @@ ALTER TABLE `grupos`
   ADD UNIQUE KEY `nome_UNIQUE` (`nome`);
 
 --
--- Indexes for table `itens`
+-- Índices de tabela `itens`
 --
 ALTER TABLE `itens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`);
 
 --
--- Indexes for table `metas`
+-- Índices de tabela `metas`
 --
 ALTER TABLE `metas`
   ADD PRIMARY KEY (`id`),
@@ -309,72 +309,72 @@ ALTER TABLE `metas`
   ADD KEY `fk_metas_campanhas1_idx` (`campanhas_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
--- AUTO_INCREMENT for table `avatares`
+-- AUTO_INCREMENT de tabela `avatares`
 --
 ALTER TABLE `avatares`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id do avatar, utilizado para identificá-lo e fazer o link com o colaborador.', AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `campanhas`
+-- AUTO_INCREMENT de tabela `campanhas`
 --
 ALTER TABLE `campanhas`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id único da campanha, utilizado para id identificá-la.', AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `colaboradores`
+-- AUTO_INCREMENT de tabela `colaboradores`
 --
 ALTER TABLE `colaboradores`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id único para identificar o colaborador.', AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `grupos`
+-- AUTO_INCREMENT de tabela `grupos`
 --
 ALTER TABLE `grupos`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id do grupo, utilizado para identificá-lo.', AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `itens`
+-- AUTO_INCREMENT de tabela `itens`
 --
 ALTER TABLE `itens`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id do item, utilizado para identificá-lo e fazer o link com o avatar.', AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT for table `metas`
+-- AUTO_INCREMENT de tabela `metas`
 --
 ALTER TABLE `metas`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id da meta, utilizado para identificá-la.', AUTO_INCREMENT=3;
 --
--- Constraints for dumped tables
+-- Restrições para dumps de tabelas
 --
 
 --
--- Limitadores para a tabela `avatares`
+-- Restrições para tabelas `avatares`
 --
 ALTER TABLE `avatares`
   ADD CONSTRAINT `fk_avatares_colaboradores1` FOREIGN KEY (`colaboradores_id`) REFERENCES `colaboradores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `avatares_has_itens`
+-- Restrições para tabelas `avatares_has_itens`
 --
 ALTER TABLE `avatares_has_itens`
   ADD CONSTRAINT `fk_avatares_has_itens_avatares1` FOREIGN KEY (`avatares_id`) REFERENCES `avatares` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_avatares_has_itens_itens1` FOREIGN KEY (`itens_id`) REFERENCES `itens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `colaboradores_has_campanhas`
+-- Restrições para tabelas `colaboradores_has_campanhas`
 --
 ALTER TABLE `colaboradores_has_campanhas`
   ADD CONSTRAINT `fk_colaboradores_has_campanhas_campanhas1` FOREIGN KEY (`campanhas_id`) REFERENCES `campanhas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_colaboradores_has_campanhas_colaboradores1` FOREIGN KEY (`colaboradores_id`) REFERENCES `colaboradores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `colaboradores_has_grupos`
+-- Restrições para tabelas `colaboradores_has_grupos`
 --
 ALTER TABLE `colaboradores_has_grupos`
   ADD CONSTRAINT `fk_colaboradores_has_grupos_colaboradores1` FOREIGN KEY (`colaboradores_id`) REFERENCES `colaboradores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_colaboradores_has_grupos_grupos1` FOREIGN KEY (`grupos_id`) REFERENCES `grupos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `metas`
+-- Restrições para tabelas `metas`
 --
 ALTER TABLE `metas`
   ADD CONSTRAINT `fk_metas_campanhas1` FOREIGN KEY (`campanhas_id`) REFERENCES `campanhas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
