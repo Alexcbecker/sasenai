@@ -1,23 +1,16 @@
-.admin {
-	float: left;
-	margin-top: 5%;
-	margin-bottom: 5%;
-	width: 25%;
-	height: 80%;
-	border: 2px solid #00000077;
+.borda-geral{
+    margin-top: 3%;
+    padding: 2%;
+    width: 80%;
+      box-shadow: 0 15px 25px rgba(0,0,0,.3);
+      overflow-y: auto;
+        max-height: 80vh;
 }
-
-.teste {
-	float: right;
-	margin-top: 5%;
-	margin-bottom: 5%;
-	width: 70%;
-	height: 80%;
-	border: 2px solid #00000077;
-}
-.rank {
-	float: right;
-	width: 75%;
-	height: 80%;
-	border: 2px solid #00000077;
+.borda-campanhas{
+    padding: 2%;
+    margin-top: 3%;
+    width: 80%;
+      box-shadow: 0 15px 25px rgba(0,0,0,.3);
+        overflow-y: auto;
+        max-height: 80vh;
 }
