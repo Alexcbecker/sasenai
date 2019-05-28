@@ -1,72 +1,37 @@
 <html>
 
 <head>
-<meta charset="utf-8">
-
-  <link href="../../css/componente_multiselecao.css" rel="stylesheet">
-
-    <link rel="stylesheet" href        
-
+<link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
 </head>
 
 <body>
-
-
-<div class="container">
-
-
-            <div class="borda" style=" margin-top:3%;">
-                <form>
-                    <h1>Cadastro de Times</h1>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Nome do time</label>
-                        <input type="text" class="form-control" name="nomeTime" id="nomeTime">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Descrição do time</label>
-                        <textarea class="form-control" name="descricaoTime" id="descricaoTime"></textarea>
-                    </div>
-
-
-
+<div class="borda" style=" margin-top:3%;">
+        <form action='teams/back_cadastro_grupo.php' method='post'>
+          <h1>Cadastro de grupos</h1>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Nome do grupo</label>
+            <input type="text" class="form-control"  name="nome_grupo" id="nome_grupo" placeholder="De um nome ao grupo" >
+          </div>
             <div class="form-group">
-            <label for="exampleFormControlInput1">Lider</label>
-            <select class="custom-select custom-select-lg mb-3">
-                <option selected>Lider</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-
+              <label for="exampleFormControlTextarea1">Descrição</label>
+              <textarea class="form-control" name='descricao_grupo' id="descricao_grupo"  placeholder="Descreva seu grupo" rows="3"></textarea>
             </div>
-
-            <div  class="form-group">
-            <label  for="exampleFormControlInput1">Usuários:</label>
-            <select id="multiple" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
-                <option></option>
-                <option>Option One</option>
-                <option>Option Two</option>
-                <option>Option Three</option>
-                <option>Option Four</option>
-                <option>Option Five</option>
-                <option>Option Six</option>
-                <option>Option Seven</option>
-                <option>Option Eight</option>
-            </select>
+        <?php
+        if(isset($_GET['mensagem'])){
+          ?>
+          <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
+            <?php echo $_GET['mensagem']; ?>
+          </div>
+          <?php
+        }
+        ?>
+          <div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-danger">Cancelar</button>
+            
             </div>
-
-        <div>
-            <button type="button" class="btn btn-primary btn-md">Cadastrar Time</button>
-            <button type="button" class="btn btn-danger btn-md">Cancelar</button>
-
-        </div>
         </form>
-        </div>
   </div>
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.6/chosen.jquery.min.js"></script>

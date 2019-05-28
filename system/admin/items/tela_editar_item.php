@@ -30,7 +30,8 @@
 
         <div class="borda" style=" margin-top:3%;">
           <h1>Editar Itens</h1>
-    <table class="table table-hover">
+          <div  style="overflow-y:auto; max-height:500px;">
+    <table class="table table-hover overflow-y">
       <thead  class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -75,6 +76,7 @@
     <?php
     }
     ?>
+</div>
 </div>
 </div>
 
