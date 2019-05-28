@@ -2,7 +2,7 @@
 
 $id  = $_POST['id'];
 $nomeUsuario        = $_POST['nomeUsuario'];
-$emailUsuasio       = $_POST['emailUsuasio'];
+$emailUsuasio       = $_POST['emailUsuario'];
 $cpfUsuario         = $_POST['cpfUsuario'];
 $tipoUsuario        = $_POST['tipoUsuario'];
 $sexoUsuario        = $_POST['sexoUsuario'];
