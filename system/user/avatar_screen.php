@@ -35,20 +35,25 @@ $(document).ready(function(){
 
 	$(".box").click(function(){
 		debugger;
-		var idItem = this.id.substr(2);
+		var idItem = this.id.substr(2,10);
 		var tipoItem = this.id.substr(0,1);
-		
-
+		var caminhoItem = this.id.substr(13);
+		debugger;
 
 		$.ajax({
           url : "avatar_screen_ajax.php",
           type : 'post',
           data : {
                  id : idItem,
-                 tipo : tipoItem
+                 tipo : tipoItem,
+				 caminho : caminhoItem,
             },
         })
         .done(function(msg){
+			idItem =parseInt(idItem);
+			$(".slot0").attr('src', msg);
+			console.log(".slot" + idItem);
+			debugger;
         })
         .fail(function(jqXHR, textStatus, msg){
             alert(msg);
@@ -69,16 +74,15 @@ function checkVisibility($param) {
 				<div class="row">
 					<div class="col-5">
 						<div class="divAvatar">
-							<img id="imgAvatar-background" class="imgAvatar-background" src="../../<?php echo $equipedItens[0]['caminho']?>">
-							<img id="imgAvatar-body" class="imgAvatar-body" src="../../<?php echo $equipedItens[1]['caminho']?>">
-							<img id="imgAvatar-feet" class="imgAvatar-feet" src="../../<?php echo $equipedItens[2]['caminho']?>">
-							<img id="imgAvatar-legs" class="imgAvatar-legs" src="../../<?php echo $equipedItens[3]['caminho']?>">
-							<img id="imgAvatar-torso" class="imgAvatar-torso" src="../../<?php echo $equipedItens[4]['caminho']?>">
-							<img id="imgAvatar-hair" class="imgAvatar-hair" src="../../<?php echo $equipedItens[5]['caminho']?>">
-							<img id="imgAvatar-headgear" class="imgAvatar-headgear" src="../../<?php echo $equipedItens[6]['caminho']?>">
-							<img id="imgAvatar-accessories" class="imgAvatar-accessories" src="../../<?php echo $equipedItens[7]['caminho']?>">
+							<img id="imgAvatar-background" class="imgAvatar-background slot0" src="<?php echo $equipedItens[0]['caminho']?>">
+							<img id="imgAvatar-body" class="imgAvatar-body slot1" src="<?php echo $equipedItens[1]['caminho']?>">
+							<img id="imgAvatar-feet" class="imgAvatar-feet slot2" src="<?php echo $equipedItens[2]['caminho']?>">
+							<img id="imgAvatar-legs" class="imgAvatar-legs slot4" src="<?php echo $equipedItens[3]['caminho']?>">
+							<img id="imgAvatar-torso" class="imgAvatar-torso slot5" src="<?php echo $equipedItens[4]['caminho']?>">
+							<img id="imgAvatar-hair" class="imgAvatar-hair slot6" src="<?php echo $equipedItens[5]['caminho']?>">
+							<img id="imgAvatar-headgear" class="imgAvatar-headgear slot7" src="<?php echo $equipedItens[6]['caminho']?>">
+							<img id="imgAvatar-accessories" class="imgAvatar-accessories slot8" src="<?php echo $equipedItens[7]['caminho']?>">
 						</div>
-						<!-- <button type="button" class="btn btn-primary saveAvatar">Salvar avatar</button> -->
 					</div>
 					<div class="col-7">
 						<div class="row">
@@ -116,8 +120,8 @@ function checkVisibility($param) {
 											</div>
 											<?php foreach($itens as $key=>$item) {?>
 												<?php if($item['slot'] == 5) {?>
-													<div class="box" id="<?php echo $item['slot'] . "_" . $item["id"];?>">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -131,7 +135,7 @@ function checkVisibility($param) {
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 4) {?>
 													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -145,7 +149,7 @@ function checkVisibility($param) {
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 3) {?>
 													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -159,7 +163,7 @@ function checkVisibility($param) {
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 2) {?>
 													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -173,7 +177,7 @@ function checkVisibility($param) {
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 6) {?>
 													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -187,7 +191,7 @@ function checkVisibility($param) {
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 7) {?>
 													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -200,8 +204,8 @@ function checkVisibility($param) {
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 0) {?>
-													<div class="box">
-														<img class="imgItems" src="../../<?php echo $item['caminho']?>">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
+														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
 											<?php } ?>
@@ -216,7 +220,6 @@ function checkVisibility($param) {
 			<div class="col-lg-3 col-md-12">
 				Rank
 				<div class="rank">
-
 				</div>
 			</div>
 		</div>
