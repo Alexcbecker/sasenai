@@ -77,7 +77,7 @@ include "../../database/autenticacao/sessaovalidate.php";
             Usuarios
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="navbar.php?folder=users&file=tela_cadastro_adm.php">Cadastro de Administrador</a>
+            <a class="dropdown-item" href="navbar.php?folder=users&file=tela_cadastro_adm.php">Cadastro</a>
           </div>
 
           <li class="nav-item active">
