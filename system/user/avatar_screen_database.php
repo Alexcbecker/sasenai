@@ -14,7 +14,15 @@ $itens = mysqli_query($con, "SELECT * FROM itens");
 $resultEquipedItens = mysqli_query($con, "SELECT avatares.id as 'avatarid', avatares_has_itens.itens_id as 'itensId',itens.caminho, itens.slot FROM avatares INNER JOIN avatares_has_itens ON avatares.id=avatares_has_itens.avatares_id INNER JOIN itens ON itens.id=avatares_has_itens.itens_id WHERE avatares.colaboradores_id='$userId' AND avatares_has_itens.status='1'");
 
 $equipedItens = mysqli_fetch_all($resultEquipedItens, MYSQLI_ASSOC);
-$avatarId = $equipedItens[0]['id'];
+
+
+function sortByOrder($a, $b) {
+    return $a['slot'] - $b['slot'];
+}
+
+usort($equipedItens, 'sortByOrder');
+
+$avatarId = $equipedItens[0]['avatarId'];
 
 function updateAvatar($newitemId, $slot) {
 
