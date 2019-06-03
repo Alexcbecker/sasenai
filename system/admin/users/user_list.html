@@ -1,0 +1,273 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <link href="../../css/componente_multiselecao.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+
+    <style>
+    td input[type="checkbox"] {
+        float: none;
+        margin: 5px 5px auto auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div style=" margin-top:3%;">
+        <div class="container">
+            <div class="row">
+                <div class="row justify-content-start">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_user">Adicionar</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger btn-sm">Limpar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="userlist">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Cpf</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="users/user_add.php" id="suform">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="cpf">Cpf</label>
+                            <input type="number" class="form-control" name="cpf" id="cpf" required>
+                            <div class="invalid-feedback" id="cpffeedback"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6 mb-4">
+                                <label for="password0">Senha</label>
+                                <input type="password" class="form-control" name="password" id="password0" required>
+                                <div class="invalid-feedback" id="passwfeedback"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="password1">Confirmar senha</label>
+                                <input type="password" class="form-control" id="password1" required>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-1 pt-0">Sexo</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sex" id="male" value="male" required>
+                                        <label class="form-check-label" for="male">
+                                            Masculino
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sex" id="female" value="female" required>
+                                        <label class="form-check-label" for="female">
+                                            Feminino
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-1 pt-0">Tipo de usuário</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="usertype" id="admin" value="1" required>
+                                        <label class="form-check-label" for="admin">
+                                            Administrador
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="usertype" id="fher" value="2" required>
+                                        <label class="form-check-label" for="fher">
+                                            Lider
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="usertype" id="colab" value="3" required>
+                                        <label class="form-check-label" for="colab">
+                                            Colaborador comum
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="modal-footer">
+                            <button id="subb" type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function ulistcheck()
+    {
+        $("#button_remove").attr("disabled", true);
+
+        $("#userlist tbody tr").each(function()
+        {
+            $(this).find('td input:checked').each(() => $("#button_remove").attr("disabled", false));
+        });
+    }
+
+    function remove_checked()
+    {
+        $("#userlist tbody tr").each(function()
+        {
+
+        });
+    }
+
+    function makelist()
+    {
+        $.getJSON("users/fetch_user_list.php", function(data)
+        {
+            $("#userlist tbody").empty();
+            var tr = '';
+
+            $.each(data, function(key, value)
+            {
+                tr += '<tr>';
+                tr += '<td style="text-align:center;"><input class="form-check-input" type="checkbox" onclick="ulistcheck()" id="userlistid' + key + '"></td>';
+                tr += '<td>' + (key + 1) + '</td>';
+                tr += '<td>' + value.name + '</td>';
+                tr += '<td>' + value.type + '</td>';
+                tr += '<td>' + value.sex + '</td>';
+                tr += '<td>' + value.email + '</td>';
+                tr += '<td>' + value.cpf + '</td>';
+                tr += '<td>' + value.status + '</td>';
+                tr += '</tr>';
+            });
+
+            $("#userlist tbody").append(tr);
+        });
+    }
+
+    $("#suform").submit(function(event)
+    {
+        event.preventDefault();
+
+        $("#cpf").removeClass("is-valid");
+        $("#cpf").removeClass("is-invalid");
+
+        if ($("#cpf").val().length != 11)
+        {
+            $("#cpf").addClass("is-invalid");
+            $("#cpffeedback").empty();
+            $("#cpffeedback").append("cpf possui ao menos 11 dígitos");
+        }
+        else
+        {
+            $("#cpf").addClass("is-valid");
+
+            $("#password0").removeClass("is-invalid");
+            $("#password1").removeClass("is-invalid");
+            $("#password0").removeClass("is-valid");
+            $("#password1").removeClass("is-valid");
+
+            var passw = $("#password0").val();
+
+            if(passw != $("#password1").val())
+            {
+                $("#password0").addClass("is-invalid");
+                $("#password1").addClass("is-invalid");
+                $("#passwfeedback").empty();
+                $("#passwfeedback").append("digite a mesma senha");
+            }
+            else
+            {
+                $("#passwfeedback").empty();
+                $("#password0").addClass("is-valid");
+                $("#password1").addClass("is-valid");
+
+                var $form = $(this);
+
+                var url = $form.attr("action");
+
+                var fields = $form.serializeArray();
+
+                var p = $.post(url, fields);
+
+                p.done(function(data)
+                {
+                    if (data == "status:cpfinvalid")
+                    {
+                        $("#cpf").addClass("is-invalid");
+                        $("#cpffeedback").empty();
+                        $("#cpffeedback").append("cpf já existe");
+                    }
+                    else if (data == "status:ok" || data == "status:error")
+                    {
+                        makelist();
+
+                        $("#add_user").modal("toggle");
+                        $form.trigger('reset');
+
+                        $("#cpf").removeClass("is-valid");
+                        $("#cpf").removeClass("is-invalid");
+
+                        $("#password0").removeClass("is-invalid");
+                        $("#password1").removeClass("is-invalid");
+                        $("#password0").removeClass("is-valid");
+                        $("#password1").removeClass("is-valid");
+                    }
+                });
+            }
+        }
+    });
+
+    makelist();
+    </script>
+
+</body>
+
+</html>
