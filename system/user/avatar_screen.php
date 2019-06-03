@@ -9,30 +9,7 @@
 <script>
 
 $(document).ready(function(){
-	// $("#removeBg").click(function(){
-	// 	if(checkVisibility("#imgAvatar-background")) {
-	// 		$("#imgAvatar-background").hide();
-	// 	} 
-	// });
-	// $("#removeFeet").click(function(){
-	// 	$("#imgAvatar-feet").hide();
-	// });
-	// $("#removeLegs").click(function(){
-	// 	$("#imgAvatar-legs").hide();
-	// });
-	// $("#removeTorso").click(function(){
-	// 	$("#imgAvatar-torso").hide();
-	// });
-	// $("#removeHair").click(function(){
-	// 	$("#imgAvatar-hair").hide();
-	// });
-	// $("#removeHeadgear").click(function(){
-	// 	$("#imgAvatar-headgear").hide();
-	// });
-	// $("#removeAccessories").click(function(){
-	// 	$("#imgAvatar-accessories").hide();
-	// });
-
+	
 	$(".box").click(function(){
 		debugger;
 		var typeOfRequest = 1;

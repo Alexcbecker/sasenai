@@ -52,6 +52,10 @@
 		max-width: 100%;
 	}
 
+	img[src=""] {
+		display: none;
+	 }
+
 	.saveAvatar {
 		float: right;
 		margin-top: 0%;
