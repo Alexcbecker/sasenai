@@ -9,35 +9,43 @@
 <script>
 
 $(document).ready(function(){
-	$("#removeBg").click(function(){
-		if(checkVisibility("#imgAvatar-background")) {
-			$("#imgAvatar-background").hide();
-		} 
-	});
-	$("#removeFeet").click(function(){
-		$("#imgAvatar-feet").hide();
-	});
-	$("#removeLegs").click(function(){
-		$("#imgAvatar-legs").hide();
-	});
-	$("#removeTorso").click(function(){
-		$("#imgAvatar-torso").hide();
-	});
-	$("#removeHair").click(function(){
-		$("#imgAvatar-hair").hide();
-	});
-	$("#removeHeadgear").click(function(){
-		$("#imgAvatar-headgear").hide();
-	});
-	$("#removeAccessories").click(function(){
-		$("#imgAvatar-accessories").hide();
-	});
+	// $("#removeBg").click(function(){
+	// 	if(checkVisibility("#imgAvatar-background")) {
+	// 		$("#imgAvatar-background").hide();
+	// 	} 
+	// });
+	// $("#removeFeet").click(function(){
+	// 	$("#imgAvatar-feet").hide();
+	// });
+	// $("#removeLegs").click(function(){
+	// 	$("#imgAvatar-legs").hide();
+	// });
+	// $("#removeTorso").click(function(){
+	// 	$("#imgAvatar-torso").hide();
+	// });
+	// $("#removeHair").click(function(){
+	// 	$("#imgAvatar-hair").hide();
+	// });
+	// $("#removeHeadgear").click(function(){
+	// 	$("#imgAvatar-headgear").hide();
+	// });
+	// $("#removeAccessories").click(function(){
+	// 	$("#imgAvatar-accessories").hide();
+	// });
 
 	$(".box").click(function(){
 		debugger;
+		var typeOfRequest = 1;
+		var removeId = this.id.substr(2);
 		var idItem = this.id.substr(2,10);
 		var tipoItem = this.id.substr(0,1);
 		var caminhoItem = this.id.substr(13);
+		var idAvatar =$(".divAvatar").attr("id");
+		if($(this).hasClass("remove")) {
+			typeOfRequest = 2;
+			idItem = removeId;
+			debugger;
+		}
 		debugger;
 
 		$.ajax({
@@ -47,12 +55,25 @@ $(document).ready(function(){
                  id : idItem,
                  tipo : tipoItem,
 				 caminho : caminhoItem,
+				 idAvatar : idAvatar,
+				 requestType: typeOfRequest
             },
         })
         .done(function(msg){
-			idItem =parseInt(idItem);
-			$(".slot0").attr('src', msg);
-			console.log(".slot" + idItem);
+			debugger;
+			tipoItem = parseInt(tipoItem);
+			slot = ".slot" + tipoItem;
+			if(msg != "erro") {
+				if(msg == "removeItem") {
+					$(slot).fadeOut("slow");
+  					$(slot).fadeOut(4000);
+				} else {
+					$(slot).attr('src', msg);
+				
+					$(slot).fadeIn("slow");
+  					$(slot).fadeIn(4000);
+				}
+			}
 			debugger;
         })
         .fail(function(jqXHR, textStatus, msg){
@@ -73,15 +94,15 @@ function checkVisibility($param) {
 			<div class="col-lg-9 col-md-12">
 				<div class="row">
 					<div class="col-5">
-						<div class="divAvatar">
+						<div class="divAvatar" id="<?php echo $equipedItens[0]['avatarid']; ?>">
 							<img id="imgAvatar-background" class="imgAvatar-background slot0" src="<?php echo $equipedItens[0]['caminho']?>">
 							<img id="imgAvatar-body" class="imgAvatar-body slot1" src="<?php echo $equipedItens[1]['caminho']?>">
 							<img id="imgAvatar-feet" class="imgAvatar-feet slot2" src="<?php echo $equipedItens[2]['caminho']?>">
-							<img id="imgAvatar-legs" class="imgAvatar-legs slot4" src="<?php echo $equipedItens[3]['caminho']?>">
-							<img id="imgAvatar-torso" class="imgAvatar-torso slot5" src="<?php echo $equipedItens[4]['caminho']?>">
-							<img id="imgAvatar-hair" class="imgAvatar-hair slot6" src="<?php echo $equipedItens[5]['caminho']?>">
-							<img id="imgAvatar-headgear" class="imgAvatar-headgear slot7" src="<?php echo $equipedItens[6]['caminho']?>">
-							<img id="imgAvatar-accessories" class="imgAvatar-accessories slot8" src="<?php echo $equipedItens[7]['caminho']?>">
+							<img id="imgAvatar-legs" class="imgAvatar-legs slot3" src="<?php echo $equipedItens[3]['caminho']?>">
+							<img id="imgAvatar-torso" class="imgAvatar-torso slot4" src="<?php echo $equipedItens[4]['caminho']?>">
+							<img id="imgAvatar-hair" class="imgAvatar-hair slot5" src="<?php echo $equipedItens[5]['caminho']?>">
+							<img id="imgAvatar-headgear" class="imgAvatar-headgear slot6" src="<?php echo $equipedItens[6]['caminho']?>">
+							<img id="imgAvatar-accessories" class="imgAvatar-accessories slot7" src="<?php echo $equipedItens[7]['caminho']?>">
 						</div>
 					</div>
 					<div class="col-7">
@@ -115,7 +136,7 @@ function checkVisibility($param) {
 								<div class="tab-content" id="myTabContent">
 									<div class="tab-pane fade show active" id="hair" role="tabpanel" aria-labelledby="hair-tab">
 										<div class="wrapperInventory" id="hair">
-											<div class="box" id="removeHair">
+											<div class="box remove" id="5_removeHair">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $key=>$item) {?>
@@ -129,12 +150,12 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="torso" role="tabpanel" aria-labelledby="torso-tab">
 										<div class="wrapperInventory" id="torso">
-											<div class="box" id="removeTorso">
+											<div class="box remove" id="4_removeTorso">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 4) {?>
-													<div class="box">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
 														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
@@ -143,12 +164,12 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="legs" role="tabpanel" aria-labelledby="legs-tab">
 										<div class="wrapperInventory" id="legs">
-											<div class="box" id="removeLegs">
+											<div class="box remove" id="3_removeLegs">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 3) {?>
-													<div class="box">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
 														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
@@ -157,12 +178,12 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="feet" role="tabpanel" aria-labelledby="feet-tab">
 										<div class="wrapperInventory" id="feet">
-											<div class="box" id="removeFeet">
+											<div class="box remove" id="2_removeFeet">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 2) {?>
-													<div class="box">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
 														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
@@ -171,12 +192,12 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="headgear" role="tabpanel" aria-labelledby="headgear-tab">
 										<div class="wrapperInventory" id="headgear">
-											<div class="box" id="removeHeadgear">
+											<div class="box remove" id="6_removeHeadgear">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 6) {?>
-													<div class="box">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
 														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
@@ -185,12 +206,12 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="accessories" role="tabpanel" aria-labelledby="accessories-tab">
 										<div class="wrapperInventory" id="accessories">
-											<div class="box" id="removeAccessories">
+											<div class="box remove" id="7_removeAccessories">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
 												<?php if($item['slot'] == 7) {?>
-													<div class="box">
+													<div class="box" id="<?php echo $item['slot'] . "_" . $item['id'] . "_" . $item['caminho'];?>">
 														<img class="imgItems" src="<?php echo $item['caminho']?>">
 													</div>
 												<?php } ?>
@@ -199,7 +220,7 @@ function checkVisibility($param) {
 									</div>
 									<div class="tab-pane fade" id="background" role="tabpanel" aria-labelledby="background-tab">
 										<div class="wrapperInventory" id="background">
-											<div class="box" id="removeBg">
+											<div class="box remove" id="0_removeBg">
 												<img class="imgItems" src="../../images/items/noimage.png">
 											</div>
 											<?php foreach($itens as $item) {?>
@@ -220,6 +241,7 @@ function checkVisibility($param) {
 			<div class="col-lg-3 col-md-12">
 				Rank
 				<div class="rank">
+				
 				</div>
 			</div>
 		</div>
