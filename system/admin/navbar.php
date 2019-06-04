@@ -1,7 +1,7 @@
+
+
 <?php
-
 include "../../database/autenticacao/sessaovalidate.php";
-
 ?>
 
 <html>
@@ -54,7 +54,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
-            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=editar_campanha.php">Editar campanha</a>
+            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=tela_editar_campanha.php">Editar campanha</a>
           </div>
 
           <li class="nav-item dropdown">
@@ -74,7 +74,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
-            <a class="dropdown-item" href="navbar.php?folder=teams&file=administracao_grupos.php">Editar grupo</a>
+            <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_editar_grupo.php">Editar grupo</a>
           </div>
 
           <li class="nav-item active">

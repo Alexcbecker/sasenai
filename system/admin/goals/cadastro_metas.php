@@ -63,6 +63,9 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
                 ?>
                 <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
                     <?php echo $_GET['mensagem']; ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
                 </div>
                 <?php
                  }
