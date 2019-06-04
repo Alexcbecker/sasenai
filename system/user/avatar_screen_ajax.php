@@ -2,37 +2,51 @@
 
 session_start();
 
-$userId = $_SESSION['id'];
-$avatarId = "";
+$con = mysqli_connect("localhost","root","root","bd_fito");
 
-$idItem = $_POST['id'];
-$tipoItem = $_POST['tipo'];
+if(!$con){
+    die("Erro no banco de dados");
+}
 
-echo $tipoItem;
-// include_once("../../database/conexao_bd.php");
+if($_POST["requestType"] == 1)
+    updateAvatar($con);
+else{
+    $slotItem = $_POST['tipo'];
+    $idAvatar = $_POST['idAvatar'];
+    changeItemStatus($con, 0, $slotItem, $idAvatar);
+}
 
-// $itens = mysqli_query($con, "SELECT * FROM itens");
 
-// $resultEquipedItens = mysqli_query($con, "SELECT avatares.id as 'avatarid', itens.caminho, itens.slot FROM avatares INNER JOIN avatares_has_itens ON avatares.id=avatares_has_itens.avatares_id INNER JOIN itens ON itens.id=avatares_has_itens.itens_id WHERE avatares.colaboradores_id='$userId' AND avatares_has_itens.status='1'");
+function updateAvatar($con){
+    $idUsuario = $_SESSION['id'];
+    $idItem = $_POST['id'];
+    $tipoItem = $_POST['tipo'];
+    $caminhoItem = $_POST['caminho'];
+    $idAvatar = $_POST['idAvatar'];
 
-// $equipedItens = mysqli_fetch_all($resultEquipedItens, MYSQLI_ASSOC);
-// print_r($equipedItens);
-// $avatarId = $equipedItens[0]['id'];
+    $query = "UPDATE avatares_has_itens INNER JOIN colaboradores INNER JOIN itens ON itens.id=avatares_has_itens.itens_id SET avatares_has_itens.itens_id = $idItem, avatares_has_itens.status = 1 WHERE avatares_has_itens.avatares_id = $idAvatar AND colaboradores.id =$idUsuario AND itens.slot = '$tipoItem'";
+        
+    $resultUpdateQuery = mysqli_query($con, $query);
 
-// function saveAvatar($bgPath, $feetPath, $legsPath, $torsoPath, $hairPath, $headGearPath, $accessoriesPath) {
+    $atualizou = mysqli_affected_rows($con);
 
-//     $query = "";
-    
-//     $resultSaveQuery = mysqli_query($con, $query);
-// }
+    if($atualizou > 0) 
+        echo $caminhoItem;
+    else 
+        echo "erro";
+}
 
-// function changeItemStatus($status, $slot) {
-//     echo $status;
-//     $currentStatus = ($status == 0) ? 1: 0;
-//     // $itemStatusQuery = "UPDATE avatares_has_itens INNER JOIN avatares ON avatares.id SET status='$status' WHERE avatares.colaboradores_id='$userId' AND avatares_has_itens.itens_id='$slot' AND avatares_has_itens.status='$currentStatus'";
-//     $itemStatusQuery = "UPDATE avatares_has_itens INNER JOIN avatares ON avatares.id SET status='0' WHERE avatares.colaboradores_id='$userId' AND avatares_has_itens.itens_id='8' AND avatares_has_itens.status='1'";
+function changeItemStatus($con, $status, $slot, $avatarId) {
+    $currentStatus = ($status == 0) ? 1: 0;
 
-//     $resultStatusQuery = mysqli_query($con, $itemStatusQuery);
-// }
+    $itemStatusQuery = "UPDATE avatares_has_itens INNER JOIN itens ON itens.id=avatares_has_itens.itens_id SET avatares_has_itens.status=0 WHERE avatares_has_itens.avatares_id='$avatarId' AND itens.slot ='$slot'";
+    $resultStatusQuery = mysqli_query($con, $itemStatusQuery);
 
+    $atualizou = mysqli_affected_rows($con);
+
+    if($atualizou > 0) 
+        echo "removeItem";
+    else 
+        echo "erro";
+}
 ?>
