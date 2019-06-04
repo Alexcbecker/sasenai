@@ -1,7 +1,7 @@
-
-
 <?php
+
 include "../../database/autenticacao/sessaovalidate.php";
+
 ?>
 
 <html>
@@ -17,7 +17,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="navbar.php?folder=&file=admin.php">
         <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top"
         alt="random image"> Olá <?php echo $_SESSION['nome']; ?>
       </a>
