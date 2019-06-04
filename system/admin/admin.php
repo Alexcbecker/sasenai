@@ -155,6 +155,16 @@
 
           Rank de campanhas
           <table class="table">
+          <div class="btn-group">
+  <button style="left:150%" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Campanhas
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">campanha 1</a>
+      <a class="dropdown-item" href="#">campanha 2</a>
+      <a class="dropdown-item" href="#">campanha 3</a>
+  </div>
+</div>
             <thead class="thead-dark">
               <tr>
                 <th scope="col">colocacao</th>
