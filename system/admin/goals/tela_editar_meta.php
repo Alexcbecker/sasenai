@@ -29,17 +29,17 @@
 
     <div class="container">
 
-        <div class="borda" style=" margin-top:3%;">
-          <h1>Editar Metas</h1>
-          <div  style="overflow-y:auto; max-height:500px;">
-    <table class="table table-hover">
-      <thead  class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Descrição</th>
-          <th scope="col">Pontos</th>
-          <th scope="col">Ações</th>
+    <div class="borda" style=" margin-top:3%;">
+      <h1>Editar Meta</h1>
+      <div  style="overflow-y:auto; max-height:60vh;">
+        <table class="table table-hover">
+          <thead  class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Pontos</th>
+              <th scope="col">ações</th>
 
         </tr>
       </thead>

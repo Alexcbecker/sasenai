@@ -29,7 +29,7 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 
 <html>
 
-<head>  
+<head>
 
   <link href="../../css/componente_multiselecao.css" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
@@ -40,7 +40,7 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 <body>
 <div class="borda" style=" margin-top:3%;">
 
-	<form action='teams/estruturar_grupo.php' method="post">
+	<form action='teams/formar_grupo.php' method="post">
 
         <div class="container">
         <h1>Editar grupos</h1>
@@ -88,7 +88,7 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
         </form>
 </div>
 
- 
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.6/chosen.jquery.min.js"></script>

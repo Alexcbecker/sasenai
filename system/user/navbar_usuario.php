@@ -12,8 +12,6 @@ include "../../database/autenticacao/sessaovalidate.php";
 </head>
 <body>
 
-   <form>
-
      <nav  class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
 
 
@@ -27,7 +25,7 @@ include "../../database/autenticacao/sessaovalidate.php";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="navbar_usuario.php?folder=&file=back_perfil.php">Perfil</a>
+                    <a class="nav-link" href="navbar_usuario.php?folder=&file=tela_perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">campanhas e metas</a>
@@ -63,6 +61,6 @@ include "../../database/autenticacao/sessaovalidate.php";
   </div>
 </div>
 
-</form>
+
 </body>
 </html>

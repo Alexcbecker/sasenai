@@ -18,9 +18,9 @@ if ($inseriu > 0) {
     $mensagem = "Meta criada com sucesso!";
     $status = "success";
   }else{
-  
-    $mensagem = "Erro ao cadastrar meta";
-  
+
+    $mensagem = "Erro ao cadastrar meta!";
+
   }
   header("Location: ".$link."&mensagem=".$mensagem."&status=".$status);
 ?>
