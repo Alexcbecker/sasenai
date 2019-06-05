@@ -58,19 +58,31 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 				<?php
 				if(isset($_GET['mensagem'])){
 					?>
-					<div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
-						<?php echo $_GET['mensagem']; ?>
-					</div>
-					<?php
-				}
-				?>
-				<div>
-					<button type="submit" class="btn btn-primary btn-md">Cadastrar meta</button>
-					<button type="submit" class="btn btn-danger">Cancelar</button>
-				</div>
-			</form>
-		</div>
-	</div>
+                    <option value="<?php echo $value["id"]; ?>" selected><?php echo $value["nome"]; ?></option>
+                    <?php
+    }
+    ?>
+                  </select>
+                  </div>
+                <?php
+                 if(isset($_GET['mensagem'])){
+                ?>
+                <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
+                    <?php echo $_GET['mensagem']; ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+                </div>
+                <?php
+                 }
+                ?>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-md">Cadastrar meta</button>
+                    <button type="submit" class="btn btn-danger">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

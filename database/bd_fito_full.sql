@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/05/2019 às 00:12
+-- Tempo de geração: 04/06/2019 às 03:01
 -- Versão do servidor: 5.7.11-log
 -- Versão do PHP: 5.6.15
 
@@ -59,14 +59,14 @@ CREATE TABLE `avatares_has_itens` (
 --
 
 INSERT INTO `avatares_has_itens` (`avatares_id`, `itens_id`, `status`) VALUES
-(0000000001, 0000000001, 1),
 (0000000001, 0000000002, 1),
 (0000000001, 0000000003, 1),
 (0000000001, 0000000004, 1),
 (0000000001, 0000000005, 1),
 (0000000001, 0000000006, 1),
 (0000000001, 0000000007, 1),
-(0000000001, 0000000008, 1);
+(0000000001, 0000000008, 1),
+(0000000001, 0000000009, 1);
 
 -- --------------------------------------------------------
 
@@ -202,14 +202,15 @@ CREATE TABLE `itens` (
 --
 
 INSERT INTO `itens` (`id`, `nome`, `valor`, `tipo`, `status`, `caminho`, `quantidade`, `slot`) VALUES
-(0000000001, 'Fundo de teste 01', 0, 1, 1, 'images\\items\\background\\bg01.png', NULL, 0),
-(0000000002, 'Corpo de teste 01', 0, 1, 1, 'images\\items\\body\\body01.png', NULL, 1),
-(0000000003, 'Sapatos de teste 01', 0, 1, 1, 'images\\items\\feet\\feet01.png', NULL, 2),
-(0000000004, 'Calças de teste 01', 0, 1, 1, 'images\\items\\legs\\legs01.png', NULL, 3),
-(0000000005, 'Camiseta de teste 01', 0, 1, 1, 'images\\items\\torso\\torso01.png', NULL, 4),
-(0000000006, 'Cabelo de teste 01', 0, 1, 1, 'images\\items\\hair\\hair01.png', NULL, 5),
-(0000000007, 'Acessório de cabeça de teste 01', 0, 1, 1, 'images\\items\\headgear\\hg01.png', NULL, 6),
-(0000000008, 'Acessório geral de teste 01', 0, 1, 1, 'images\\items\\accessories\\acc01.png', NULL, 7);
+(0000000001, 'Fundo de teste 01', 0, 1, 1, '..\\..\\images\\items\\background\\bg01.png', NULL, 0),
+(0000000002, 'Corpo de teste 01', 0, 1, 1, '..\\..\\images\\items\\body\\body01.png', NULL, 1),
+(0000000003, 'Sapatos de teste 01', 0, 1, 1, '..\\..\\images\\items\\feet\\feet01.png', NULL, 2),
+(0000000004, 'Calças de teste 01', 0, 1, 1, '..\\..\\images\\items\\legs\\legs01.png', NULL, 3),
+(0000000005, 'Camiseta de teste 01', 0, 1, 1, '..\\..\\images\\items\\torso\\torso01.png', NULL, 4),
+(0000000006, 'Cabelo de teste 01', 0, 1, 1, '..\\..\\images\\items\\hair\\hair01.png', NULL, 5),
+(0000000007, 'Acessório de cabeça de teste 01', 0, 1, 1, '..\\..\\images\\items\\headgear\\hg01.png', NULL, 6),
+(0000000008, 'Acessório geral de teste 01', 0, 1, 1, '..\\..\\images\\items\\accessories\\acc01.png', NULL, 7),
+(0000000009, 'Fundo de teste 02', 0, 1, 1, '..\\..\\images\\items\\background\\bg02.png', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -336,7 +337,7 @@ ALTER TABLE `grupos`
 -- AUTO_INCREMENT de tabela `itens`
 --
 ALTER TABLE `itens`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id do item, utilizado para identificá-lo e fazer o link com o avatar.', AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id do item, utilizado para identificá-lo e fazer o link com o avatar.', AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de tabela `metas`
 --

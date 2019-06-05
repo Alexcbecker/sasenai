@@ -8,6 +8,8 @@ $mensagem = "";
 $status   = "danger";
 $link     = "../navbar.php?folder=goals&file=tela_editar_meta.php";
 
+
+
 if($nomeMeta == ""){
 
   $mensagem = "Nome não preenchido!";

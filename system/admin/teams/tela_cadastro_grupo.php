@@ -21,6 +21,8 @@
           ?>
           <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
             <?php echo $_GET['mensagem']; ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
           </div>
           <?php
         }
@@ -28,7 +30,7 @@
           <div>
             <button type="submit" class="btn btn-primary">Cadastrar</button>
             <button type="submit" class="btn btn-danger">Cancelar</button>
-            
+
             </div>
         </form>
   </div>

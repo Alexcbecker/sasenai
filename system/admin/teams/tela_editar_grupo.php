@@ -13,7 +13,7 @@
       include "../../database/conexao_bd.php";
 
 
-       $sql_sel =  "SELECT `id`, `nome`, `descricao`, `pontos`, `campanhas_id` FROM metas";
+       $sql_sel =  "SELECT `id`, `nome`, `descricao` FROM grupos";
 
 
 
@@ -29,17 +29,16 @@
 
     <div class="container">
 
-    <div class="borda" style=" margin-top:3%;">
-      <h1>Editar Meta</h1>
-      <div  style="overflow-y:auto; max-height:60vh;">
-        <table class="table table-hover">
-          <thead  class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nome</th>
-              <th scope="col">Descrição</th>
-              <th scope="col">Pontos</th>
-              <th scope="col">ações</th>
+        <div class="borda" style=" margin-top:3%;">
+          <h1>Editar Grupos</h1>
+          <div  style="overflow-y:auto; max-height:500px;">
+    <table class="table table-hover">
+      <thead  class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Ações</th>
 
         </tr>
       </thead>
@@ -51,9 +50,8 @@
           <th scope="row"><?php echo $user['id']?></th>
           <td><?php echo $user['nome']?></td>
           <td><?php echo $user['descricao']?></td>
-          <td><?php echo $user['pontos']?></td>
           <td>
-            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whateverpontos="<?php echo $user['pontos']?>" >
+            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>">
             <button type="button" class="btn btn-success" name="editar">Editar</button>
             </a>
             <a data-toggle="modal" data-target="#modalExcluir" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" >
@@ -94,18 +92,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="goals/editar_meta.php" enctype="multipart/form-data" method="post">
+        <form action="teams/editar_grupo.php" enctype="multipart/form-data" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Nome:</label>
-            <input type="text" class="form-control" name="nomeMeta" id="recipient-nome">
+            <input type="text" class="form-control" name="nomeGrupo" id="recipient-nome">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Descrição:</label>
-            <input type="textarea" class="form-control" name="decricaoMeta" id="recipient-descricao">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Pontos:</label>
-            <input type="number" class="form-control" name="pontosMeta" id="recipient-pontos">
+            <input type="textarea" class="form-control" name="decricaoGrupo" id="recipient-descricao">
           </div>
 
           <input type="hidden" name="id" id="id">
@@ -134,18 +128,17 @@ var button = $(event.relatedTarget)
 var id = button.data('whateverid')
 var nome = button.data('whatevernome')
 var descricao = button.data('whateverdescricao')
-var pontos = button.data('whateverpontos')
 var modal = $(this)
 modal.find('.modal-title').text('Editar o item ' + nome)
 modal.find('#id').val(id)
 modal.find('#recipient-nome').val(nome)
 modal.find('#recipient-descricao').val(descricao)
-modal.find('#recipient-pontos').val(pontos)
 })
 </script>
 
 
 <!-- Modal Excluir -->
+
 <div class="modal" id="modalExcluir" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -156,12 +149,11 @@ modal.find('#recipient-pontos').val(pontos)
         </button>
       </div>
       <div class="modal-body">
-
-        <p id="msg">Você realmente deseja excluir a meta <?php echo $user['name'];?></p>
+        <p id="msg">Você realmente deseja excluir o grupo <?php echo $user['name'];?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <a id="link" href="goals/excluir_meta.php?id=">
+        <a id="link" href="teams/excluir_grupo.php?id=">
         <button type="button" class="btn btn-success">Excluir</button>
       </a>
       </div>
@@ -175,7 +167,7 @@ $('#modalExcluir').on('show.bs.modal', function (event) {
 var nome = button.data('whatevernome')
 var modal = $(this)
 modal.find('#msg').text('Você realmente deseja excluir o item ( ' + nome + ' ) ?')
-modal.find('#link').attr("href","goals/excluir_meta.php?id="+id)
+modal.find('#link').attr("href","teams/excluir_grupo.php?id="+id)
 })
 </script>
   </body>

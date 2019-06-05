@@ -46,25 +46,32 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
         <h1>Editar grupos</h1>
 			<div class="form-group">
 				<label for="exampleFormControlInput1">Grupo</label>
-				<select name="grupo" class="custom-select custom-select-lg mb-3">
+				<select name="grupo" class="custom-select custom-select-lg mb-3" required="required">
+					<option selected>...</option>
 				<?php foreach($grupo as $key => $value){ ?>
-					<option value="<?php echo $value["id"]; ?>" selected><?php echo $value["nome"]; ?></option>
+
+					<option value="<?php echo $value["id"]; ?>" ><?php echo $value["nome"]; ?></option>
                 <?php } ?>
+
+
 				</select>
             </div>
 
             <div class="form-group">
             <label for="exampleFormControlInput1">Líder</label>
-            <select name="lider" class="custom-select custom-select-lg mb-3">
+            <select name="lider" class="custom-select custom-select-lg mb-3" required="required">
+							<option selected>...</option>
+
 				<?php foreach($lider as $key => $value){ ?>
-                <option  value="<?php echo $value["id"]; ?>" selected><?php echo $value["nome"]; ?></option>
+                <option  value="<?php echo $value["id"]; ?>" ><?php echo $value["nome"]; ?></option>
                 <?php } ?>
+
             </select>
             </div>
 
             <div  class="form-group">
             <label  for="exampleFormControlInput1">Usuários</label>
-            <select id="multiple" name="usuarios[]" class="form-control form-control-chosen" data-placeholder="Por favor, selecione..."  multiple="multiple" required>
+            <select id="multiple" name="usuarios[]" class="form-control form-control-chosen" data-placeholder="Por favor, selecione..."  multiple="multiple" required="required">
 				<?php foreach($colaborador as $key => $value){ ?>
 
 				<option  value="<?php echo $value["id"]; ?>"><?php echo $value["nome"]; ?></option>
@@ -76,6 +83,8 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
             ?>
                 <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
                     <?php echo $_GET['mensagem']; ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
                 </div>
             <?php
                 }

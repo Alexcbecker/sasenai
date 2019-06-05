@@ -72,6 +72,8 @@
     ?>
     <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
       <?php echo $_GET['mensagem']; ?>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
     </div>
     <?php
     }
@@ -163,11 +165,11 @@ modal.find('#imagem').val(imagem)
         </button>
       </div>
       <div class="modal-body">
-        <p>Você realmente deseja excluir o item <?php echo $user['name'];?></p>
+        <p id="msg">Você realmente deseja excluir a meta <?php echo $user['name'];?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <a href="items/deletar_item.php?id=<?php echo $user['id'];?>">
+        <a id="link" href="items/deletar_item.php?id=">
         <button type="button" class="btn btn-success">Excluir</button>
       </a>
       </div>
@@ -180,7 +182,8 @@ $('#modalExcluir').on('show.bs.modal', function (event) {
   var id = button.data('whateverid')
 var nome = button.data('whatevernome')
 var modal = $(this)
-modal.find('.modal-body').text('Você realmente deseja excluir o item ' + nome + '?')
+modal.find('#msg').text('Você realmente deseja excluir o item ( ' + nome + ' ) ?')
+modal.find('#link').attr("href","items/deletar_item.php?id="+id)
 })
 </script>
   </body>

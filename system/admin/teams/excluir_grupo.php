@@ -4,13 +4,13 @@
   $status = "danger";
 
   include "../../../database/conexao_bd.php";
-  $sql_del  = "DELETE FROM metas WHERE id= {$id} " ;
+  $sql_del  = "DELETE FROM grupos WHERE id= {$id}";
   $result = mysqli_query($con, $sql_del);
   if ($result) {
-    $msg  = "Meta excluida com sucesso";
+    $msg  = "Grupo excluido com sucesso";
     $status ="success";
   }  else{
     $msg = "Erro ao excluir";
   }
-  header("Location: ../navbar.php?folder=goals&file=tela_editar_meta.php&status=".$status."&mensagem=".$msg."");
+  header("Location: ../navbar.php?folder=teams&file=tela_editar_grupo.php&status=".$status."&mensagem=".$msg."");
 ?>
