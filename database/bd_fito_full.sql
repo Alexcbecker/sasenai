@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/06/2019 às 03:01
+-- Tempo de geração: 06/06/2019 às 02:18
 -- Versão do servidor: 5.7.11-log
 -- Versão do PHP: 5.6.15
 
@@ -39,8 +39,8 @@ CREATE TABLE `avatares` (
 --
 
 INSERT INTO `avatares` (`id`, `imagem`, `colaboradores_id`) VALUES
-(0000000001, 'Checar se isso vai ser necessário.', 0000000003),
-(0000000003, 'Checar se isso vai ser necessário(2).', 0000000002);
+(0000000001, '-', 0000000003),
+(0000000003, '--', 0000000002);
 
 -- --------------------------------------------------------
 
@@ -59,6 +59,7 @@ CREATE TABLE `avatares_has_itens` (
 --
 
 INSERT INTO `avatares_has_itens` (`avatares_id`, `itens_id`, `status`) VALUES
+(0000000001, 0000000001, 1),
 (0000000001, 0000000002, 1),
 (0000000001, 0000000003, 1),
 (0000000001, 0000000004, 1),
@@ -66,7 +67,14 @@ INSERT INTO `avatares_has_itens` (`avatares_id`, `itens_id`, `status`) VALUES
 (0000000001, 0000000006, 1),
 (0000000001, 0000000007, 1),
 (0000000001, 0000000008, 1),
-(0000000001, 0000000009, 1);
+(0000000003, 0000000001, 1),
+(0000000003, 0000000002, 1),
+(0000000003, 0000000003, 1),
+(0000000003, 0000000004, 1),
+(0000000003, 0000000005, 1),
+(0000000003, 0000000006, 1),
+(0000000003, 0000000007, 1),
+(0000000003, 0000000008, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +99,8 @@ CREATE TABLE `campanhas` (
 --
 
 INSERT INTO `campanhas` (`id`, `nome`, `descricao`, `tipo`, `bonificacao`, `variante_pontos`, `data_inicial`, `data_final`, `tipo_participantes`) VALUES
-(0000000001, 'Campanha de teste 01', 'Esta é uma campanha de teste.', 1, 2, 50, '2019-05-09', '2019-12-31', 1);
+(0000000001, 'Campanha 01', 'Campanha de teste 01.', 2, 5, 10, '2019-06-05', '2019-06-30', 0),
+(0000000002, 'Campanha 02', 'Campanha de teste 02.', 1, 10, 100, '2019-06-05', '2019-06-30', 1);
 
 -- --------------------------------------------------------
 
@@ -117,9 +126,9 @@ CREATE TABLE `colaboradores` (
 --
 
 INSERT INTO `colaboradores` (`id`, `email`, `senha`, `cpf`, `nome`, `tipo`, `sexo`, `pontos`, `creditos`, `status`) VALUES
-(0000000001, 'alexander_becker@estudante.sc.senai.br', '123', '83719976980', 'Administrador', 1, 1, 0, 0, 0),
-(0000000002, 'alexander_becker@estudante.sc.senai.br', '123', '32254530992', 'Líder de Teste 01', 2, 1, 0, 0, 0),
-(0000000003, 'alexander_becker@estudante.sc.senai.br', '123', '90010448918', 'Usuário de Teste 01', 3, 1, 0, 0, 0);
+(0000000001, 'teste@email.com', '123', '83719976980', 'Admin ', 1, 1, NULL, NULL, 0),
+(0000000002, 'teste2@email.com', '123', '32254530992', 'Líder ', 2, 1, NULL, NULL, 0),
+(0000000003, 'teste3@email.com', '123', '90010448918', 'Usuário', 3, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -128,18 +137,20 @@ INSERT INTO `colaboradores` (`id`, `email`, `senha`, `cpf`, `nome`, `tipo`, `sex
 --
 
 CREATE TABLE `colaboradores_has_campanhas` (
-  `colaboradores_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'Estrangeira de colaboradores.',
+  `colaboradores_id` int(10) UNSIGNED ZEROFILL DEFAULT NULL COMMENT 'Estrangeira de colaboradores.',
   `campanhas_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'Estrangeira de campanhas.',
-  `pontos_desta_campanha` bigint(8) DEFAULT NULL COMMENT 'Pontos obtidos apenas nesta campanha, poderão ser utilizados para gerar um ranqueamento apenas desta campanha.'
+  `pontos_desta_campanha` bigint(8) DEFAULT NULL COMMENT 'Pontos obtidos apenas nesta campanha, poderão ser utilizados para gerar um ranqueamento apenas desta campanha.',
+  `grupos_id` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `objetivo_acumulado` int(11) DEFAULT NULL COMMENT 'Campo para cadastrar o número de itens ou valor durante toda a campanha, é utilizado para verificar se a meta foi cumprida ou não.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Fazendo dump de dados para tabela `colaboradores_has_campanhas`
 --
 
-INSERT INTO `colaboradores_has_campanhas` (`colaboradores_id`, `campanhas_id`, `pontos_desta_campanha`) VALUES
-(0000000002, 0000000001, 0),
-(0000000003, 0000000001, 0);
+INSERT INTO `colaboradores_has_campanhas` (`colaboradores_id`, `campanhas_id`, `pontos_desta_campanha`, `grupos_id`, `id`, `objetivo_acumulado`) VALUES
+(0000000003, 0000000001, 0, NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -178,7 +189,7 @@ CREATE TABLE `grupos` (
 --
 
 INSERT INTO `grupos` (`id`, `nome`, `status`, `descricao`) VALUES
-(0000000001, 'Grupo de teste 01', 0, 'Este é um grupo de teste.');
+(0000000001, 'Grupo 01', 0, 'Grupo de teste 01.');
 
 -- --------------------------------------------------------
 
@@ -223,16 +234,18 @@ CREATE TABLE `metas` (
   `nome` varchar(45) NOT NULL COMMENT 'Nome da meta utilizado para pesquisa e identificação.',
   `descricao` text NOT NULL COMMENT 'Descrição da meta, utilizado para os usuários entenderem o que devem fazer para cumpri-lá.',
   `pontos` bigint(8) NOT NULL COMMENT 'Pontos que o usuário recebe ao completar a campanha.',
-  `campanhas_id` int(10) UNSIGNED ZEROFILL NOT NULL
+  `campanhas_id` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `status` tinyint(1) NOT NULL COMMENT '0 - Completa\n1 - Não completa',
+  `objetivo` bigint(8) NOT NULL COMMENT 'Quantidade ou valor que deve ser atingido para completar a meta.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Fazendo dump de dados para tabela `metas`
 --
 
-INSERT INTO `metas` (`id`, `nome`, `descricao`, `pontos`, `campanhas_id`) VALUES
-(0000000001, 'Meta de teste 01', 'Esta é uma meta de teste.', 10, 0000000001),
-(0000000002, 'Meta de teste 02', 'Esta é uma meta de teste.', 20, 0000000001);
+INSERT INTO `metas` (`id`, `nome`, `descricao`, `pontos`, `campanhas_id`, `status`, `objetivo`) VALUES
+(0000000001, 'Meta 01', 'Vender 5 rolos de papel celofane.', 5, 0000000001, 1, 5),
+(0000000002, 'Meta 02', 'Vender 300 reais de batata salsa.', 10, 0000000002, 1, 300);
 
 --
 -- Índices de tabelas apagadas
@@ -274,9 +287,10 @@ ALTER TABLE `colaboradores`
 -- Índices de tabela `colaboradores_has_campanhas`
 --
 ALTER TABLE `colaboradores_has_campanhas`
-  ADD PRIMARY KEY (`colaboradores_id`,`campanhas_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `fk_colaboradores_has_campanhas_campanhas1_idx` (`campanhas_id`),
-  ADD KEY `fk_colaboradores_has_campanhas_colaboradores1_idx` (`colaboradores_id`);
+  ADD KEY `fk_colaboradores_has_campanhas_colaboradores1_idx` (`colaboradores_id`),
+  ADD KEY `fk_colaboradores_has_campanhas_grupos1_idx` (`grupos_id`);
 
 --
 -- Índices de tabela `colaboradores_has_grupos`
@@ -322,12 +336,17 @@ ALTER TABLE `avatares`
 -- AUTO_INCREMENT de tabela `campanhas`
 --
 ALTER TABLE `campanhas`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id único da campanha, utilizado para id identificá-la.', AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id único da campanha, utilizado para id identificá-la.', AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de tabela `colaboradores`
 --
 ALTER TABLE `colaboradores`
   MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id único para identificar o colaborador.', AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de tabela `colaboradores_has_campanhas`
+--
+ALTER TABLE `colaboradores_has_campanhas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de tabela `grupos`
 --
@@ -365,7 +384,8 @@ ALTER TABLE `avatares_has_itens`
 --
 ALTER TABLE `colaboradores_has_campanhas`
   ADD CONSTRAINT `fk_colaboradores_has_campanhas_campanhas1` FOREIGN KEY (`campanhas_id`) REFERENCES `campanhas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_colaboradores_has_campanhas_colaboradores1` FOREIGN KEY (`colaboradores_id`) REFERENCES `colaboradores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_colaboradores_has_campanhas_colaboradores1` FOREIGN KEY (`colaboradores_id`) REFERENCES `colaboradores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_colaboradores_has_campanhas_grupos1` FOREIGN KEY (`grupos_id`) REFERENCES `grupos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para tabelas `colaboradores_has_grupos`
