@@ -262,11 +262,6 @@
         $("#button_remove").attr("disabled", true);
         $("#button_edit").attr("disabled", true);
 
-        $.get("users/fetch_user_list.php", function(data)
-        {
-            //alert(data);
-        });
-
         $.getJSON("users/fetch_user_list.php", function(data)
         {
             $("#userlist tbody").empty();

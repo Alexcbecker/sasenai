@@ -10,6 +10,7 @@ if ($_SESSION['id_sessao']  == session_id())
 {
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+    mysqli_set_charset($conn, "utf8");
 
     $cpf = $_GET['value'];
     $q = "SELECT * FROM colaboradores WHERE cpf={$cpf}";
@@ -18,9 +19,9 @@ if ($_SESSION['id_sessao']  == session_id())
 
     $data = [];
 
-    if ($result->num_rows > 0)
+    if ($result->num_rows == 1)
     {
-        while ($row = $result->fetch_assoc())
+        if ($row = $result->fetch_assoc())
         {
             $data['name'] = $row['nome'];
             $data['cpf'] = $row['cpf'];

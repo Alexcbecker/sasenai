@@ -10,6 +10,7 @@ if ($_SESSION['id_sessao']  == session_id())
 {
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+    mysqli_set_charset($conn, "utf8");
 
     $q = "SELECT * FROM colaboradores";
 
@@ -23,7 +24,7 @@ if ($_SESSION['id_sessao']  == session_id())
 
         while ($row = $result->fetch_assoc())
         {
-            $rowa['name'] = utf8_encode($row['nome']);
+            $rowa['name'] = $row['nome'];
             $rowa['cpf'] = $row['cpf'];
             $rowa['email'] = $row['email'];
             $rowa['type'] = $row['tipo'] == 1 ? "Administrador" : ($row['tipo'] == 2 ? "Líder" : "Colaborador");
