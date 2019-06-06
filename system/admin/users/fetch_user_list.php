@@ -4,31 +4,39 @@ $username = "root";
 $password = "root";
 $dbname = "bd_fito";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+session_start();
 
-$q = "SELECT * FROM colaboradores";
-
-$result = $conn->query($q);
-
-$data = [];
-
-if ($result->num_rows > 0)
+if ($_SESSION['id_sessao']  == session_id())
 {
-    $rowa = [];
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
-    while($row = $result->fetch_assoc())
+    $q = "SELECT * FROM colaboradores";
+
+    $result = $conn->query($q);
+
+    $data = [];
+
+    if ($result->num_rows > 0)
     {
-        $rowa['name'] = $row['nome'];
-        $rowa['cpf'] = $row['cpf'];
-        $rowa['email'] = $row['email'];
-        $rowa['type'] = $row['tipo'] == 1 ? "Administrador" : $row['tipo'] == 2 ? "Líder" : "Colaborador";
-        $rowa['sex'] = $row['sexo'] == 1 ? "Masculino" : "Feminino";
-        $rowa['status'] = $row['status'] == 0 ? "Ativo" : "Desativado";
+        $rowa = [];
 
-        array_push($data, $rowa);
+        while ($row = $result->fetch_assoc())
+        {
+            $rowa['name'] = utf8_encode($row['nome']);
+            $rowa['cpf'] = $row['cpf'];
+            $rowa['email'] = $row['email'];
+            $rowa['type'] = $row['tipo'] == 1 ? "Administrador" : ($row['tipo'] == 2 ? "Líder" : "Colaborador");
+            $rowa['sex'] = $row['sexo'] == 1 ? "Masculino" : "Feminino";
+            $rowa['status'] = $row['status'] == 0 ? "Ativo" : "Desativado";
+            $rowa['adm'] = $row['cpf'] == $_SESSION['cpf'] ? "True" : "False";
+
+            array_push($data, $rowa);
+        }
     }
-}
 
-echo json_encode($data);
+    echo json_encode($data);
+}
+else die;
+
 ?>
