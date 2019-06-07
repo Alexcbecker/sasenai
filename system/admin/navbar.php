@@ -26,6 +26,9 @@ include "../../database/autenticacao/sessaovalidate.php";
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link"aria-haspopup="true" href="navbar.php?folder=&file=tela_cadastro_pontos.php">Pontos</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -83,18 +86,19 @@ include "../../database/autenticacao/sessaovalidate.php";
         </ul>
       </div>
     </nav>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <?php
+          if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
+            if (@include $_GET['folder']."/".$_GET['file']) {
 
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <?php
-        if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
-          if (@include $_GET['folder']."/".$_GET['file']) {
+            }
+          }else{
 
           }
-        }else{
-
-        }
-        ?>
+          ?>
+        </div>
       </div>
     </div>
 
