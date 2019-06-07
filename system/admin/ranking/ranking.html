@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="../../css/componente_multiselecao.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+</head>
+
+<body>
+    <div class="borda" style=" margin-top:3%;">
+        <h3>Ranking</h3>
+        <div class="container">
+            <div class="row">
+                <div class="btn-group" role="group">
+                    <button type="button" id="general_b" class="btn btn-secondary btn-sm" onclick="makelist_general()">Geral</button>
+                    <button type="button" id="campaign_b" class="btn btn-secondary btn-sm" onclick="makelist_campaign()">Campanha</button>
+                    <button type="button" id="group_b" class="btn btn-secondary btn-sm" onclick="makelist_group()">Grupo</button>
+                </div>
+            </div>
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <div style="display: none" id="ranking_general_d">
+                        <table class="table table-striped" id="ranking_general">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação</th>
+                                    <th scope="col">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div style="display: none" id="ranking_campaign_d">
+                        <table class="table table-striped" id="ranking_campaign">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Campanha</th>
+                                    <th scope="col">Pontuação</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div style="display: none" id="ranking_group_d">
+                        <table class="table table-striped" id="ranking_group">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação Campanha</th>
+                                    <th scope="col">Grupo</th>
+                                    <th scope="col">Campanha</th>
+                                    <th scope="col">Pontuação</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function makelist_general() 
+        {
+            $.getJSON("ranking/fetch_ranking_general.php", function (data)
+            {
+                $("#ranking_general tbody").empty();
+                var tr = "";
+
+                $.each(data, function (key, value)
+                {
+                    tr += "<tr>";
+                    tr += "<td>" + value.points + "</td>";
+                    tr += "<td>" + value.name + "</td>";
+                    tr += "</tr>";
+                });
+
+                $("#ranking_general tbody").append(tr);
+
+                $("#ranking_general_d").css("display", "block");
+                $("#ranking_campaign_d").css("display", "none");
+                $("#ranking_group_d").css("display", "none");
+
+                $("#general_b").addClass("active");
+                $("#campaign_b").removeClass("active");
+                $("#group_b").removeClass("active");
+            });
+        }
+
+
+        function makelist_campaign()
+        {
+            $.getJSON("ranking/fetch_ranking_campaign.php", function (data)
+            {
+                $("#ranking_general tbody").empty();
+                var tr = "";
+
+                $.each(data, function (key, value)
+                {
+                    tr += "<tr>";
+                    tr += "<td>" + value.name + "</td>";
+                    tr += "<td>" + value.points + "</td>";
+                    tr += "<td>" + value.credit + "</td>";
+                    tr += "</tr>";
+                });
+
+                $("#ranking_general tbody").append(tr);
+
+                $("#ranking_general_d").css("display", "none");
+                $("#ranking_campaign_d").css("display", "block");
+                $("#ranking_group_d").css("display", "none");
+
+                $("#general_b").removeClass("active");
+                $("#campaign_b").addClass("active");
+                $("#group_b").removeClass("active");
+            });
+        }
+
+
+        function makelist_group()
+        {
+            $.getJSON("ranking/fetch_ranking_group.php", function (data)
+            {
+                $("#ranking_general tbody").empty();
+                var tr = "";
+
+                $.each(data, function (key, value)
+                {
+                    tr += "<tr>";
+                    tr += "<td>" + value.name + "</td>";
+                    tr += "<td>" + value.points + "</td>";
+                    tr += "<td>" + value.credit + "</td>";
+                    tr += "</tr>";
+                });
+
+                $("#ranking_general tbody").append(tr);
+
+                $("#ranking_general_d").css("display", "none");
+                $("#ranking_campaign_d").css("display", "none");
+                $("#ranking_group_d").css("display", "block");
+
+                $("#general_b").removeClass("active");
+                $("#campaign_b").removeClass("active");
+                $("#group_b").addClass("active");
+            });
+        }
+
+
+        makelist_general();
+    </script>
+</body>
+
+</html>

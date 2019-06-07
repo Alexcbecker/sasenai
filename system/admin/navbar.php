@@ -14,8 +14,6 @@ include "../../database/autenticacao/sessaovalidate.php";
 
 </head>
 <body>
-
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
       <a class="navbar-brand" href="#">
@@ -28,7 +26,7 @@ include "../../database/autenticacao/sessaovalidate.php";
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Ranking</a>
+            <a class="nav-link" href="navbar.php?folder=ranking&file=ranking.html">Ranking</a>
           </li>
 
 
