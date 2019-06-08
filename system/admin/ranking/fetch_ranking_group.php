@@ -12,24 +12,29 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 mysqli_set_charset($conn, "utf8");
 
-$q = "SELECT * FROM colaboradores ORDER BY pontos DESC, creditos DESC";
+$q = <<<S
+SELECT grupos.nome AS nome, s.pontos AS pontos FROM grupos
+LEFT JOIN(SELECT colaboradores_has_grupos.grupos_id AS id, SUM(colaboradores.pontos) as pontos
+FROM colaboradores_has_grupos
+LEFT JOIN colaboradores ON colaboradores.id = colaboradores_has_grupos.colaboradores_id
+GROUP BY colaboradores_has_grupos.grupos_id) AS s ON grupos.id = s.id
+ORDER BY pontos DESC
+S;
 
-$result = $conn->query($q);
+$r = $conn->query($q);
+
+echo $conn->error;
 
 $data = [];
 
-if ($result->num_rows > 0)
+while ($row = $r->fetch_assoc())
 {
     $rowa = [];
 
-    while ($row = $result->fetch_assoc())
-    {
-        $rowa['name'] = $row['nome'];
-        $rowa['points'] = $row['pontos'];
-        $rowa['credit'] = $row['creditos'];
+    $rowa['points'] = $row['pontos'];
+    $rowa['group'] = $row['nome'];
 
-        array_push($data, $rowa);
-   }
+    array_push($data, $rowa);
 }
 
 echo json_encode($data);

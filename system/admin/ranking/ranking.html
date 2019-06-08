@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <div class="borda" style=" margin-top:3%;">
+    <div style=" margin-top:3%;" class="borda">
         <h3>Ranking</h3>
         <div class="container">
             <div class="row">
@@ -19,7 +19,7 @@
             </div>
             <div class="row" style="margin-top:2%;">
                 <div class="table-responsive">
-                    <div style="display: none" id="ranking_general_d">
+                    <div id="ranking_general_d">
                         <table class="table table-striped" id="ranking_general">
                             <thead class="thead-dark">
                                 <tr>
@@ -30,7 +30,7 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div style="display: none" id="ranking_campaign_d">
+                    <div id="ranking_campaign_d">
                         <table class="table table-striped" id="ranking_campaign">
                             <thead class="thead-dark">
                                 <tr>
@@ -42,14 +42,12 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div style="display: none" id="ranking_group_d">
+                    <div id="ranking_group_d">
                         <table class="table table-striped" id="ranking_group">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">Pontuação Campanha</th>
-                                    <th scope="col">Grupo</th>
-                                    <th scope="col">Campanha</th>
                                     <th scope="col">Pontuação</th>
+                                    <th scope="col">Grupo</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -58,11 +56,31 @@
                 </div>
             </div>
         </div>
+        <div class="text-center" id="table_progress">
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
     </div>
 
     <script>
+        function show_progss()
+        {
+            $("#ranking_general_d").hide();
+            $("#ranking_campaign_d").hide();
+            $("#ranking_group_d").hide();
+            $("#table_progress").show();
+        }
+
+
         function makelist_general() 
         {
+            show_progss();
+
+            $("#general_b").addClass("active");
+            $("#campaign_b").removeClass("active");
+            $("#group_b").removeClass("active");
+
             $.getJSON("ranking/fetch_ranking_general.php", function (data)
             {
                 $("#ranking_general tbody").empty();
@@ -78,19 +96,20 @@
 
                 $("#ranking_general tbody").append(tr);
 
-                $("#ranking_general_d").css("display", "block");
-                $("#ranking_campaign_d").css("display", "none");
-                $("#ranking_group_d").css("display", "none");
-
-                $("#general_b").addClass("active");
-                $("#campaign_b").removeClass("active");
-                $("#group_b").removeClass("active");
+                $("#table_progress").hide();
+                $("#ranking_general_d").show();
             });
         }
 
 
         function makelist_campaign()
         {
+            show_progss();
+
+            $("#general_b").removeClass("active");
+            $("#campaign_b").addClass("active");
+            $("#group_b").removeClass("active");
+
             $.getJSON("ranking/fetch_ranking_campaign.php", function (data)
             {
                 $("#ranking_campaign tbody").empty();
@@ -107,45 +126,39 @@
 
                 $("#ranking_campaign tbody").append(tr);
 
-                $("#ranking_general_d").css("display", "none");
-                $("#ranking_campaign_d").css("display", "block");
-                $("#ranking_group_d").css("display", "none");
-
-                $("#general_b").removeClass("active");
-                $("#campaign_b").addClass("active");
-                $("#group_b").removeClass("active");
+                $("#table_progress").hide();
+                $("#ranking_campaign_d").show();
             });
         }
 
 
         function makelist_group()
         {
+            show_progss();
+
+            $("#general_b").removeClass("active");
+            $("#campaign_b").removeClass("active");
+            $("#group_b").addClass("active");
+
             $.getJSON("ranking/fetch_ranking_group.php", function (data)
             {
-                $("#ranking_general tbody").empty();
+                $("#ranking_group tbody").empty();
                 var tr = "";
 
                 $.each(data, function (key, value)
                 {
                     tr += "<tr>";
-                    tr += "<td>" + value.name + "</td>";
                     tr += "<td>" + value.points + "</td>";
-                    tr += "<td>" + value.credit + "</td>";
+                    tr += "<td>" + value.group + "</td>";
                     tr += "</tr>";
                 });
 
-                $("#ranking_general tbody").append(tr);
+                $("#ranking_group tbody").append(tr);
 
-                $("#ranking_general_d").css("display", "none");
-                $("#ranking_campaign_d").css("display", "none");
-                $("#ranking_group_d").css("display", "block");
-
-                $("#general_b").removeClass("active");
-                $("#campaign_b").removeClass("active");
-                $("#group_b").addClass("active");
+                $("#table_progress").hide();
+                $("#ranking_group_d").show();
             });
         }
-
 
         makelist_general();
     </script>
