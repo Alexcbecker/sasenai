@@ -77,9 +77,9 @@
         {
             show_progss();
 
-            $("#general_b").addClass("active");
             $("#campaign_b").removeClass("active");
             $("#group_b").removeClass("active");
+            $("#general_b").addClass("active");
 
             $.getJSON("ranking/fetch_ranking_general.php", function (data)
             {
@@ -97,7 +97,7 @@
                 $("#ranking_general tbody").append(tr);
 
                 $("#table_progress").hide();
-                $("#ranking_general_d").show();
+                if ($("#general_b").hasClass("active")) $("#ranking_general_d").show();
             });
         }
 
@@ -107,8 +107,8 @@
             show_progss();
 
             $("#general_b").removeClass("active");
-            $("#campaign_b").addClass("active");
             $("#group_b").removeClass("active");
+            $("#campaign_b").addClass("active");
 
             $.getJSON("ranking/fetch_ranking_campaign.php", function (data)
             {
@@ -127,7 +127,7 @@
                 $("#ranking_campaign tbody").append(tr);
 
                 $("#table_progress").hide();
-                $("#ranking_campaign_d").show();
+                if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").show();
             });
         }
 
@@ -156,7 +156,8 @@
                 $("#ranking_group tbody").append(tr);
 
                 $("#table_progress").hide();
-                $("#ranking_group_d").show();
+                
+                if ($("#group_b").hasClass("active")) $("#ranking_group_d").show();
             });
         }
 

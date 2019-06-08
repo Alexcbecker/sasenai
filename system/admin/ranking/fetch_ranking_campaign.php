@@ -17,6 +17,7 @@ SELECT colaboradores.nome AS c_nome, colaboradores_has_campanhas.pontos_desta_ca
 FROM ((colaboradores_has_campanhas
 INNER JOIN colaboradores ON colaboradores.id = colaboradores_has_campanhas.colaboradores_id)
 INNER JOIN campanhas ON campanhas.id = colaboradores_has_campanhas.campanhas_id)
+WHERE colaboradores.status = 0
 ORDER BY colaboradores_has_campanhas.pontos_desta_campanha DESC
 S;
 

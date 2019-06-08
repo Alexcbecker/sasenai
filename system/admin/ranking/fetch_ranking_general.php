@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 mysqli_set_charset($conn, "utf8");
 
-$q = "SELECT * FROM colaboradores ORDER BY pontos DESC";
+$q = "SELECT * FROM colaboradores WHERE colaboradores.status = 0 ORDER BY pontos DESC";
     
 $result = $conn->query($q);
 
