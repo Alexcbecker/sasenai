@@ -37,7 +37,6 @@
                                     <th scope="col">Pontuação</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Campanha</th>
-                                    <th scope="col">Pontuação</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -94,19 +93,19 @@
         {
             $.getJSON("ranking/fetch_ranking_campaign.php", function (data)
             {
-                $("#ranking_general tbody").empty();
+                $("#ranking_campaign tbody").empty();
                 var tr = "";
 
                 $.each(data, function (key, value)
                 {
                     tr += "<tr>";
-                    tr += "<td>" + value.name + "</td>";
                     tr += "<td>" + value.points + "</td>";
-                    tr += "<td>" + value.credit + "</td>";
+                    tr += "<td>" + value.name + "</td>";
+                    tr += "<td>" + value.campaign + "</td>";
                     tr += "</tr>";
                 });
 
-                $("#ranking_general tbody").append(tr);
+                $("#ranking_campaign tbody").append(tr);
 
                 $("#ranking_general_d").css("display", "none");
                 $("#ranking_campaign_d").css("display", "block");
