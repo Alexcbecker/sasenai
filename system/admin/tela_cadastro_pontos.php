@@ -25,7 +25,7 @@
               <?php } ?>
             </select>
           </div>
-          <button type="submit" class="btn btn-success botao" name="editar">ver</button>
+          <button type="submit" class="btn btn-success botao" name="editar">Ver</button>
         </div>
       </form>
         <div  style="overflow-y:auto; max-height:60vh;">
@@ -50,8 +50,9 @@
               if(isset($_POST) && $_POST['campanhas']!=""){
                 $sql = "SELECT * FROM campanhas WHERE id = " . $_POST['campanhas'];
                 $campanhas  = mysqli_query($con, $sql);
-
+              
                 foreach($campanhas AS $campanha):
+                $idCampanha= $campanha['id'];
               ?>
                 <tr>
                   <td><?php echo $campanha['id']; ?></td>
@@ -94,16 +95,20 @@
             <tbody id="tabela">
               <?php
               if(isset($_POST) && $_POST['campanhas']!=""){
-                $sql = "SELECT * FROM campanhas WHERE id = " . $_POST['campanhas'];
-                $campanhas  = mysqli_query($con, $sql);
+                $sql = "SELECT * FROM colaboradores INNER JOIN colaboradores_has_campanhas ON colaboradores_has_campanhas.colaboradores_id=colaboradores.id where colaboradores_has_campanhas.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
+                $colaboradores  = mysqli_query($con, $sql);
 
-                foreach($campanhas AS $campanha):
+                foreach($colaboradores AS $colaborador):
               ?>
                 <tr>
-                  <td><?php echo 1 ?></td>
-                  <td><?php echo 2 ?></td>
-                  <td><?php echo 3 ?></td>
-                  <td><?php echo 4 ?></td>  
+                  <td><?php echo $colaborador['cpf'];?></td>
+                  <td><?php echo $colaborador['nome'];?></td>
+                  <?php if ($colaborador['tipo'] == 2){ ?>
+                    <td><?php echo "Líder"; ?></td>
+                  <?php }else if($colaborador['tipo'] == 3) { ?>
+                    <td><?php echo "Usuário comum"; ?></td>
+                  <?php } ?>
+                  <td><input type="number" class="form-control" id="value" aria-describedby="Valor" placeholder="Digite a quantidade ou valor" required></td>  
                   <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>                        
                 </tr>
               <?php
