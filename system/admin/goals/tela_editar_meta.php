@@ -55,7 +55,12 @@
                 <td><?php echo $user['descricao']?></td>
                 <td><?php echo $user['pontos']?></td>
                 <td><?php echo $user['objetivo']?></td>
-                <td><?php echo $user['status']?></td>
+                <?php if ($user['status'] == 1): ?>
+                  <td><?php echo "Não concluida" ?></td>
+                <?php else: ?>
+                  <td><?php echo "Concluida" ?></td>
+                <?php endif; ?>
+
                 <td>
                   <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whateverstatus="<?php echo $user['status']?>" data-whateverobjetivo="<?php echo $user['objetivo']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whateverpontos="<?php echo $user['pontos']?>" >
                     <button type="button" class="btn btn-success" name="editar">Editar</button>
@@ -184,7 +189,7 @@
       var id = button.data('whateverid')
       var nome = button.data('whatevernome')
       var modal = $(this)
-      modal.find('#msg').text('Você realmente deseja excluir o item ( ' + nome + ' ) ?')
+      modal.find('#msg').text('Você realmente deseja excluir a meta ( ' + nome + ' ) ?')
       modal.find('#link').attr("href","goals/excluir_meta.php?id="+id)
     })
     </script>
