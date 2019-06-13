@@ -31,12 +31,13 @@
                         </table>
                     </div>
                     <div id="ranking_campaign_d">
-                        <table class="table table-striped" id="ranking_campaign">
+                        <select class="form-control form-control-sm" id="campaign_select">
+                        </select>
+                        <table class="table table-striped" id="ranking_campaign" style="margin-top:2%;">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Pontuação</th>
                                     <th scope="col">Nome</th>
-                                    <th scope="col">Campanha</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -97,7 +98,7 @@
                 $("#ranking_general tbody").append(tr);
 
                 $("#table_progress").hide();
-                if ($("#general_b").hasClass("active")) $("#ranking_general_d").show();
+                if ($("#general_b").hasClass("active")) $("#ranking_general_d").fadeIn("fast");
             });
         }
 
@@ -110,25 +111,72 @@
             $("#group_b").removeClass("active");
             $("#campaign_b").addClass("active");
 
-            $.getJSON("ranking/fetch_ranking_campaign.php", function (data)
+            $.getJSON("ranking/fetch_campaigns.php", function (data)
             {
-                $("#ranking_campaign tbody").empty();
-                var tr = "";
+                $("#campaign_select").empty();
+                var bd = "";
 
                 $.each(data, function (key, value)
                 {
-                    tr += "<tr>";
-                    tr += "<td>" + value.points + "</td>";
-                    tr += "<td>" + value.name + "</td>";
-                    tr += "<td>" + value.campaign + "</td>";
-                    tr += "</tr>";
+                    if (key == 0)
+                    {
+                        var url = "";
+                        if (value.user_type == "Individual") url = "ranking/fetch_ranking_campaign.php";
+                        else if (value.user_type == "Grupo") 
+                        {
+                            url = "ranking/fetch_ranking_campaign_group.php";
+                            $.get(url, { name: value.name }, (data) => alert(data));
+                        }
+
+                        $.getJSON(url, { name: value.name }, (wdata) => makelist_campaign_table(wdata));
+                    }
+
+                    bd += "<option>" + value.name + "</option>";
                 });
 
-                $("#ranking_campaign tbody").append(tr);
+                $("#campaign_select").append(bd);
 
                 $("#table_progress").hide();
-                if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").show();
+                if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").fadeIn("fast");
             });
+        }
+
+
+        $("#campaign_select").on("change", function ()
+        {
+            show_progss();
+
+            $.getJSON("ranking/fetch_campaign.php", { name: $("#campaign_select option:selected").text() }, function (data)
+            {
+                var url = "";
+                if (data.user_type == "Individual") url = " ranking/fetch_ranking_campaign.php";
+                else if (data.user_type == "Grupo") url = "ranking/fetch_ranking_campaign_group.php";
+
+                $.getJSON(url, { name: data.name }, function (wdata)
+                {
+                    makelist_campaign_table(wdata);
+
+                    $("#table_progress").hide();
+                    if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").fadeIn("fast");
+                });
+            });
+        });
+
+
+        function makelist_campaign_table(data)
+        {
+            $("#ranking_campaign tbody").empty();
+            var tr = "";
+
+            $.each(data, function (key, value)
+            {
+                tr += "<tr>";
+                tr += "<td>" + value.points + "</td>";
+                tr += "<td>" + value.name + "</td>";
+                tr += "</tr>";
+            });
+
+            $("#ranking_campaign tbody").append(tr);
         }
 
 
@@ -156,8 +204,8 @@
                 $("#ranking_group tbody").append(tr);
 
                 $("#table_progress").hide();
-                
-                if ($("#group_b").hasClass("active")) $("#ranking_group_d").show();
+
+                if ($("#group_b").hasClass("active")) $("#ranking_group_d").fadeIn("fast");
             });
         }
 

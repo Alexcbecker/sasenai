@@ -14,7 +14,7 @@ mysqli_set_charset($conn, "utf8");
 
 $q = <<<S
 SELECT grupos.nome AS nome, s.pontos AS pontos FROM grupos
-LEFT JOIN(SELECT colaboradores_has_grupos.grupos_id AS id, SUM(colaboradores.pontos) as pontos
+LEFT JOIN (SELECT colaboradores_has_grupos.grupos_id AS id, SUM(colaboradores.pontos) AS pontos
 FROM colaboradores_has_grupos
 LEFT JOIN colaboradores ON colaboradores.id = colaboradores_has_grupos.colaboradores_id
 GROUP BY colaboradores_has_grupos.grupos_id) AS s ON grupos.id = s.id

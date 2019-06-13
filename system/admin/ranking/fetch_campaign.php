@@ -12,21 +12,19 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 mysqli_set_charset($conn, "utf8");
 
-$q = "SELECT * FROM colaboradores WHERE colaboradores.status = 0 AND colaboradores.tipo != 1 ORDER BY pontos DESC";
+$q = "SELECT * FROM campanhas WHERE campanhas.nome = '{$_GET['name']}'";
 
 $result = $conn->query($q);
 
 $data = [];
 
-$rowa = [];
-
-while ($row = $result->fetch_assoc())
+if ($row = $result->fetch_assoc())
 {
-    $rowa['name'] = $row['nome'];
-    $rowa['points'] = $row['pontos'];
-    $rowa['credit'] = $row['creditos'];
-
-    array_push($data, $rowa);
+    $data['name'] = $row['nome'];
+    $data['description'] = $row['descricao'];
+    $data['type'] = $row['tipo'] == 1 ? 'Valor' : 'Quantidade';
+    $data['bonus'] = $row['bonificacao'];
+    $data['user_type'] = $row['tipo_participantes'] == 0 ? 'Individual' : 'Grupo';
 }
 
 echo json_encode($data);
