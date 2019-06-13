@@ -151,7 +151,7 @@ ENGINE = InnoDB;
 -- Table `bd_fito`.`colaboradores_has_grupos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_fito`.`colaboradores_has_grupos` (
-  `id` INT ZEROFILL NOT NULL,
+  `id` INT ZEROFILL NOT NULL AUTO_INCREMENT,
   `colaboradores_id` INT ZEROFILL NOT NULL,
   `grupos_id` INT ZEROFILL NOT NULL,
   `status` TINYINT(1) NOT NULL,
