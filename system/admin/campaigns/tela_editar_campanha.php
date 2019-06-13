@@ -170,7 +170,7 @@ var data_inicial = button.data('whateverdatainicial')
 var data_final = button.data('whateverdatafinal')
 
 var modal = $(this)
-modal.find('.modal-title').text('Editar o item ' + nome)
+modal.find('.modal-title').text('Editar a campanha ' + nome)
 modal.find('#id').val(id)
 modal.find('#recipient-nome').val(nome)
 modal.find('#recipient-descricao').val(descricao)
@@ -213,7 +213,7 @@ $('#modalExcluir').on('show.bs.modal', function (event) {
   var id = button.data('whateverid')
 var nome = button.data('whatevernome')
 var modal = $(this)
-modal.find('#msg').text('Você realmente deseja excluir o item ( ' + nome + ' ) ?')
+modal.find('#msg').text('Você realmente deseja excluir a campanha ( ' + nome + ' ) ?')
 modal.find('#link').attr("href","campaigns/excluir_campanha.php?id="+id)
 })
 </script>

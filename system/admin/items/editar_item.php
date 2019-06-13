@@ -13,7 +13,7 @@ if($nomeItemDigital == ""){
 
   $mensagem = "Nome não preenchido!";
 }else if($valorItemDigital == ""){
-  $mensagem = "Valor não preenchida!";
+  $mensagem = "Valor não preenchido!";
 }else{
  include("../../../database/conexao_bd.php");
  include("../../../database/funcoes_base_crud.php");
