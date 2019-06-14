@@ -37,9 +37,6 @@
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Descrição</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Bonificação</th>
-                <th scope="col">Variante de Pontos</th>
                 <th scope="col">Início</th>
                 <th scope="col">Fim</th>
                 <th scope="col">Tipo de Participantes</th>
@@ -58,13 +55,6 @@
                   <td><?php echo $campanha['id']; ?></td>
                   <td><?php echo $campanha['nome']; ?></td>
                   <td><?php echo $campanha['descricao']; ?></td>
-                  <?php if ($campanha['tipo'] == 1){ ?>
-                    <td><?php echo "valor"; ?></td>
-                  <?php }else{ ?>
-                    <td><?php echo "Quantidade"; ?></td>
-                  <?php } ?>
-                  <td><?php echo $campanha['bonificacao']; ?></td>
-                  <td><?php echo $campanha['variante_pontos']; ?></td>
                   <td><?php echo $campanha['data_inicial']; ?></td>
                   <td><?php echo $campanha['data_final']; ?></td>
                   <?php if ($campanha['tipo_participantes'] == 0){ ?>
@@ -89,16 +79,18 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Valor</th>
+                <th scope="col">Quantidade</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody id="tabela">
               <?php
               if(isset($_POST) && $_POST['campanhas']!=""){
-                $sql = "SELECT * FROM colaboradores INNER JOIN colaboradores_has_campanhas ON colaboradores_has_campanhas.colaboradores_id=colaboradores.id where colaboradores_has_campanhas.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
+                $sql = "SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id INNER JOIN metas ON metas.id=metas_has_colaboradores.metas_id where metas.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
                 $colaboradores  = mysqli_query($con, $sql);
 
                 foreach($colaboradores AS $colaborador):
+                  var_dump($colaborador);
               ?>
                 <tr>
                   <td><?php echo $colaborador['cpf'];?></td>
@@ -108,7 +100,8 @@
                   <?php }else if($colaborador['tipo'] == 3) { ?>
                     <td><?php echo "Usuário comum"; ?></td>
                   <?php } ?>
-                  <td><input type="number" class="form-control" id="value" aria-describedby="Valor" placeholder="Digite a quantidade ou valor" required></td>  
+                  <td><input type="number" class="form-control" id="value" aria-describedby="Valor" placeholder="Digite o valor" required></td>  
+                  <td><input type="number" class="form-control" id="quantidade" aria-describedby="Quantidade" placeholder="Digite a quantidade" required></td>  
                   <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>                        
                 </tr>
               <?php
