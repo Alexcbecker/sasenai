@@ -86,6 +86,7 @@
             <tbody id="tabela">
               <?php
               if(isset($_POST) && $_POST['campanhas']!=""){
+                SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id LEFT OUTER JOIN (select distinct id, metas.campanhas_id from metas) m ON m.id=metas_has_colaboradores.metas_id where m.campanhas_id = 2 AND colaboradores.status = 0
                 $sql = "SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id INNER JOIN metas ON metas.id=metas_has_colaboradores.metas_id where metas.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
                 $colaboradores  = mysqli_query($con, $sql);
 
