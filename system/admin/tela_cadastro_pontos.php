@@ -50,6 +50,7 @@
               
                 foreach($campanhas AS $campanha):
                 $idCampanha= $campanha['id'];
+                $tipoCampanha = $campanha['tipo'];
               ?>
                 <tr>
                   <td><?php echo $campanha['id']; ?></td>
@@ -81,18 +82,22 @@
                 <th scope="col">Valor</th>
                 <th scope="col">Quantidade</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody id="tabela">
               <?php
               if(isset($_POST) && $_POST['campanhas']!=""){
-                SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id LEFT OUTER JOIN (select distinct id, metas.campanhas_id from metas) m ON m.id=metas_has_colaboradores.metas_id where m.campanhas_id = 2 AND colaboradores.status = 0
-                $sql = "SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id INNER JOIN metas ON metas.id=metas_has_colaboradores.metas_id where metas.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
+                $sql = "SELECT * FROM colaboradores INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.colaboradores_id=colaboradores.id LEFT OUTER JOIN (select distinct id, metas.campanhas_id from metas) m ON m.id=metas_has_colaboradores.metas_id where m.campanhas_id = '$idCampanha' AND colaboradores.status = 0";
                 $colaboradores  = mysqli_query($con, $sql);
 
                 foreach($colaboradores AS $colaborador):
-                  var_dump($colaborador);
+                  $idColaborador = $colaborador['id'];
               ?>
+              <form action="back_tela_cadastro_pontos.php" method="POST">
                 <tr>
                   <td><?php echo $colaborador['cpf'];?></td>
                   <td><?php echo $colaborador['nome'];?></td>
@@ -101,10 +106,15 @@
                   <?php }else if($colaborador['tipo'] == 3) { ?>
                     <td><?php echo "Usuário comum"; ?></td>
                   <?php } ?>
-                  <td><input type="number" class="form-control" id="value" aria-describedby="Valor" placeholder="Digite o valor" required></td>  
-                  <td><input type="number" class="form-control" id="quantidade" aria-describedby="Quantidade" placeholder="Digite a quantidade" required></td>  
-                  <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>                        
+                  <td><input type="number" class="form-control" id="valor" aria-describedby="Valor" placeholder="Digite o valor" required></td>  
+                  <td><input type="number" class="form-control" id="quantidade" aria-describedby="Quantidade" placeholder="Digite a quantidade" required></td>
+                  <td><input type="hidden" class="form-control" id="cpf" value="<?php $colaborador['cpf'] ?>"></td>
+                  <td><input type="hidden" class="form-control" id="tipoCampanha" value="<?php $tipoCampanha ?>"></td>
+                  <td><input type="hidden" class="form-control" id="idCampanha" value="<?php $idCampanha ?>"></td> 
+                  <td><input type="hidden" class="form-control" id="idColaborador" value="<?php $idColaborador ?>"></td>  
+                  <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>
                 </tr>
+              </form>
               <?php
                 endforeach;
               }
