@@ -60,7 +60,5 @@ include "../../database/autenticacao/sessaovalidate.php";
     </div>
   </div>
 </div>
-
-
 </body>
 </html>
