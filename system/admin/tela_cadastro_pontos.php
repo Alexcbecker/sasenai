@@ -106,13 +106,19 @@
                   <?php }else if($colaborador['tipo'] == 3) { ?>
                     <td><?php echo "Usuário comum"; ?></td>
                   <?php } ?>
-                  <td><input type="number" class="form-control" id="valor" aria-describedby="Valor" placeholder="Digite o valor" required></td>  
-                  <td><input type="number" class="form-control" id="quantidade" aria-describedby="Quantidade" placeholder="Digite a quantidade" required></td>
-                  <td><input type="hidden" class="form-control" id="cpf" value="<?php $colaborador['cpf'] ?>"></td>
-                  <td><input type="hidden" class="form-control" id="tipoCampanha" value="<?php $tipoCampanha ?>"></td>
-                  <td><input type="hidden" class="form-control" id="idCampanha" value="<?php $idCampanha ?>"></td> 
-                  <td><input type="hidden" class="form-control" id="idColaborador" value="<?php $idColaborador ?>"></td>  
+                  <td><input type="number" class="form-control" id="valor" name="valor" aria-describedby="Valor" placeholder="Digite o valor" required></td>  
+                  <td><input type="number" class="form-control" id="quantidade" name="quantidade" aria-describedby="Quantidade" placeholder="Digite a quantidade" required></td>
+                  <td><input type="hidden" class="form-control" id="cpf" name="cpf" value="<?php $colaborador['cpf'] ?>"></td>
+                  <td><input type="hidden" class="form-control" id="tipoCampanha" name="tipoCampanha" value="<?php $tipoCampanha ?>"></td>
+                  <td><input type="hidden" class="form-control" id="idCampanha" name="idCampanha" value="<?php $idCampanha ?>"></td> 
+                  <td><input type="hidden" class="form-control" id="idColaborador" name="idColaborador" value="<?php $idColaborador ?>"></td>  
                   <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>
+                  <?php 
+                  var_dump($idCampanha);
+                  var_dump($tipoCampanha);
+                  var_dump($idColaborador);
+                  var_dump($cpf);
+                  ?>
                 </tr>
               </form>
               <?php
