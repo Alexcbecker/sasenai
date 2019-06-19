@@ -9,13 +9,9 @@
 
     <?php
 
-
       include "../../database/conexao_bd.php";
 
-
-       $sql_sel =  "SELECT `id`, `nome`, `descricao`,`tipo`,`bonificacao`,`variante_pontos`,`data_inicial`,`data_final` FROM campanhas";
-
-
+        $sql_sel =  "SELECT `id`, `nome`, `descricao`,data_inicial`,`data_final`,`tipo_participante` FROM campanhas";
 
         $result  = mysqli_query($con, $sql_sel);
 
@@ -23,9 +19,7 @@
 
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
     ?>
-
 
     <div class="container">
 
@@ -38,13 +32,10 @@
           <th scope="col">#</th>
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
-          <th scope="col">Tipo</th>
-          <th scope="col">Bonificação</th>
-          <th scope="col">Variante de pontos</th>
+          <th scope="col">Tipo_participante</th>
           <th scope="col">Data inicial</th>
           <th scope="col">Data final</th>
           <th scope="col">Ações</th>
-
         </tr>
       </thead>
       <tbody>
@@ -55,15 +46,11 @@
           <th scope="row"><?php echo $user['id']?></th>
           <td><?php echo $user['nome']?></td>
           <td><?php echo $user['descricao']?></td>
-          <td><?php echo $user['tipo']?></td>
-          <td><?php echo $user['bonificacao']?></td>
-          <td><?php echo $user['variante_pontos']?></td>
+          <td><?php echo $user['tipo_participante']?></td>
           <td><?php echo $user['data_inicial']?></td>
           <td><?php echo $user['data_final']?></td>
           <td>
-            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whatevertipo="<?php echo $user['tipo']?>" data-whateverbonificacao="<?php echo $user['bonificacao']?>" data-whatevervariantepontos="<?php echo $user['variante_pontos']?>" data-whateverdatainicial="<?php echo $user['data_inicial']?>" data-whateverdatafinal="<?php echo $user['data_final']?>" >
-
-
+            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whatevertipo="<?php echo $user['tipo_participante']?>" data-whateverdatainicial="<?php echo $user['data_inicial']?>" data-whateverdatafinal="<?php echo $user['data_final']?>" >
             <button type="button" class="btn btn-success" name="editar">Editar</button>
             </a>
             <a data-toggle="modal" data-target="#modalExcluir" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" >
@@ -114,20 +101,12 @@
             <input type="textarea" class="form-control" name="decricaoCampanha" id="recipient-descricao">
           </div>
           <div  class="form-group">
-  					<label  for="exampleFormControlInput1">Tipo:</label>
-  					<select name='tipoCampanha' id="recipient-tipo" class="form-control form-control-chosen" data-placeholder="Selecione o método">
-  						<option value="Valor">Valor</option>
-  						<option value="Quantidade">Quantidade</option>
+  					<label  for="exampleFormControlInput1">Tipos de participantes</label>
+  					<select name='tipoParticipante' id="recipient-tipo" class="form-control form-control-chosen" data-placeholder="Selecione o método">
+  						<option value="0">Individual</option>
+  						<option value="1">Em grupo</option>
   					</select>
   				</div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Bonificacao:</label>
-            <input type="number" class="form-control" name="bonificacaoCampanha" id="recipient-bonificacao">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Variante de pontos:</label>
-            <input type="number" class="form-control" name="variante_pontosCampanha" id="recipient-pontos">
-          </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Data inicial:</label>
             <input type="date" class="form-control" name="data_inicialCampanha" id="recipient-inicial">
@@ -164,8 +143,6 @@ var id = button.data('whateverid')
 var nome = button.data('whatevernome')
 var descricao = button.data('whateverdescricao')
 var tipo = button.data('whatevertipo')
-var bonificacao = button.data('whateverbonificacao')
-var variante_pontos = button.data('whatevervariantepontos')
 var data_inicial = button.data('whateverdatainicial')
 var data_final = button.data('whateverdatafinal')
 
@@ -175,8 +152,6 @@ modal.find('#id').val(id)
 modal.find('#recipient-nome').val(nome)
 modal.find('#recipient-descricao').val(descricao)
 modal.find('#recipient-tipo').val(tipo)
-modal.find('#recipient-bonificacao').val(bonificacao)
-modal.find('#recipient-pontos').val(variante_pontos)
 modal.find('#recipient-inicial').val(data_inicial)
 modal.find('#recipient-final').val(data_final)
 
