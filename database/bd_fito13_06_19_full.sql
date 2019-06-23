@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/06/2019 às 02:01
+-- Tempo de geração: 18/06/2019 às 00:04
 -- Versão do servidor: 5.7.11-log
 -- Versão do PHP: 5.6.15
 
@@ -234,7 +234,8 @@ CREATE TABLE `metas` (
 
 INSERT INTO `metas` (`id`, `nome`, `descricao`, `pontos`, `campanhas_id`, `objetivo`, `tipo`, `bonificacao`, `variante_pontos`) VALUES
 (0000000001, 'Finalizar a tela de cadastro de pontos de adm', 'Terminar essa bexiga.', 50, 0000000001, 1, 2, 1, 1),
-(0000000002, 'Finalizar as telas de campanha do adm', 'Terminar as telas de cadastro de campanha e edição de campanha.', 100, 0000000001, 1, 2, 5, 1);
+(0000000002, 'Finalizar as telas de campanha do adm', 'Terminar as telas de cadastro de campanha e edição de campanha.', 100, 0000000001, 1, 2, 5, 1),
+(0000000003, 'Meta de teste individual', 'Uma descrição de meta.', 50, 0000000002, 10, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -249,6 +250,13 @@ CREATE TABLE `metas_has_colaboradores` (
   `objetivo_conquistado` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL COMMENT 'Status da meta:\n\n0 - Não completa\n1 - Completa'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Fazendo dump de dados para tabela `metas_has_colaboradores`
+--
+
+INSERT INTO `metas_has_colaboradores` (`metas_id`, `colaboradores_id`, `pontos_conquistados`, `objetivo_conquistado`, `status`) VALUES
+(0000000003, 0000000003, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -392,7 +400,7 @@ ALTER TABLE `itens`
 -- AUTO_INCREMENT de tabela `metas`
 --
 ALTER TABLE `metas`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id da meta, utilizado para identificá-la.', AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Id da meta, utilizado para identificá-la.', AUTO_INCREMENT=4;
 --
 -- Restrições para dumps de tabelas
 --
