@@ -2,19 +2,49 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Admin</title>
+  <title>Cadastro de pontos</title>
   <link rel="stylesheet" href="../../css/style_adm_points.css">
 </head>
+<script>
+$(document).ready(function(){
+  
+  $(".botao").click(function(){
+    var valor = $('input[name=valor]').val();
+    var quantidade = $('input[name=quantidade]').val();
+    var idColaborador = $('input[name=idColaborador]').val();
+    debugger;
+    $.ajax({
+          url : "back_tela_cadastro_pontos.php",
+          type : 'post',
+          data : {
+                 valor : valor,
+                 quantidade : quantidade,
+                 idColaborador : idColaborador
+            },
+        })
+        .done(function(msg){
+          debugger;
+          if(msg != "erro") {
+            $("#" + idColaborador).css("background-color", "#ccffcc");
+          }
+        })
+        .fail(function(jqXHR, textStatus, msg){
+            alert(msg);
+            debugger;
+        }); 
+  });
+})
+</script>
 <body>
   <?php
   include "../../database/conexao_bd.php";
-  $sql_sel =  "SELECT * FROM `campanhas`";
-  $result  = mysqli_query($con, $sql_sel);
-  if (!$result) die ("Erro ao conectar usuário.");
-  $campanhas = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  // $sql_sel =  "SELECT * FROM `campanhas`";
+  // $result  = mysqli_query($con, $sql_sel);
+  // if (!$result) die ("Erro ao conectar usuário.");
+  // $campanhas = mysqli_fetch_all($result, MYSQLI_ASSOC);
   ?>
   <div class="borda" style=" margin-top:3%;">
-          <h4 style="text-align:center;">Participantes da campanha</h4>
+          <h4 style="text-align:center;">Colaboradores ativos</h4>
           <hr>
           <table class="table table-hover overflow-y">
             <thead  class="thead-dark">
@@ -37,8 +67,8 @@
                 foreach($colaboradores AS $colaborador):
                   $idColaborador = $colaborador['id'];
               ?>
-              <form action="back_tela_cadastro_pontos.php" method="POST">
-                <tr>
+              <!-- <form action="back_tela_cadastro_pontos.php" method="POST"> -->
+                <tr id="<?php echo $idColaborador ?>">
                   <td><?php echo $colaborador['cpf'];?></td>
                   <td><?php echo $colaborador['nome'];?></td>
                   <?php if ($colaborador['tipo'] == 2){ ?>
@@ -51,7 +81,7 @@
                   <td><input type="hidden" class="form-control" id="idColaborador" name="idColaborador" value="<?php echo $idColaborador ?>"></td>  
                   <td><button type="submit" class="btn btn-success botao" name="editar">Enviar</button></td>
                 </tr>
-              </form>
+              <!-- </form> -->
               <?php
                 endforeach;
               }
