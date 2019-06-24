@@ -11,7 +11,6 @@ include "../../database/autenticacao/sessaovalidate.php";
 
 </head>
 <body>
-<form>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
@@ -62,6 +61,5 @@ include "../../database/autenticacao/sessaovalidate.php";
       </div>
     </div>
 
-</form>
 </body>
 </html>
