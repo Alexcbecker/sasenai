@@ -1,0 +1,16 @@
+.borda-geral{
+    margin-top: 3%;
+    padding: 2%;
+    width: 80%;
+      box-shadow: 0 15px 25px rgba(0,0,0,.3);
+      overflow-y: auto;
+        max-height: 80vh;
+}
+.borda-campanhas{
+    padding: 2%;
+    margin-top: 3%;
+    width: 80%;
+      box-shadow: 0 15px 25px rgba(0,0,0,.3);
+        overflow-y: auto;
+        max-height: 80vh;
+}

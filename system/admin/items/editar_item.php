@@ -4,6 +4,7 @@ $id  = $_POST['id'];
 $nomeItemDigital       = $_POST['nomeItemDigital'];
 $valorItemDigital      = $_POST['valorItemDigital'];
 $quantidadeItemDigital = $_POST['quantidadeItemDigital'];
+$imagemItemDigital = $_POST['imagem'];
 $mensagem = "";
 $status   = "danger";
 $link     = "../navbar.php?folder=items&file=tela_editar_item.php";
@@ -12,7 +13,7 @@ if($nomeItemDigital == ""){
 
   $mensagem = "Nome não preenchido!";
 }else if($valorItemDigital == ""){
-  $mensagem = "Valor não preenchida!";
+  $mensagem = "Valor não preenchido!";
 }else{
  include("../../../database/conexao_bd.php");
  include("../../../database/funcoes_base_crud.php");
@@ -39,10 +40,14 @@ $target_file = substr($target_file, 3, 1111);
        $inserirItem = mysql_insert("UPDATE `itens` SET `nome`='$nomeItemDigital',`valor`='$valorItemDigital',`caminho`='$target_file',`quantidade`='$quantidadeItemDigital' WHERE id='$id'");
 
         $status= "success";
-         $mensagem="Item cadastrado com sucesso!";
+         $mensagem="Item editado com sucesso!";
 
      } else {
-        $mensagem="Imagem não adicionada!";
+       $inserirItem = mysql_insert("UPDATE `itens` SET `nome`='$nomeItemDigital',`valor`='$valorItemDigital',`caminho`='$imagemItemDigital',`quantidade`='$quantidadeItemDigital' WHERE id='$id'");
+
+        $status= "success";
+         $mensagem="Item editado com sucesso!";
+
      }
  }
  }

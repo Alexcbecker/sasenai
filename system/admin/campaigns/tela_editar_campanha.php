@@ -9,13 +9,9 @@
 
     <?php
 
-
       include "../../database/conexao_bd.php";
 
-
-       $sql_sel =  "SELECT id, nome, valor, caminho, quantidade FROM itens WHERE tipo=2";
-
-
+        $sql_sel =  "SELECT `id`, `nome`, `descricao`,data_inicial`,`data_final`,`tipo_participante` FROM campanhas";
 
         $result  = mysqli_query($con, $sql_sel);
 
@@ -23,24 +19,23 @@
 
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
     ?>
 
     <div class="container">
 
         <div class="borda" style=" margin-top:3%;">
-          <h1>Editar Itens</h1>
-          <div  style="overflow-y:auto; max-height:60vh;">
-    <table class="table table-hover overflow-y">
+          <h1>Editar Campanhas</h1>
+          <div  style="overflow-y:auto; max-height:500px;">
+    <table class="table table-hover">
       <thead  class="thead-dark">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nome</th>
-          <th scope="col">Valor</th>
-          <th scope="col">Quantidade</th>
-          <th scope="col">Imagem</th>
-          <th scope="col">ações</th>
-
+          <th scope="col">Descrição</th>
+          <th scope="col">Tipo_participante</th>
+          <th scope="col">Data inicial</th>
+          <th scope="col">Data final</th>
+          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -50,11 +45,12 @@
         <tr>
           <th scope="row"><?php echo $user['id']?></th>
           <td><?php echo $user['nome']?></td>
-          <td><?php echo $user['valor']?></td>
-          <td><?php echo $user['quantidade']?></td>
-          <td>  <img src="<?php echo $user['caminho']?> "width="100" height="100" ></td>
+          <td><?php echo $user['descricao']?></td>
+          <td><?php echo $user['tipo_participante']?></td>
+          <td><?php echo $user['data_inicial']?></td>
+          <td><?php echo $user['data_final']?></td>
           <td>
-            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverid="<?php echo $user['id']?>" data-whatevervalor="<?php echo $user['valor']?>" data-whateverquantidade="<?php echo $user['quantidade']?>" data-whateverimagem="<?php echo $user['caminho']?>">
+            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whatevertipo="<?php echo $user['tipo_participante']?>" data-whateverdatainicial="<?php echo $user['data_inicial']?>" data-whateverdatafinal="<?php echo $user['data_final']?>" >
             <button type="button" class="btn btn-success" name="editar">Editar</button>
             </a>
             <a data-toggle="modal" data-target="#modalExcluir" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" >
@@ -95,25 +91,32 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="items/editar_item.php" enctype="multipart/form-data" method="post">
+        <form action="campaigns/editar_campanha.php" enctype="multipart/form-data" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Nome:</label>
-            <input type="text" class="form-control" name="nomeItemDigital" id="recipient-nome">
+            <input type="text" class="form-control" name="nomeCampanha" id="recipient-nome">
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Valor:</label>
-            <input type="number" class="form-control" name="valorItemDigital" id="recipient-valor">
+            <label for="recipient-name" class="col-form-label">Descrição:</label>
+            <input type="textarea" class="form-control" name="decricaoCampanha" id="recipient-descricao">
+          </div>
+          <div  class="form-group">
+  					<label  for="exampleFormControlInput1">Tipos de participantes</label>
+  					<select name='tipoParticipante' id="recipient-tipo" class="form-control form-control-chosen" data-placeholder="Selecione o método">
+  						<option value="0">Individual</option>
+  						<option value="1">Em grupo</option>
+  					</select>
+  				</div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Data inicial:</label>
+            <input type="date" class="form-control" name="data_inicialCampanha" id="recipient-inicial">
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Quantidade:</label>
-            <input type="number" class="form-control" name="quantidadeItemDigital" id="recipient-quantidade">
+            <label for="recipient-name" class="col-form-label">Data final:</label>
+            <input type="date" class="form-control" name="data_finalCampanha" id="recipient-final">
           </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Imagem:</label>
-            <input type="file" accept="image/x-png,image/jpeg" name="imagemItemDigital" class="form-control" id="recipient-imagem">
-          </div>
+
           <input type="hidden" name="id" id="id">
-          <input type="hidden" name="imagem" id="imagem">
 
       </div>
       <?php
@@ -138,23 +141,25 @@ $('#modalEditar').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget)
 var id = button.data('whateverid')
 var nome = button.data('whatevernome')
-var valor = button.data('whatevervalor')
-var quantidade = button.data('whateverquantidade')
-var imagem = button.data('whateverimagem')
+var descricao = button.data('whateverdescricao')
+var tipo = button.data('whatevertipo')
+var data_inicial = button.data('whateverdatainicial')
+var data_final = button.data('whateverdatafinal')
+
 var modal = $(this)
-modal.find('.modal-title').text('Editar o item ' + nome)
+modal.find('.modal-title').text('Editar a campanha ' + nome)
 modal.find('#id').val(id)
 modal.find('#recipient-nome').val(nome)
-modal.find('#recipient-valor').val(valor)
-modal.find('#recipient-quantidade').val(quantidade)
-modal.find('#imagem').val(imagem)
+modal.find('#recipient-descricao').val(descricao)
+modal.find('#recipient-tipo').val(tipo)
+modal.find('#recipient-inicial').val(data_inicial)
+modal.find('#recipient-final').val(data_final)
 
 })
 </script>
 
 
 <!-- Modal Excluir -->
-
 <div class="modal" id="modalExcluir" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -165,11 +170,12 @@ modal.find('#imagem').val(imagem)
         </button>
       </div>
       <div class="modal-body">
-        <p id="msg">Você realmente deseja excluir a meta <?php echo $user['name'];?></p>
+
+        <p id="msg">Você realmente deseja excluir a campanha <?php echo $user['name'];?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <a id="link" href="items/deletar_item.php?id=">
+        <a id="link" href="campaigns/excluir_campanha.php?id=">
         <button type="button" class="btn btn-success">Excluir</button>
       </a>
       </div>
@@ -182,8 +188,8 @@ $('#modalExcluir').on('show.bs.modal', function (event) {
   var id = button.data('whateverid')
 var nome = button.data('whatevernome')
 var modal = $(this)
-modal.find('#msg').text('Você realmente deseja excluir o item ( ' + nome + ' ) ?')
-modal.find('#link').attr("href","items/deletar_item.php?id="+id)
+modal.find('#msg').text('Você realmente deseja excluir a campanha ( ' + nome + ' ) ?')
+modal.find('#link').attr("href","campaigns/excluir_campanha.php?id="+id)
 })
 </script>
   </body>

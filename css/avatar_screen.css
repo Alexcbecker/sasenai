@@ -1,5 +1,5 @@
 .container {
-	margin-top: 2%;
+	margin-top: 0.2%;
 	padding: 0;
 	max-width: 95%;
 	display: block;
@@ -9,7 +9,7 @@
 	position: relative;
 	float: left;
 	margin-top: 5%;
-	margin-bottom: 5%;
+	margin-bottom: 1%;
 	width: 100%;
 	height: 80vh;
 	border: 2px solid #00000077;
@@ -50,6 +50,18 @@
 	.imgItems {
 		height: 100%;
 		max-width: 100%;
+	}
+
+	img[src=""] {
+		display: none;
+	 }
+
+	.saveAvatar {
+		float: right;
+		margin-top: 0%;
+		width: 100%;
+		background-color: #00a7e1;
+		border-color: #00a7e1;
 	}
 
 	[class*="imgAvatar-"]{

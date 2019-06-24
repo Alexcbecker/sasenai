@@ -1,68 +1,84 @@
+<?php
+$con = mysqli_connect("localhost","root","root","bd_fito");
+
+$select1 = mysqli_query($con,"SELECT * FROM  campanhas ORDER BY nome");
+
+$campanhas = array();
+
+while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
+	array_push($campanhas,$linha1);
+}
+?>
+
 <html>
 
 <head>
-  <meta charset="utf-8">
-<link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+	<link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+	<script>
 
-  <script>
+	$(document).ready(function () {
+		$('.custom-file-input').on('change', function () {
+			let fileName = $(this).val().split('\\').pop();
+			$(this).next('.custom-file-label').addClass("selected").html(fileName);
+		});
 
-  $(document).ready(function () {
-    $('.custom-file-input').on('change', function () {
-      let fileName = $(this).val().split('\\').pop();
-      $(this).next('.custom-file-label').addClass("selected").html(fileName);
-    });
-
-  });
-
-  </script>
+	});
+	</script>
 
 </head>
 
 <body>
+	<div class="container">
 
-
-  <div class="container">
-
-    <div class="borda" style=" margin-top:3%;">
-      <form>
-        <h1>Cadastro de metas</h1>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Nome da meta</label>
-          <input type="text" class="form-control" id="nomeItemDigital">
-        </div>
-
-        <div class="form-group">
-          <label for="exampleF ormControlTextarea1">Pontos da meta</label>
-          <input type="number" class="form-control" id="valorItemDigital">
-        </div>
-        <div class="form-group">
-        <label for="exampleFormControlInput1">Campanha</label>
-        <select class="custom-select custom-select-lg mb-3">
-            <option selected>Campanhas</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Descrição da meta</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-
-
-    <div>
-      <button type="button" class="btn btn-primary btn-md">Cadastrar meta</button>
-      <button type="button" class="btn btn-danger btn-md">Cancelar</button>
-
-    </div>
+		<div class="borda" style=" margin-top:3%;">
+			<form action='goals/back_cadastro_metas.php' method='post'>
+				<h1>Cadastro de metas</h1>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">Nome da meta</label>
+					<input type="text" class="form-control" name='nome' id="nomeMeta" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleF ormControlTextarea1">Pontos da meta</label>
+					<input type="number" class="form-control" name='pontos' id="pontosMetas" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleF ormControlTextarea1">Objetivo</label>
+					<input type="number" class="form-control" name='pontosNescessarios' id="pontosNescessarios" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlTextarea1">Descrição da meta</label>
+					<textarea class="form-control" name='descricao' id="descricaoMetas" rows="3" required></textarea>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">Campanha</label>
+					<select name="campanhas" class="custom-select custom-select-lg mb-3" id="campanhas" required>
+						<?php
+						foreach($campanhas as $key => $value){
+							?>
+							<option value="<?php echo $value["id"]; ?>" selected><?php echo $value["nome"]; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				<?php
+				if(isset($_GET['mensagem'])){
+					?>
+					<div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
+						<?php echo $_GET['mensagem']; ?>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<?php
+				}
+				?>
+				<div>
+					<button type="submit" class="btn btn-primary btn-md">Cadastrar meta</button>
+					<button type="submit" class="btn btn-danger">Cancelar</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
-  </form>
-</div>
-
-
-
-
-
-
 </body>
 
 </html>

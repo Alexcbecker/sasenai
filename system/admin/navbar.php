@@ -16,7 +16,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="navbar.php?folder=&file=admin.php">
         <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top"
         alt="random image"> Olá <?php echo $_SESSION['nome']; ?>
       </a>
@@ -28,7 +28,35 @@ include "../../database/autenticacao/sessaovalidate.php";
           <li class="nav-item">
             <a class="nav-link" href="navbar.php?folder=../ranking&file=ranking.html">Ranking</a>
           </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Usuários
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_cadastro_usuario.php">Cadastro de usuário</a>
+            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_editar_usuario.php">Editar usuário</a>
+          </div>
 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Grupos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
+            <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_editar_grupo.php">Editar grupo</a>
+          </div>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Campanhas
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
+            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=tela_editar_campanha.php">Editar campanha</a>
+          </div>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -43,31 +71,11 @@ include "../../database/autenticacao/sessaovalidate.php";
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            Campanhas
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="navbar.php?folder=campaigns&file=cadastro_campanhas_front.php">Cadastro de campanha</a>
-            <a class="dropdown-item" href="#">Editar campanha</a>
-          </div>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Itens
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="navbar.php?folder=items&file=tela_cadastro_item.php">Cadastro de item</a>
-            <a class="dropdown-item" href="navbar.php?folder=items&file=tela_editar_item.php">Editar item</a>
-          </div>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
             Grupos
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="navbar.php?folder=teams&file=tela_cadastro_grupo.php">Cadastro de grupo</a>
-            <a class="dropdown-item" href="#">Editar grupo</a>
+            <a class="dropdown-item" href="navbar.php?folder=items&file=tela_cadastro_item.php">Cadastro de item</a>
+            <a class="dropdown-item" href="navbar.php?folder=items&file=tela_editar_item.php">Editar item</a>
           </div>
 
             <li class="nav-item">
@@ -80,18 +88,19 @@ include "../../database/autenticacao/sessaovalidate.php";
         </ul>
       </div>
     </nav>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <?php
+          if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
+            if (@include $_GET['folder']."/".$_GET['file']) {
 
-    <div class="row justify-content-center">
-      <div class="col-8" id="main">
-        <?php
-        if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
-          if (@include $_GET['folder']."/".$_GET['file']) {
+            }
+          }else{
 
           }
-        }else{
-
-        }
-        ?>
+          ?>
+        </div>
       </div>
     </div>
 

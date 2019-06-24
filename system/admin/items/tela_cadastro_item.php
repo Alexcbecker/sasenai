@@ -1,6 +1,16 @@
 <html>
 <head>
   <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+  <script>
+
+  $(document).ready(function () {
+    $('.custom-file-input').on('change', function () {
+      let fileName = $(this).val().split('\\').pop();
+      $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+
+  });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -31,6 +41,8 @@
           ?>
           <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
             <?php echo $_GET['mensagem']; ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
           </div>
           <?php
         }

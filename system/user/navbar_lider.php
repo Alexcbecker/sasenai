@@ -11,7 +11,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 
 </head>
 <body>
-<form>
+
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
@@ -28,13 +28,13 @@ include "../../database/autenticacao/sessaovalidate.php";
             <a class="nav-link" href="navbar_lider.php?folder=../ranking&file=ranking.html">Ranking</a>
           </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Perfil</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">campanhas</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=lider&file=tela_campanha.php">campanhas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ranking da equipe</a>
+                    <a class="nav-link" href="navbar_lider.php?folder=lider&file=tela_ranking_equipe.php">ranking da equipe</a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
@@ -50,7 +50,7 @@ include "../../database/autenticacao/sessaovalidate.php";
             </span>
         </div>
     </nav>
-
+<div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
         <?php
@@ -64,7 +64,6 @@ include "../../database/autenticacao/sessaovalidate.php";
         ?>
       </div>
     </div>
-
-</form>
+</div>
 </body>
 </html>

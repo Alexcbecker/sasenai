@@ -4,13 +4,13 @@
   $status = "danger";
 
   include "../../../database/conexao_bd.php";
-  $sql_del  = "DELETE FROM metas WHERE id= {$id} " ;
+  $sql_del  = "DELETE FROM campanhas WHERE id= {$id} " ;
   $result = mysqli_query($con, $sql_del);
   if ($result) {
-    $msg  = "Meta excluida com sucesso";
+    $msg  = "Campanha excluida com sucesso";
     $status ="success";
   }  else{
     $msg = "Erro ao excluir";
   }
-  header("Location: ../navbar.php?folder=goals&file=tela_editar_meta.php&status=".$status."&mensagem=".$msg."");
+  header("Location: ../navbar.php?folder=campaigns&file=tela_editar_campanha.php&status=".$status."&mensagem=".$msg."");
 ?>
