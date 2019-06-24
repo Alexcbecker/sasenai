@@ -3,9 +3,7 @@
 $id                      = $_POST['id'];
 $nomeCampanha            = $_POST['nomeCampanha'];
 $decricaoCampanha        = $_POST['decricaoCampanha'];
-$tipoCampanha            = $_POST['tipoCampanha'];
-$bonificacaoCampanha     = $_POST['bonificacaoCampanha'];
-$variante_pontoCampanha  = $_POST['variante_pontosCampanha'];
+$tipo_participante       = $_POST['tipoCampanha'];
 $data_inicialCampanha    = $_POST['data_inicialCampanha'];
 $data_finalCampanha      = $_POST['data_finalCampanha'];
 
@@ -20,11 +18,7 @@ if($nomeCampanha == ""){
 }else if($decricaoCampanha== ""){
   $mensagem = "Descrição não preenchida!";
 }else if($tipoCampanha== ""){
-  $mensagem = "Pontuação não preenchida!";
-}else if($bonificacaoCampanha== ""){
-  $mensagem = "Bonificação não preenchida!";
-}else if($variante_pontoCampanha== ""){
-  $mensagem = "Variante de pontos não preenchida!";
+  $mensagem = "Tipo de participante não preenchido!";
 }else if($data_inicialCampanha== ""){
   $mensagem = "Data inicial não preenchida!";
 }else if($data_finalCampanha== ""){
@@ -33,7 +27,7 @@ if($nomeCampanha == ""){
  include("../../../database/conexao_bd.php");
  include("../../../database/funcoes_base_crud.php");
 
-       $inserirItem = mysql_insert("UPDATE `campanhas` SET `nome`='$nomeCampanha',`descricao`='$decricaoCampanha',`tipo`='$tipoCampanha',`bonificacao`='$bonificacaoCampanha',`variante_pontos`='$variante_pontoCampanha',`data_inicial`='$data_inicialCampanha',`data_final`='$data_finalCampanha' WHERE id='$id'");
+       $inserirItem = mysql_insert("UPDATE `campanhas` SET `nome`='$nomeCampanha',`descricao`='$decricaoCampanha',`tipo`='$tipo_participante',`data_inicial`='$data_inicialCampanha',`data_final`='$data_finalCampanha' WHERE id='$id'");
 
         $status= "success";
          $mensagem="Campanha editada com sucesso!";
