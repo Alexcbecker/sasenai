@@ -48,7 +48,7 @@ document.getElementById('t2').focus();
 
 
       <form action='campaigns/criar.php' method='post'>
-        <h1>CADASTRO DE CAMPANHAS</h1>
+        <h1>Cadastro de Campanhas</h1>
         <div class="form-group">
           <label for="exampleFormControlInput1">Nome da campanha</label>
           <input type="text" class="form-control" name="nome_campanha" id="nome_campanha" placeholder="De um nome a campanha" required="required">
@@ -73,7 +73,7 @@ document.getElementById('t2').focus();
 				</div>
 
         <div class="form-group">
-          <label for="exampleFormControlTextarea1">Descricao</label>
+          <label for="exampleFormControlTextarea1">Descrição</label>
           <textarea class="form-control" name='descricao' id="descricao" rows="3" required="required"></textarea>
         </div>
 				<?php

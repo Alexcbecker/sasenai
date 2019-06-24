@@ -32,7 +32,7 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 
 		<div class="borda" style=" margin-top:3%;">
 			<form action='goals/back_cadastro_metas.php' method='post'>
-				<h1>Cadastro de metas</h1>
+				<h1>Cadastro de Metas</h1>
 				<div class="form-group">
 					<label for="exampleFormControlInput1">Nome da meta</label>
 					<input type="text" class="form-control" name='nome' id="nomeMeta" required>
