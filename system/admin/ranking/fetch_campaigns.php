@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 mysqli_set_charset($conn, "utf8");
 
-$q = "SELECT * FROM campanhas";
+$q = "SELECT id, nome, tipo_participantes, descricao FROM campanhas";
 
 $result = $conn->query($q);
 
@@ -22,10 +22,9 @@ $rowa = [];
 
 while ($row = $result->fetch_assoc())
 {
+    $rowa['id'] = $row['id'];
     $rowa['name'] = $row['nome'];
     $rowa['description'] = $row['descricao'];
-    $rowa['type'] = $row['tipo'] == 1 ? 'Valor' : 'Quantidade';
-    $rowa['bonus'] = $row['bonificacao'];
     $rowa['user_type'] = $row['tipo_participantes'] == 0 ? 'Individual' : 'Grupo';
 
     array_push($data, $rowa);

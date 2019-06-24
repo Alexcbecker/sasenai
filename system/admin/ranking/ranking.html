@@ -37,7 +37,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Pontuação</th>
-                                    <th scope="col">Nome</th>
+                                    <th id="user_name_col" scope="col">Nome</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -121,14 +121,19 @@
                     if (key == 0)
                     {
                         var url = "";
-                        if (value.user_type == "Individual") url = "ranking/fetch_ranking_campaign.php";
+                        
+                        if (value.user_type == "Individual") 
+                        {
+                            $("#user_name_col").text("Nome");
+                            url = "ranking/fetch_ranking_campaign.php";
+                        }
                         else if (value.user_type == "Grupo") 
                         {
+                            $("#user_name_col").text("Grupo");
                             url = "ranking/fetch_ranking_campaign_group.php";
-                            $.get(url, { name: value.name }, (data) => alert(data));
                         }
-
-                        $.getJSON(url, { name: value.name }, (wdata) => makelist_campaign_table(wdata));
+                        
+                        $.getJSON(url, { id: value.id }, (wdata) => makelist_campaign_table(wdata));
                     }
 
                     bd += "<option>" + value.name + "</option>";
@@ -144,21 +149,22 @@
 
         $("#campaign_select").on("change", function ()
         {
-            show_progss();
-
             $.getJSON("ranking/fetch_campaign.php", { name: $("#campaign_select option:selected").text() }, function (data)
             {
                 var url = "";
-                if (data.user_type == "Individual") url = " ranking/fetch_ranking_campaign.php";
-                else if (data.user_type == "Grupo") url = "ranking/fetch_ranking_campaign_group.php";
 
-                $.getJSON(url, { name: data.name }, function (wdata)
+                if (data.user_type == "Individual") 
                 {
-                    makelist_campaign_table(wdata);
+                    $("#user_name_col").text("Nome");
+                    url = "ranking/fetch_ranking_campaign.php";
+                }
+                else if (data.user_type == "Grupo") 
+                {
+                    $("#user_name_col").text("Grupo");
+                    url = "ranking/fetch_ranking_campaign_group.php";
+                }
 
-                    $("#table_progress").hide();
-                    if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").fadeIn("fast");
-                });
+                $.getJSON(url, { id: data.id }, (wdata) => makelist_campaign_table(wdata));
             });
         });
 
