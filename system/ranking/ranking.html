@@ -82,7 +82,7 @@
             $("#group_b").removeClass("active");
             $("#general_b").addClass("active");
 
-            $.getJSON("ranking/fetch_ranking_general.php", function (data)
+            $.getJSON("../ranking/fetch_ranking_general.php", function (data)
             {
                 $("#ranking_general tbody").empty();
                 var tr = "";
@@ -111,7 +111,7 @@
             $("#group_b").removeClass("active");
             $("#campaign_b").addClass("active");
 
-            $.getJSON("ranking/fetch_campaigns.php", function (data)
+            $.getJSON("../ranking/fetch_campaigns.php", function (data)
             {
                 $("#campaign_select").empty();
                 var bd = "";
@@ -125,12 +125,12 @@
                         if (value.user_type == "Individual") 
                         {
                             $("#user_name_col").text("Nome");
-                            url = "ranking/fetch_ranking_campaign.php";
+                            url = "../ranking/fetch_ranking_campaign.php";
                         }
                         else if (value.user_type == "Grupo") 
                         {
                             $("#user_name_col").text("Grupo");
-                            url = "ranking/fetch_ranking_campaign_group.php";
+                            url = "../ranking/fetch_ranking_campaign_group.php";
                         }
                         
                         $.getJSON(url, { id: value.id }, (wdata) => makelist_campaign_table(wdata));
@@ -149,19 +149,19 @@
 
         $("#campaign_select").on("change", function ()
         {
-            $.getJSON("ranking/fetch_campaign.php", { name: $("#campaign_select option:selected").text() }, function (data)
+            $.getJSON("../ranking/fetch_campaign.php", { name: $("#campaign_select option:selected").text() }, function (data)
             {
                 var url = "";
 
                 if (data.user_type == "Individual") 
                 {
                     $("#user_name_col").text("Nome");
-                    url = "ranking/fetch_ranking_campaign.php";
+                    url = "../ranking/fetch_ranking_campaign.php";
                 }
                 else if (data.user_type == "Grupo") 
                 {
                     $("#user_name_col").text("Grupo");
-                    url = "ranking/fetch_ranking_campaign_group.php";
+                    url = "../ranking/fetch_ranking_campaign_group.php";
                 }
 
                 $.getJSON(url, { id: data.id }, (wdata) => makelist_campaign_table(wdata));
@@ -194,7 +194,7 @@
             $("#campaign_b").removeClass("active");
             $("#group_b").addClass("active");
 
-            $.getJSON("ranking/fetch_ranking_group.php", function (data)
+            $.getJSON("../ranking/fetch_ranking_group.php", function (data)
             {
                 $("#ranking_group tbody").empty();
                 var tr = "";

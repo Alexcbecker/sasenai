@@ -36,7 +36,7 @@ if ($_SESSION['id_sessao']  == session_id())
             {
                 if ($row = $r->fetch_assoc())
                 {
-                    $q = "INSERT INTO avatares (id, imagem, colaboradores_id) VALUES (null, 'image_{$row['id']}', {$row['id']})";
+                    $q = "INSERT INTO avatares (id, colaboradores_id) VALUES (null, {$row['id']})";
 
                     if ($conn->query($q) === TRUE)
                     {

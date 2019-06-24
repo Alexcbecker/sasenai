@@ -340,7 +340,7 @@
                             $("#cpffeedback").empty();
                             $("#cpffeedback").append("cpf já existe");
                         }
-                        else
+                        else if (data == "status:ok")
                         {
                             $("#add_user_m").modal("toggle");
 
