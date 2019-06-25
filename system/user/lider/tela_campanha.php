@@ -7,12 +7,12 @@
 </head>
 <body>
 
-
-
   <?php
     $id_usuario = $_SESSION['id'];
 
   include "../../database/conexao_bd.php";
+  // SELECT * FROM campanhas INNER JOIN metas ON metas.campanhas_id=campanhas.id INNER JOIN metas_has_colaboradores ON metas_has_colaboradores.metas_id=metas.id WHERE metas_has_colaboradores.colaboradores_id = 3
+  // SELECT * FROM campanhas INNER JOIN metas ON metas.campanhas_id=campanhas.id INNER JOIN metas_has_colaboradores_has_grupos on metas_has_colaboradores_has_grupos.metas_id=metas.id INNER JOIN colaboradores_has_grupos ON colaboradores_has_grupos.id=metas_has_colaboradores_has_grupos.colaboradores_has_grupos_id WHERE colaboradores_has_grupos.colaboradores_id = 3
   $sql_sel =  "SELECT * FROM campanhas INNER JOIN colaboradores_has_campanhas ON colaboradores_has_campanhas.campanhas_id=campanhas.id WHERE colaboradores_has_campanhas.colaboradores_id ='$id_usuario' ";
   $result  = mysqli_query($con, $sql_sel);
   if (!$result) die ("Erro ao conectar usuário.");
@@ -44,10 +44,10 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nome</th>
-              <th scope="col">Dataescricao</th>
+              <th scope="col">Descrição</th>
               <th scope="col">Tipo</th>
-              <th scope="col">Bonificacao</th>
-              <th scope="col">Variante_pontos</th>
+              <th scope="col">Bonificação</th>
+              <th scope="col">Variante pontos</th>
               <th scope="col">Data inicial</th>
               <th scope="col">Data final</th>
               <th scope="col">Tipo participantes</th>
@@ -135,7 +135,7 @@
                             <?php if ($campanha['status'] == 1): ?>
                               <td ><?php echo "Não concluida" ?></td>
                             <?php else: ?>
-                              <td><?php echo "Concluida" ?></td>
+                              <td><?php echo "Concluída" ?></td>
                             <?php endif; ?>
                           </tr>
                         <?php endif; ?>
@@ -148,8 +148,5 @@
               </div>
 
             </div>
-
-
-
       </body>
       </html>
