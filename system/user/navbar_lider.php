@@ -13,7 +13,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 <body>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
 
         <a class="navbar-brand" href="navbar_lider.php?folder=&file=avatar_screen.php">
             <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
@@ -56,7 +56,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 
           }
         }else{
-
+            header("Location: navbar_lider.php?folder=&file=avatar_screen.php");
         }
         ?>
       </div>
