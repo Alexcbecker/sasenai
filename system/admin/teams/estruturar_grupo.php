@@ -8,32 +8,69 @@ $status   = "danger";
 $link     = "../navbar.php?folder=teams&file=tela_editar_grupo.php";
 
 
-$sql = "SELECT * FROM colaboradores_has_grupos WHERE colaboradores_has_grupos.colaboradores_id = '{$lider}'
-AND colaboradores_has_grupos.grupos_id = '{$id}'";
 
 
-
-$teste = array();
-
-while($linha = mysqli_fetch_array($sql,MYSQLI_ASSOC)){
-  array_push($teste,$linha);
-}
-
+    $con = mysqli_connect("localhost","root","root","bd_fito");
 
 foreach($usuarios as $key => $value){
 
-  $con = mysqli_connect("localhost","root","root","bd_fito");
-  $formar_grupo = mysqli_query($con, "INSERT INTO colaboradores_has_grupos VALUES(NULL,'{$value}', '{$id}','0')");
-  $inseriu = mysqli_affected_rows($con);
+  $sql = "SELECT * FROM colaboradores_has_grupos WHERE colaboradores_id = '{$value}'
+  AND grupos_id = '{$id}'";
+  $result = mysqli_query($con, $sql);
+  $confere = mysqli_affected_rows($con);
 
+  if($confere > 0){
+  }else{
+    $formar_grupo = mysqli_query($con, "INSERT INTO colaboradores_has_grupos VALUES(NULL,'{$value}', '{$id}','0')");
+    $inseriu = mysqli_affected_rows($con);
 
-
-
+       }
 }
 
-  $con = mysqli_connect("localhost","root","root","bd_fito");
-  $formar_grupo1 = mysqli_query($con, "INSERT INTO colaboradores_has_grupos VALUES(NULL,'{$lider}', '{$id}','0')");
-  $inseriu = mysqli_affected_rows($con);
+
+
+
+
+
+
+
+
+
+$sql = "SELECT * FROM colaboradores_has_grupos WHERE colaboradores_id = '{$lider}'
+AND grupos_id = '{$id}'";
+$result = mysqli_query($con, $sql);
+$confere = mysqli_affected_rows($con);
+
+
+  if($confere > 0){
+  }else{
+
+      $sql1 = "SELECT colaboradores.tipo AS 'colaboradortipo', grupos.id AS 'grupoid'
+      FROM grupos
+      INNER JOIN colaboradores_has_grupos
+      ON colaboradores_has_grupos.grupos_id = grupos.id
+      INNER JOIN colaboradores
+      ON colaboradores_has_grupos.colaboradores_id=colaboradores.id
+      WHERE colaboradores.tipo = 2";
+
+      $resultado = mysqli_query($con, $sql1);
+      $revisa = mysqli_affected_rows($con);
+
+
+          if($revisa >= 1){
+          }else{
+            $con = mysqli_connect("localhost","root","root","bd_fito");
+            $formar_grupo1 = mysqli_query($con, "INSERT INTO colaboradores_has_grupos VALUES(NULL,'{$lider}', '{$id}','0')");
+            $inseriu = mysqli_affected_rows($con);
+          }
+}
+
+
+
+
+
+
+
 
 
 
@@ -44,7 +81,7 @@ if ($inseriu > 0) {
   $status = "success";
 }else{
 
-  $mensagem = "Erro ao editar grupo";
+  $mensagem = "Por favor, verifique se o usuário já está cadastrado.";
 
 }
 header("Location: ".$link."&mensagem=".$mensagem."&status=".$status);

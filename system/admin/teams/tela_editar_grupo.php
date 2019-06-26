@@ -14,7 +14,7 @@
       include "../../database/conexao_bd.php";
 
 
-       $sql_sel =  "SELECT `id`, `nome`, `descricao` FROM grupos";
+       $sql_sel =  "SELECT `id`, `nome`, `descricao` FROM grupos where status = 0";
 
 
 
@@ -150,19 +150,8 @@ while($linha = mysqli_fetch_array($select,MYSQLI_ASSOC)){
             <label for="recipient-name" class="col-form-label">Descrição:</label>
             <input type="textarea" class="form-control" name="decricaoGrupo" id="recipient-descricao">
           </div>
-
-          <input type="hidden" name="id" id="id">
-
+            <input type="hidden" name="id" id="id">
       </div>
-      <?php
-      if(isset($_GET['mensagem'])){
-      ?>
-      <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
-        <?php echo $_GET['mensagem']; ?>
-      </div>
-      <?php
-      }
-      ?>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-success">Enviar</button>

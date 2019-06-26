@@ -18,7 +18,7 @@ while($linha = mysqli_fetch_array($select,MYSQLI_ASSOC)){
 	array_push($lider,$linha);
 }
 
-$select1 = mysqli_query($con,"SELECT * FROM  grupos ORDER BY nome");
+$select1 = mysqli_query($con,"SELECT * FROM  grupos WHERE status = 0 ORDER BY nome");
 
 $grupo = array();
 
