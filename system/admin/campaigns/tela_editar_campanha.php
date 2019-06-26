@@ -11,7 +11,7 @@
 
       include "../../database/conexao_bd.php";
 
-        $sql_sel =  "SELECT `id`, `nome`, `descricao`,data_inicial`,`data_final`,`tipo_participante` FROM campanhas";
+        $sql_sel =  "SELECT * FROM campanhas";
 
         $result  = mysqli_query($con, $sql_sel);
 
@@ -23,7 +23,7 @@
 
     <div class="container">
 
-        <div class="borda" style=" margin-top:3%;">
+        <div class="borda" style=" margin-top:3%; width:95%;">
           <h1>Editar Campanhas</h1>
           <div  style="overflow-y:auto; max-height:500px;">
     <table class="table table-hover">
@@ -32,7 +32,7 @@
           <th scope="col">#</th>
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
-          <th scope="col">Tipo_participante</th>
+          <th scope="col">Tipo participante</th>
           <th scope="col">Data inicial</th>
           <th scope="col">Data final</th>
           <th scope="col">Ações</th>
@@ -46,11 +46,18 @@
           <th scope="row"><?php echo $user['id']?></th>
           <td><?php echo $user['nome']?></td>
           <td><?php echo $user['descricao']?></td>
-          <td><?php echo $user['tipo_participante']?></td>
-          <td><?php echo $user['data_inicial']?></td>
-          <td><?php echo $user['data_final']?></td>
+          <td><?php if($user['tipo_participantes'] == 0){
+            echo("Individual");
+          } else if($user['tipo_participantes'] == 1) {
+            echo("Grupo");
+          }?></td>
+          <td><?php echo date('d/m/Y', strtotime($user['data_inicial']));?></td>
+          <td><?php echo date('d/m/Y', strtotime($user['data_final']));?></td>
           <td>
-            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" data-whatevertipo="<?php echo $user['tipo_participante']?>" data-whateverdatainicial="<?php echo $user['data_inicial']?>" data-whateverdatafinal="<?php echo $user['data_final']?>" >
+            <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>"
+             data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>" 
+             data-whatevertipo="<?php echo $user['tipo_participantes']?>" 
+             data-whateverdatainicial="<?php echo $user['data_inicial']?>" data-whateverdatafinal="<?php echo $user['data_final']?>" >
             <button type="button" class="btn btn-success" name="editar">Editar</button>
             </a>
             <a data-toggle="modal" data-target="#modalExcluir" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" >
@@ -119,15 +126,6 @@
           <input type="hidden" name="id" id="id">
 
       </div>
-      <?php
-      if(isset($_GET['mensagem'])){
-      ?>
-      <div class="alert alert-<?php echo $_GET['status']; ?>" role="alert">
-        <?php echo $_GET['mensagem']; ?>
-      </div>
-      <?php
-      }
-      ?>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-success">Enviar</button>

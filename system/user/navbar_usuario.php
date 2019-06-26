@@ -28,7 +28,7 @@ include "../../database/autenticacao/sessaovalidate.php";
               <a class="nav-link" href="navbar_usuario.php?folder=../ranking&file=ranking.html">Ranking</a>
             </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="navbar_usuario.php?folder=&file=tela_perfil.php">Perfil</a>
+                    <a class="nav-link" href="navbar_usuario.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="navbar_usuario.php?folder=lider&file=tela_campanha.php">Campanhas e metas</a>

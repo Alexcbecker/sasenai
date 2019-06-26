@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Perfil de usuario</title>
+    <title>Perfil</title>
     <link rel="stylesheet" type="text/css" href="../../css/style_base_cadastro_editar.css">
   </head>
   <body>
@@ -22,7 +22,7 @@
       $tipo = "Administrador";
 
     } elseif ($tipo == 2) {
-      $tipo = "Lider";
+      $tipo = "Líder";
 
     }else {
       $tipo = "Colaborador";
@@ -51,7 +51,7 @@
       </div>
 
       <div class="form-group">
-      <label for="exampleInputEmail1">cpf:</label>
+      <label for="exampleInputEmail1">CPF:</label>
       <?php echo $cpf ?>
       </div>
 
@@ -71,7 +71,7 @@
       </div>
 
       <div class="form-group">
-      <label for="exampleInputEmail1">Creditos:</label>
+      <label for="exampleInputEmail1">Créditos:</label>
       <?php echo $creditos ?>
     </div>
     <?php
