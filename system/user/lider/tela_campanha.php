@@ -11,6 +11,7 @@
     $id_usuario = $_SESSION['id'];
 
   include "../../database/conexao_bd.php";
+  $queryMetas = "";
   $queryCampanhasIndividuais = "SELECT DISTINCT * FROM campanhas INNER JOIN (SELECT id as metasId, metas.campanhas_id from metas)m ON m.campanhas_id=campanhas.id INNER JOIN (SELECT metas_id, metas_has_colaboradores.colaboradores_id from metas_has_colaboradores) mc ON mc.metas_id=m.metasId WHERE mc.colaboradores_id = '$id_usuario'";
   $queryCampanhasGrupo = "SELECT DISTINCT * FROM campanhas INNER JOIN (SELECT id AS metasId, metas.campanhas_id from metas) m ON m.campanhas_id=campanhas.id INNER JOIN (SELECT metas_has_colaboradores_has_grupos.metas_id, metas_has_colaboradores_has_grupos.colaboradores_has_grupos_id from metas_has_colaboradores_has_grupos) mg on mg.metas_id=m.metasId INNER JOIN (SELECT id AS metasCol, colaboradores_has_grupos.colaboradores_id from colaboradores_has_grupos) cg ON cg.metasCol=mg.colaboradores_has_grupos_id WHERE cg.colaboradores_id = '$id_usuario'";
   $arrayCampanhas = array();
@@ -79,8 +80,10 @@
                       <td><?php echo date('d/m/Y', strtotime($campanha['data_final'])); ?></td>
                       <?php if ($campanha['tipo_participantes'] == 0){ ?>
                         <td><?php echo "Individual"; ?></td>
+                        <?php $queryMetas = "SELECT metas.id,metas.nome,metas.descricao,metas.pontos,metas.objetivo,metas.bonificacao,metas.variante_pontos,metas.tipo,metas_has_colaboradores.status FROM metas INNER JOIN metas_has_colaboradores ON metas.id=metas_has_colaboradores.metas_id AND metas_has_colaboradores.colaboradores_id='$id_usuario' WHERE metas.campanhas_id = ". $_POST['campanhas']?>
                         <?php }else{ ?>
                           <td><?php echo "Grupo"; ?></td>
+                          <?php $queryMetas = "SELECT metas.id,metas.nome,metas.descricao,metas.pontos,metas.objetivo,metas.bonificacao,metas.variante_pontos,metas.tipo,metas_has_colaboradores_has_grupos.status FROM metas INNER JOIN metas_has_colaboradores_has_grupos ON metas.id=metas_has_colaboradores_has_grupos.metas_id INNER JOIN colaboradores_has_grupos ON metas_has_colaboradores_has_grupos.colaboradores_has_grupos_id=colaboradores_has_grupos.id AND colaboradores_has_grupos.colaboradores_id= '$id_usuario' WHERE metas.campanhas_id = ". $_POST['campanhas']?>
                           <?php } ?>
                         </tr>
                         <?php
@@ -113,12 +116,11 @@
                   <tbody id="tabela">
                     <?php
                     if(isset($_POST) && $_POST['campanhas']!=""){
-                      $sql = "SELECT * FROM `metas` WHERE  campanhas_id = " . $_POST['campanhas'];
-                      $metas  = mysqli_query($con, $sql);
+                      $metas  = mysqli_query($con, $queryMetas);
 
                       foreach($metas AS $meta):
                         ?>
-                        <?php if ($meta['status'] == 1): ?>
+                        <?php if ($meta['status'] == 0): ?>
                           <tr >
                             <td><?php echo $meta['id']; ?></td>
                             <td><?php echo $meta['nome']; ?></td>
@@ -128,7 +130,7 @@
                             <td><?php echo $meta['variante_pontos']; ?></td>
                             <td><?php echo $meta['pontos']; ?></td>
                             <td><?php echo $meta['objetivo']; ?></td>
-                            <?php if ($meta['status'] == 1): ?>
+                            <?php if ($meta['status'] == 0): ?>
                               <td ><?php echo "Não concluída" ?></td>
                             <?php else: ?>
                               <td><?php echo "Concluída" ?></td>
@@ -144,7 +146,7 @@
                             <td><?php echo $meta['variante_pontos']; ?></td>
                             <td><?php echo $meta['pontos']; ?></td>
                             <td><?php echo $meta['objetivo']; ?></td>
-                            <?php if ($meta['status'] == 1): ?>
+                            <?php if ($meta['status'] == 0): ?>
                               <td ><?php echo "Não concluída" ?></td>
                             <?php else: ?>
                               <td><?php echo "Concluída" ?></td>
