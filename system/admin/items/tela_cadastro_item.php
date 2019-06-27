@@ -49,7 +49,6 @@
         ?>
         <div>
           <button type="submit" class="btn btn-primary btn-md">Cadastrar item</button>
-          <button type="button" class="btn btn-danger btn-md">Cancelar</button>
         </div>
       </form>
     </div>
