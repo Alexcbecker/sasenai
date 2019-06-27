@@ -12,8 +12,6 @@ include "../../database/autenticacao/sessaovalidate.php";
 </head>
 <body>
 
-   <form>
-
      <nav  class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-static-top" style="background-color: #00a7e1;">
 
 
@@ -30,7 +28,7 @@ include "../../database/autenticacao/sessaovalidate.php";
                     <a class="nav-link" href="navbar_usuario.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">campanhas e metas</a>
+                    <a class="nav-link" href="navbar_usuario.php?folder=lider&file=tela_campanha.php">Campanhas e metas</a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
@@ -38,7 +36,7 @@ include "../../database/autenticacao/sessaovalidate.php";
                 </ul>
 
                 <span class="navbar-text ml-1" style="width: 150px;">
-                capointes: <?php echo $_SESSION['pontos']; ?>
+                Créditos: <?php echo $_SESSION['pontos']; ?>
                 </span>
 
                 <span class="navbar-text" style="width: 150px;">
@@ -63,6 +61,6 @@ include "../../database/autenticacao/sessaovalidate.php";
   </div>
 </div>
 
-</form>
+
 </body>
 </html>

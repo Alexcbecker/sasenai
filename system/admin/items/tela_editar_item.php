@@ -30,7 +30,7 @@
 
         <div class="borda" style=" margin-top:3%;">
           <h1>Editar Itens</h1>
-          <div  style="overflow-y:auto; max-height:500px;">
+          <div  style="overflow-y:auto; max-height:60vh;">
     <table class="table table-hover overflow-y">
       <thead  class="thead-dark">
         <tr>

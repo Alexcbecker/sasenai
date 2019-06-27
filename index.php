@@ -1,7 +1,7 @@
 <html>
 <head>
 
-  <title>fito</title>
+  <title>!!!BEM-VINDO AO FITO!!!</title>
 
   <link rel="stylesheet" href="css/style_login.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,11 +27,11 @@
 
           <form name="login" action="database/autenticacao/login_autenticacao.php" method="post">
             <div class="form-group">
-              <label>cpf</label>
+              <label>CPF</label>
               <input type="text" name="cpf" class="form-control" id="cpf"  >
             </div>
             <div class="form-group">
-              <label>senha</label>
+              <label>Senha</label>
               <input type="password" name="senha" class="form-control" id="Senha" >
             </div>
             <div class="form-group ">
@@ -47,7 +47,7 @@
               <?php
             }
             ?>
-            <button type="submit" class="btn btn-primary">login</button>
+            <button type="submit" class="btn btn-primary">Login</button>
           </form>
 </div>
 
