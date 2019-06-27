@@ -11,12 +11,13 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
+<?php 
+session_start();
+unset($_SESSION);
+session_destroy();
+?>
 
 <body style="background-color: #00a7e1;">
-
-
-
-
   <div class="container">
     <center>
     <img src="images/image_login/logo_fito.png" width=”20px” height=”20px” >
