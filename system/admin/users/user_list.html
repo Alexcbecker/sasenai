@@ -17,13 +17,15 @@
 <body>
     <div class="borda" style=" margin-top:3%;">
         <h3>Usuários</h3>
+        <div class="alert collapse alert-dismissible fade show" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#add_user_m">Adicionar</button>
-                    <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()"
-                        disabled>Remover</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_user_m">Adicionar</button>
+                    <!-- <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button> -->
                 </div>
             </div>
 
@@ -113,8 +115,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="edit_user_m" tabindex="-1" role="dialog" aria-labelledby="edituser_m"
-        aria-hidden="true">
+    <div class="modal fade" id="edit_user_m" tabindex="-1" role="dialog" aria-labelledby="edituser_m" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -244,12 +245,22 @@
 
             p.done(function (data)
             {
+                $("#item_alert").removeClass("alert-success");
+                $("#item_alert").removeClass("alert-danger");
+
                 if (data === "status:ok")
                 {
+                    $("#alert_message").text("Usuário editado com sucesso.");
+                    $("#item_alert").addClass("alert-success");
+
                 }
-                else if (data === "status:error")
+                else
                 {
+                    $("#alert_message").text("Erro ao editar usuário.");
+                    $("#item_alert").addClass("alert-danger");
                 }
+
+                $("#item_alert").show();
 
                 $("#edit_user_m").modal("toggle");
 
@@ -258,6 +269,11 @@
                 makelist();
             });
         });
+
+        function alert_close()
+        {
+            $("#item_alert").hide();
+        }
 
 
         function makelist()
@@ -279,7 +295,7 @@
                     tr += '<td>' + value.type + '</td>';
                     tr += '<td>' + value.cpf + '</td>';
                     tr += '<td>' + value.status + '</td>';
-                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_item(' + key + ')">editar</button></td>';
+                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_item(' + key + ')">Editar</button></td>';
                     tr += '</tr>';
                 });
 
@@ -334,32 +350,56 @@
 
                     p.done(function (data)
                     {
-                        if (data === "status:cpfinvalid")
+                        $("#item_alert").removeClass("alert-success");
+                        $("#item_alert").removeClass("alert-danger");
+
+                        switch (data)
                         {
-                            $("#cpf").addClass("is-invalid");
-                            $("#cpffeedback").empty();
-                            $("#cpffeedback").append("cpf já existe");
-                        }
-                        else if (data == "status:ok")
-                        {
-                            $("#add_user_m").modal("toggle");
+                            case "status:cpfinvalid":
+                                $("#cpf").addClass("is-invalid");
+                                $("#cpffeedback").empty();
+                                $("#cpffeedback").append("Cpf já existe");
+                                break;
 
-                            $form.trigger('reset');
+                            case "status:ok":
+                                $("#alert_message").text("Usuário cadastrado com sucesso.");
+                                $("#item_alert").addClass("alert-success");
+                                $("#item_alert").show();
 
-                            $("#cpf").removeClass("is-valid");
-                            $("#cpf").removeClass("is-invalid");
+                                clear_form();
+                                break;
 
-                            $("#password0").removeClass("is-invalid");
-                            $("#password1").removeClass("is-invalid");
-                            $("#password0").removeClass("is-valid");
-                            $("#password1").removeClass("is-valid");
 
-                            makelist();
+                            default:
+                                $("#alert_message").text("Erro ao adicionar usuário.");
+                                $("#item_alert").addClass("alert-danger");
+                                $("#item_alert").show();
+
+                                clear_form();
+                                break;
                         }
                     });
                 }
             }
         });
+
+
+        function clear_form()
+        {
+            $("#add_user_m").modal("toggle");
+
+            $form.trigger('reset');
+
+            $("#cpf").removeClass("is-valid");
+            $("#cpf").removeClass("is-invalid");
+
+            $("#password0").removeClass("is-invalid");
+            $("#password1").removeClass("is-invalid");
+            $("#password0").removeClass("is-valid");
+            $("#password1").removeClass("is-valid");
+
+            makelist();
+        }
 
         makelist();
     </script>
