@@ -24,6 +24,9 @@ include "../../database/autenticacao/sessaovalidate.php";
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                    <a class="nav-link" href="navbar_usuario.php?folder=shop&file=shopping.html">Compras</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="navbar_usuario.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
@@ -39,11 +42,11 @@ include "../../database/autenticacao/sessaovalidate.php";
                 </ul>
 
                 <span class="navbar-text ml-1" style="width: 150px;">
-                Créditos: <?php echo $_SESSION['pontos']; ?>
+                Créditos: <?php echo $_SESSION['creditos']; ?>
                 </span>
 
                 <span class="navbar-text" style="width: 150px;">
-                Pontos: <?php echo $_SESSION['creditos']; ?>
+                Pontos: <?php echo $_SESSION['pontos']; ?>
                 </span>
         </div>
     </nav>
