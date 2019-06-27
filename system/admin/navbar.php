@@ -83,7 +83,7 @@ include "../../database/autenticacao/sessaovalidate.php";
         </ul>
       </div>
     </nav>
-
+<div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
         <?php
@@ -97,6 +97,6 @@ include "../../database/autenticacao/sessaovalidate.php";
         ?>
       </div>
     </div>
-
+</div>
 </body>
 </html>
