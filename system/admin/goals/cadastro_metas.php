@@ -166,7 +166,6 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 				?>
 				<div>
 					<button type="submit" class="btn btn-primary btn-md">Cadastrar meta</button>
-					<button type="submit" class="btn btn-danger">Cancelar</button>
 				</div>
 			</div>
 		</form>
