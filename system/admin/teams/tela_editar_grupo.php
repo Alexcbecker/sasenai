@@ -93,14 +93,14 @@ while($linha = mysqli_fetch_array($select,MYSQLI_ASSOC)){
           <td><?php echo $user['descricao']?></td>
           <td>
             <a data-toggle="modal" data-target="#modalEditar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>">
-            <button type="button" class="btn btn-success" name="editar">Editar</button>
+            <button type="button" class="btn btn-primary" name="editar">Editar</button>
             </a>
             <a data-toggle="modal" data-target="#modalAdicionar" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" data-whateverdescricao="<?php echo $user['descricao']?>">
             <button type="button" class="btn btn-success" name="adicionar">Adicionar</button>
             </a>
 
           <a data-toggle="modal" data-target="#modalVisualizar" data-whateverid="<?php echo $user['id']?>">
-          <button type="button" class="btn btn-success" name="Visualizar">Visualizar</button>
+          <button type="button" class="btn btn-info" name="Visualizar">Visualizar</button>
           </a>
             <a data-toggle="modal" data-target="#modalExcluir" data-whateverid="<?php echo $user['id']?>" data-whatevernome="<?php echo $user['nome']?>" >
             <button type="button" class="btn btn-danger" name="editar">Excluir</button>

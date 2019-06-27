@@ -48,7 +48,7 @@ $confere = mysqli_affected_rows($con);
       $sql1 = "SELECT colaboradores.tipo AS 'colaboradortipo', grupos.id AS 'grupoid'
       FROM grupos
       INNER JOIN colaboradores_has_grupos
-      ON colaboradores_has_grupos.grupos_id = grupos.id
+      ON colaboradores_has_grupos.grupos_id = $id
       INNER JOIN colaboradores
       ON colaboradores_has_grupos.colaboradores_id=colaboradores.id
       WHERE colaboradores.tipo = 2";
