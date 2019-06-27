@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <link href="../../css/componente_multiselecao.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+
+    <style>
+        td input[type="checkbox"] {
+            float: none;
+            margin: 5px 5px auto auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="borda" style=" margin-top:3%;">
+        <h3>Compra de item físico</h3>
+        <div class="alert alert-danger collapse alert-dismissible fade show" role="alert" id="buy_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="container">
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="shplist">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Imagem</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="buy_item_m">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar compra</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 style="text-align:center;" id="buy_item_name_m"></h5>
+                    <p style="text-align:center;"><img id="image_path_m" width="120" height="120"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submit_buy()">comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function buy_item(value)
+        {
+            $.getJSON("shop/fetch_item.php", { name: value }, function (data) 
+            {
+                $("#buy_item_name_m").html(data.name);
+                $("#image_path_m").attr("src", data.image_path);
+                $("#buy_item_m").modal("show");
+            });
+        }
+
+
+        function submit_buy()
+        {
+            $.post("shop/buy_item.php", { name: $("#buy_item_name_m").html() }, function (data)
+            {
+                $("#buy_alert").removeClass("alert-success");
+                $("#buy_alert").removeClass("alert-danger");
+                $("#buy_alert").removeClass("alert-warning");
+                $("#buy_alert").removeClass("alert-info");
+
+                switch (data)
+                {
+                    case "ok":
+                        $("#buy_alert").addClass("alert-success");
+                        $("#alert_message").text("compra efetuada com sucesso.");
+                        break;
+
+                    case "invalid_value":
+                        $("#buy_alert").addClass("alert-warning");
+                        $("#alert_message").text("saldo insuficiente.");
+                        break;
+
+                    case "empty":
+                        $("#buy_alert").addClass("alert-info");
+                        $("#alert_message").text("não há itens disponíveis.");
+                        break;
+
+                    case "error":
+                        $("#buy_alert").addClass("alert-danger");
+                        $("#alert_message").text("error ao completar a compra.");
+                        break;
+                }
+
+                $("#buy_item_m").modal("toggle");
+                $("#buy_alert").show();
+                makelist();
+            });
+        }
+
+
+        function alert_close()
+        {
+            $("#buy_alert").hide();
+        }
+
+
+        function makelist()
+        {
+            $.getJSON("shop/fetch_items.php", function (data)
+            {
+                $("#shplist tbody").empty();
+                var tr = '';
+
+                $.each(data, function (key, value)
+                {
+                    tr += '<tr>';
+                    tr += '<td>' + '<img src="' + value.image_path + '" width="100" height="100">' + '</td>';
+                    tr += '<td>' + value.name + '</td>';
+                    tr += '<td>' + value.value + '</td>';
+                    tr += '<td>' + value.amount + '</td>';
+                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="buy_item(\'' + value.name + '\')">comprar</button></td>';
+                    tr += '</tr>';
+                });
+
+                $("#shplist tbody").append(tr);
+            });
+        }
+
+        $("#buy_alert").hide();
+        makelist();
+    </script>
+
+</body>
+
+</html>
