@@ -7,21 +7,25 @@
     <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
 
     <style>
-    td input[type="checkbox"] {
-        float: none;
-        margin: 5px 5px auto auto;
-    }
+        td input[type="checkbox"] {
+            float: none;
+            margin: 5px 5px auto auto;
+        }
     </style>
 </head>
 
 <body>
     <div class="borda" style=" margin-top:3%;">
         <h3>Usuários</h3>
+        <div class="alert collapse alert-dismissible fade show" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_user_m">Adicionar</button>
-                        <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_user_m">Adicionar</button>
+                    <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button>
                 </div>
             </div>
 
@@ -86,7 +90,7 @@
                         </div>
 
                         <fieldset class="form-group">
-                                <label for="sex">Sexo</legend>
+                            <label for="sex">Sexo</legend>
                                 <select name="sex" id="sex" class="form-control form-control-sm">
                                     <option value="Masculino" selected>Masculino</option>
                                     <option value="Feminino">Feminino</option>
@@ -94,7 +98,7 @@
                         </fieldset>
 
                         <fieldset class="form-group">
-                                <label for="usertype">Tipo de usuário</legend>
+                            <label for="usertype">Tipo de usuário</legend>
                                 <select name="usertype" id="usertype" class="form-control form-control-sm">
                                     <option value="Administrador" selected>Administrador</option>
                                     <option value="Líder">Líder</option>
@@ -139,7 +143,7 @@
                         </div>
 
                         <fieldset class="form-group">
-                                <label for="sexw">Sexo</legend>
+                            <label for="sexw">Sexo</legend>
                                 <select name="sex" id="sexw" class="form-control form-control-sm">
                                     <option value="Masculino">Masculino</option>
                                     <option value="Feminino">Feminino</option>
@@ -147,7 +151,7 @@
                         </fieldset>
 
                         <fieldset class="form-group">
-                                <label for="usertypew">Tipo de usuário</legend>
+                            <label for="usertypew">Tipo de usuário</legend>
                                 <select name="usertype" id="usertypew" class="form-control form-control-sm">
                                     <option value="Administrador">Administrador</option>
                                     <option value="Líder">Líder</option>
@@ -156,7 +160,7 @@
                         </fieldset>
 
                         <fieldset class="form-group">
-                                <label for="statusw">Status</legend>
+                            <label for="statusw">Status</legend>
                                 <select name="status" id="statusw" class="form-control form-control-sm">
                                     <option value="Ativo">Ativo</option>
                                     <option value="Desativado">Desativado</option>
@@ -174,191 +178,230 @@
 
 
     <script>
-    function ulistcheck()
-    {
-        $("#button_remove").attr("disabled", true);
-
-        $("#userlist tbody tr").each(function()
+        function ulistcheck()
         {
-            if ($(this).find('td input:checked').length > 0)
+            $("#button_remove").attr("disabled", true);
+
+            $("#userlist tbody tr").each(function ()
             {
-                $("#button_remove").attr("disabled", false);
-                return false;
+                if ($(this).find('td input:checked').length > 0)
+                {
+                    $("#button_remove").attr("disabled", false);
+                    return false;
+                }
+            });
+        }
+
+
+        function remove_checked()
+        {
+            $("#userlist tbody tr").each(function (key, value)
+            {
+                if ($(this).find('td input:checked').length > 0)
+                {
+                    var $td = $(this).find('td');
+                    var p = $.post("users/user_remove.php", { cpf: $td[3].innerHTML });
+
+                    p.done(() => makelist());
+                }
+            });
+        }
+
+
+        function edit_item(key)
+        {
+            var $list = $("#userlist tbody tr");
+            var $td = $list.eq(key).find('td');
+
+            $.getJSON("users/fetch_user.php", { value: $td[3].innerHTML }, function (data)
+            {
+                $("#namew").val(data.name);
+                $("#usertypew").val(data.type);
+                $("#emailw").val(data.email);
+                $("#statusw").val(data.status);
+                $("#sexw").val(data.sex);
+                $("#cpfw").val(data.cpf);
+
+                if (data.adm === "True") $("#usertypew").attr("disabled", "disabled");
+                else $("#usertypew").removeAttr("disabled");
+
+                $("#edit_user_m").modal("show");
+            });
+        }
+
+
+        $("#edsuform").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = $form.serializeArray();
+            //    fields.append({cpf: });
+
+            var p = $.post(url, fields);
+
+            p.done(function (data)
+            {
+                $("#item_alert").removeClass("alert-success");
+                $("#item_alert").removeClass("alert-danger");
+
+                if (data === "status:ok")
+                {
+                    $("#alert_message").text("usuário editado com sucesso.");
+                    $("#item_alert").addClass("alert-success");
+
+                }
+                else
+                {
+                    $("#alert_message").text("error ao editar usuário.");
+                    $("#item_alert").addClass("alert-danger");
+                }
+
+                $("#item_alert").show();
+
+                $("#edit_user_m").modal("toggle");
+
+                $form.trigger('reset');
+
+                makelist();
+            });
+        });
+
+        function alert_close()
+        {
+            $("#item_alert").hide();
+        }
+
+
+        function makelist()
+        {
+            $("#button_remove").attr("disabled", true);
+            $("#button_edit").attr("disabled", true);
+
+            $.getJSON("users/fetch_user_list.php", function (data)
+            {
+                $("#userlist tbody").empty();
+                var tr = '';
+
+                $.each(data, function (key, value)
+                {
+                    tr += '<tr>';
+                    tr += '<td style="text-align:center;"><input class="form-check-input" type="checkbox" onclick="ulistcheck()"' +
+                        (value.adm === 'True' ? ' disabled' : ' ') + '></td>';
+                    tr += '<td>' + value.name + '</td>';
+                    tr += '<td>' + value.type + '</td>';
+                    tr += '<td>' + value.cpf + '</td>';
+                    tr += '<td>' + value.status + '</td>';
+                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_item(' + key + ')">editar</button></td>';
+                    tr += '</tr>';
+                });
+
+                $("#userlist tbody").append(tr);
+            });
+        }
+
+        $("#suform").submit(function (event)
+        {
+            event.preventDefault();
+
+            $("#cpf").removeClass("is-valid");
+            $("#cpf").removeClass("is-invalid");
+
+            if ($("#cpf").val().length != 11)
+            {
+                $("#cpf").addClass("is-invalid");
+                $("#cpffeedback").empty();
+                $("#cpffeedback").append("cpf possui ao menos 11 dígitos");
+            }
+            else
+            {
+                $("#cpf").addClass("is-valid");
+
+                $("#password0").removeClass("is-invalid");
+                $("#password1").removeClass("is-invalid");
+                $("#password0").removeClass("is-valid");
+                $("#password1").removeClass("is-valid");
+
+                var passw = $("#password0").val();
+
+                if (passw != $("#password1").val())
+                {
+                    $("#password0").addClass("is-invalid");
+                    $("#password1").addClass("is-invalid");
+                    $("#passwfeedback").empty();
+                    $("#passwfeedback").append("digite a mesma senha");
+                }
+                else
+                {
+                    $("#passwfeedback").empty();
+                    $("#password0").addClass("is-valid");
+                    $("#password1").addClass("is-valid");
+
+                    var $form = $(this);
+
+                    var url = $form.attr("action");
+
+                    var fields = $form.serializeArray();
+
+                    var p = $.post(url, fields);
+
+                    p.done(function (data)
+                    {
+                        $("#item_alert").removeClass("alert-success");
+                        $("#item_alert").removeClass("alert-danger");
+
+                        switch (data)
+                        {
+                            case "status:cpfinvalid":
+                                $("#cpf").addClass("is-invalid");
+                                $("#cpffeedback").empty();
+                                $("#cpffeedback").append("cpf já existe");
+                                break;
+
+                            case "status:ok":
+                                $("#alert_message").text("usuário cadastrado com sucesso.");
+                                $("#item_alert").addClass("alert-success");
+                                $("#item_alert").show();
+
+                                clear_form();
+                                break;
+
+
+                            default:
+                                $("#alert_message").text("error ao adicionar usuário.");
+                                $("#item_alert").addClass("alert-danger");
+                                $("#item_alert").show();
+
+                                clear_form();
+                                break;
+                        }
+                    });
+                }
             }
         });
-    }
 
 
-    function remove_checked()
-    {
-        $("#userlist tbody tr").each(function(key, value)
+        function clear_form()
         {
-            if ($(this).find('td input:checked').length > 0)
-            {
-                var $td = $(this).find('td');
-                var p = $.post("users/user_remove.php", {cpf: $td[3].innerHTML});
-
-                p.done(() => makelist());
-            }
-        });
-    }
-
-
-    function edit_item(key)
-    {
-        var $list = $("#userlist tbody tr");
-        var $td = $list.eq(key).find('td');
-
-        $.getJSON("users/fetch_user.php", {value: $td[3].innerHTML}, function(data)
-        {
-            $("#namew").val(data.name);
-            $("#usertypew").val(data.type);
-            $("#emailw").val(data.email);
-            $("#statusw").val(data.status);
-            $("#sexw").val(data.sex);
-            $("#cpfw").val(data.cpf);
-
-            if (data.adm === "True") $("#usertypew").attr("disabled", "disabled");
-            else $("#usertypew").removeAttr("disabled");
-
-            $("#edit_user_m").modal("show");
-        });
-    }
-
-
-    $("#edsuform").submit(function(event)
-    {
-        event.preventDefault();
-
-        var $form = $(this);
-
-        var url = $form.attr("action");
-
-        var fields = $form.serializeArray();
-    //    fields.append({cpf: });
-
-        var p = $.post(url, fields);
-
-        p.done(function(data)
-        {
-            if (data === "status:ok")
-            {
-            }
-            else if (data === "status:error")
-            {
-            }
-
-            $("#edit_user_m").modal("toggle");
+            $("#add_user_m").modal("toggle");
 
             $form.trigger('reset');
 
-            makelist();
-        });
-    });
-
-
-    function makelist()
-    {
-        $("#button_remove").attr("disabled", true);
-        $("#button_edit").attr("disabled", true);
-
-        $.getJSON("users/fetch_user_list.php", function(data)
-        {
-            $("#userlist tbody").empty();
-            var tr = '';
-
-            $.each(data, function(key, value)
-            {
-                tr += '<tr>';
-                tr += '<td style="text-align:center;"><input class="form-check-input" type="checkbox" onclick="ulistcheck()"' +
-                (value.adm === 'True' ? ' disabled' : ' ') + '></td>';
-                tr += '<td>' + value.name + '</td>';
-                tr += '<td>' + value.type + '</td>';
-                tr += '<td>' + value.cpf + '</td>';
-                tr += '<td>' + value.status + '</td>';
-                tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_item(' + key + ')">editar</button></td>';
-                tr += '</tr>';
-            });
-
-            $("#userlist tbody").append(tr);
-        });
-    }
-
-    $("#suform").submit(function(event)
-    {
-        event.preventDefault();
-
-        $("#cpf").removeClass("is-valid");
-        $("#cpf").removeClass("is-invalid");
-
-        if ($("#cpf").val().length != 11)
-        {
-            $("#cpf").addClass("is-invalid");
-            $("#cpffeedback").empty();
-            $("#cpffeedback").append("cpf possui ao menos 11 dígitos");
-        }
-        else
-        {
-            $("#cpf").addClass("is-valid");
+            $("#cpf").removeClass("is-valid");
+            $("#cpf").removeClass("is-invalid");
 
             $("#password0").removeClass("is-invalid");
             $("#password1").removeClass("is-invalid");
             $("#password0").removeClass("is-valid");
             $("#password1").removeClass("is-valid");
 
-            var passw = $("#password0").val();
-
-            if(passw != $("#password1").val())
-            {
-                $("#password0").addClass("is-invalid");
-                $("#password1").addClass("is-invalid");
-                $("#passwfeedback").empty();
-                $("#passwfeedback").append("digite a mesma senha");
-            }
-            else
-            {
-                $("#passwfeedback").empty();
-                $("#password0").addClass("is-valid");
-                $("#password1").addClass("is-valid");
-
-                var $form = $(this);
-
-                var url = $form.attr("action");
-
-                var fields = $form.serializeArray();
-
-                var p = $.post(url, fields);
-
-                p.done(function(data)
-                {
-                    if (data === "status:cpfinvalid")
-                    {
-                        $("#cpf").addClass("is-invalid");
-                        $("#cpffeedback").empty();
-                        $("#cpffeedback").append("cpf já existe");
-                    }
-                    else
-                    {
-                        $("#add_user_m").modal("toggle");
-
-                        $form.trigger('reset');
-
-                        $("#cpf").removeClass("is-valid");
-                        $("#cpf").removeClass("is-invalid");
-
-                        $("#password0").removeClass("is-invalid");
-                        $("#password1").removeClass("is-invalid");
-                        $("#password0").removeClass("is-valid");
-                        $("#password1").removeClass("is-valid");
-
-                        makelist();
-                    }
-                });
-            }
+            makelist();
         }
-    });
 
-    makelist();
+        makelist();
     </script>
 
 </body>
