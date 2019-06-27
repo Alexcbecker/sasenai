@@ -23,10 +23,7 @@ include "../../database/autenticacao/sessaovalidate.php";
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                    <a class="nav-link" href="navbar_usuario.php?folder=shop&file=shopping.html">Compras</a>
-                </li>
+            <ul class="navbar-nav mr-auto">               
                 <li class="nav-item">
                     <a class="nav-link" href="navbar_usuario.php?folder=&file=back_perfil.php">Perfil</a>
                 </li>
@@ -35,6 +32,9 @@ include "../../database/autenticacao/sessaovalidate.php";
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="navbar_usuario.php?folder=../ranking&file=ranking.html">Ranking</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="navbar_usuario.php?folder=shop&file=shopping.html">Compras</a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>

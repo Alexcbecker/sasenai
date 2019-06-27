@@ -32,6 +32,9 @@ include "../../database/autenticacao/sessaovalidate.php";
                 <li class="nav-item">
                   <a class="nav-link" href="navbar_lider.php?folder=../ranking&file=ranking.html">Ranking</a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="navbar_usuario.php?folder=shop&file=shopping.html">Compras</a>
+                </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="../../database/autenticacao/logout.php">Sair</a>
                 </li>
