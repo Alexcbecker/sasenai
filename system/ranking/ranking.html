@@ -1,0 +1,222 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="../../css/componente_multiselecao.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+</head>
+
+<body>
+    <div style=" margin-top:3%;" class="borda">
+        <h3>Ranking</h3>
+        <div class="container">
+            <div class="row">
+                <div class="btn-group" role="group">
+                    <button type="button" id="general_b" class="btn btn-secondary btn-sm" onclick="makelist_general()">Geral</button>
+                    <button type="button" id="campaign_b" class="btn btn-secondary btn-sm" onclick="makelist_campaign()">Campanha</button>
+                    <button type="button" id="group_b" class="btn btn-secondary btn-sm" onclick="makelist_group()">Grupo</button>
+                </div>
+            </div>
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <div id="ranking_general_d">
+                        <table class="table table-striped" id="ranking_general">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação</th>
+                                    <th scope="col">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="ranking_campaign_d">
+                        <select class="form-control form-control-sm" id="campaign_select">
+                        </select>
+                        <table class="table table-striped" id="ranking_campaign" style="margin-top:2%;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação</th>
+                                    <th id="user_name_col" scope="col">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="ranking_group_d">
+                        <table class="table table-striped" id="ranking_group">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Pontuação</th>
+                                    <th scope="col">Grupo</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" id="table_progress">
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function show_progss()
+        {
+            $("#ranking_general_d").hide();
+            $("#ranking_campaign_d").hide();
+            $("#ranking_group_d").hide();
+            $("#table_progress").show();
+        }
+
+
+        function makelist_general() 
+        {
+            show_progss();
+
+            $("#campaign_b").removeClass("active");
+            $("#group_b").removeClass("active");
+            $("#general_b").addClass("active");
+
+            $.getJSON("../ranking/fetch_ranking_general.php", function (data)
+            {
+                $("#ranking_general tbody").empty();
+                var tr = "";
+
+                $.each(data, function (key, value)
+                {
+                    tr += "<tr>";
+                    tr += "<td>" + value.points + "</td>";
+                    tr += "<td>" + value.name + "</td>";
+                    tr += "</tr>";
+                });
+
+                $("#ranking_general tbody").append(tr);
+
+                $("#table_progress").hide();
+                if ($("#general_b").hasClass("active")) $("#ranking_general_d").fadeIn("fast");
+            });
+        }
+
+
+        function makelist_campaign()
+        {
+            show_progss();
+
+            $("#general_b").removeClass("active");
+            $("#group_b").removeClass("active");
+            $("#campaign_b").addClass("active");
+
+            $.getJSON("../ranking/fetch_campaigns.php", function (data)
+            {
+                $("#campaign_select").empty();
+                var bd = "";
+
+                $.each(data, function (key, value)
+                {
+                    if (key == 0)
+                    {
+                        var url = "";
+                        
+                        if (value.user_type == "Individual") 
+                        {
+                            $("#user_name_col").text("Nome");
+                            url = "../ranking/fetch_ranking_campaign.php";
+                        }
+                        else if (value.user_type == "Grupo") 
+                        {
+                            $("#user_name_col").text("Grupo");
+                            url = "../ranking/fetch_ranking_campaign_group.php";
+                        }
+                        
+                        $.getJSON(url, { id: value.id }, (wdata) => makelist_campaign_table(wdata));
+                    }
+
+                    bd += "<option>" + value.name + "</option>";
+                });
+
+                $("#campaign_select").append(bd);
+
+                $("#table_progress").hide();
+                if ($("#campaign_b").hasClass("active")) $("#ranking_campaign_d").fadeIn("fast");
+            });
+        }
+
+
+        $("#campaign_select").on("change", function ()
+        {
+            $.getJSON("../ranking/fetch_campaign.php", { name: $("#campaign_select option:selected").text() }, function (data)
+            {
+                var url = "";
+
+                if (data.user_type == "Individual") 
+                {
+                    $("#user_name_col").text("Nome");
+                    url = "../ranking/fetch_ranking_campaign.php";
+                }
+                else if (data.user_type == "Grupo") 
+                {
+                    $("#user_name_col").text("Grupo");
+                    url = "../ranking/fetch_ranking_campaign_group.php";
+                }
+
+                $.getJSON(url, { id: data.id }, (wdata) => makelist_campaign_table(wdata));
+            });
+        });
+
+
+        function makelist_campaign_table(data)
+        {
+            $("#ranking_campaign tbody").empty();
+            var tr = "";
+
+            $.each(data, function (key, value)
+            {
+                tr += "<tr>";
+                tr += "<td>" + value.points + "</td>";
+                tr += "<td>" + value.name + "</td>";
+                tr += "</tr>";
+            });
+
+            $("#ranking_campaign tbody").append(tr);
+        }
+
+
+        function makelist_group()
+        {
+            show_progss();
+
+            $("#general_b").removeClass("active");
+            $("#campaign_b").removeClass("active");
+            $("#group_b").addClass("active");
+
+            $.getJSON("../ranking/fetch_ranking_group.php", function (data)
+            {
+                $("#ranking_group tbody").empty();
+                var tr = "";
+
+                $.each(data, function (key, value)
+                {
+                    tr += "<tr>";
+                    tr += "<td>" + value.points + "</td>";
+                    tr += "<td>" + value.group + "</td>";
+                    tr += "</tr>";
+                });
+
+                $("#ranking_group tbody").append(tr);
+
+                $("#table_progress").hide();
+
+                if ($("#group_b").hasClass("active")) $("#ranking_group_d").fadeIn("fast");
+            });
+        }
+
+        makelist_general();
+    </script>
+</body>
+
+</html>
