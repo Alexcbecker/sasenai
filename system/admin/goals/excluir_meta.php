@@ -12,7 +12,7 @@
     $msg  = "Meta concluída com sucesso";
     $status ="success";
   }  else{
-    $msg = "Erro ao excluir";
+    $msg = "Erro ao concluir";
   }
   header("Location: ../navbar.php?folder=goals&file=tela_editar_meta.php&status=".$status."&mensagem=".$msg."");
 ?>

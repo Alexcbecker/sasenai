@@ -10,7 +10,7 @@
     $msg  = "Grupo removido com sucesso";
     $status ="success";
   }  else{
-    $msg = "Erro ao remover";
+    $msg = "Erro ao remover grupo";
   }
  header("Location: ../navbar.php?folder=goals&file=tela_editar_meta.php&status=".$status."&mensagem=".$msg."");
 ?>

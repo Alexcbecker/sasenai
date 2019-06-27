@@ -19,7 +19,7 @@ if ($inseriu > 0) {
  $status = "success";
 }else{
 
-    $mensagem = "Erro ao cadastrar grupo";
+    $mensagem = "Já existe um grupo cadastrado com este nome.";
 
 }
 

@@ -52,7 +52,7 @@
                 </select>
               </div>
 
-              <button type="submit" class="btn btn-success botao" >ver</button>
+              <button type="submit" class="btn btn-success botao" >Ver</button>
             </div>
           </form>
 
@@ -71,7 +71,7 @@
                 <th scope="col">Campanha</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Bonificação</th>
-                <th scope="col">Variante de pontos</th>
+                <th scope="col">Variante pontos</th>
                 <th scope="col">Ações</th>
 
               </tr>
@@ -139,7 +139,7 @@
                     <th scope="col">CPF</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Tipo</th>
-                    <th scope="col">ações</th>
+                    <th scope="col">Ações</th>
 
                   </tr>
                 </thead>

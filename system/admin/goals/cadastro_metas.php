@@ -80,7 +80,7 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 	<div class="container">
 		<div class="borda" style=" margin-top:3%;">
 			<form action='goals/back_cadastro_metas.php' method='post'>
-				<h1>Cadastro de metas</h1>
+				<h1>Cadastro de Metas</h1>
 				<div class="form-group">
 					<label for="exampleFormControlInput1">Nome da meta</label>
 					<input type="text" class="form-control" name='nome' id="nomeMeta" required>
@@ -140,11 +140,11 @@ while($linha1 = mysqli_fetch_array($select1,MYSQLI_ASSOC)){
 				<div class="form-row">
 					<div class="col">
 						<label for="pontuacao"></label>
-						Bonificação  <input type="number"  name='bonificacao' class="form-control" id="pontuacao" placeholder="pontuação" required="required">
+						Bonificação  <input type="number"  name='bonificacao' class="form-control" id="pontuacao" placeholder="Pontuação" required="required">
 					</div>
 					<div class="col">
 						<label for="variante_de_pontos"></label>
-						Variante de Pontos <input type="number" name='variante_pontos' class="form-control" id="variante_de_pontos" placeholder="variante de pontos" required="required">
+						Variante de Pontos <input type="number" name='variante_pontos' class="form-control" id="variante_de_pontos" placeholder="Variante de pontos" required="required">
 					</div>
 				</div>
 				<div class="form-group">

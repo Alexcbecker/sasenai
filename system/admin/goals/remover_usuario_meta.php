@@ -7,10 +7,10 @@
   $sql_del  = "DELETE FROM `metas_has_colaboradores` WHERE  `colaboradores_id`= {$id} " ;
   $result = mysqli_query($con, $sql_del);
   if ($result) {
-    $msg  = "colaborador removido com sucesso";
+    $msg  = "Colaborador removido com sucesso";
     $status ="success";
   }  else{
-    $msg = "Erro ao remover";
+    $msg = "Erro ao remover colaborador da meta";
   }
   header("Location: ../navbar.php?folder=goals&file=tela_editar_meta.php&status=".$status."&mensagem=".$msg."");
 ?>

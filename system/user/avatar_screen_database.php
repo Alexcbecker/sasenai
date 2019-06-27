@@ -9,7 +9,7 @@ $userId = $_SESSION['id'];
 
 include_once("../../database/conexao_bd.php");
 
-$itens = mysqli_query($con, "SELECT * FROM itens");
+$itens = mysqli_query($con, "SELECT * FROM itens WHERE tipo = 1");
 
 $resultEquipedItens = mysqli_query($con, "SELECT avatares.id as 'avatarid', avatares_has_itens.itens_id as 'itensId',itens.caminho, itens.slot FROM avatares INNER JOIN avatares_has_itens ON avatares.id=avatares_has_itens.avatares_id INNER JOIN itens ON itens.id=avatares_has_itens.itens_id WHERE avatares.colaboradores_id='$userId' AND avatares_has_itens.status='1'");
 
