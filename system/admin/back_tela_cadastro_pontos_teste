@@ -42,7 +42,7 @@ foreach ($queryMetasIndividuais as $metasIndividuais) {
 		$atualizaStatusMetaQuantidade = mysqli_query($con, "UPDATE metas_has_colaboradores SET metas_has_colaboradores.status = 1 WHERE metas_has_colaboradores.objetivo_conquistado = $objetivoMeta");
 		//Cadastrar pontos ao concluir a meta
 		$atualizouStatusMeta = mysqli_affected_rows($con);
-		if($atualizouStatusMeta = 1)
+		if($atualizouStatusMeta = 1) {
 			$pontosMeta = $metasIndividuais['pontos'];
 			$atualizaPontosGrupo = mysqli_query($con,"UPDATE metas_has_colaboradores AS mc INNER JOIN colaboradores AS c ON mc.colaboradores_id=c.id SET mc.pontos_conquistados = mc.pontos_conquistados + $pontosMeta, c.pontos = c.pontos + $pontosMeta, c.creditos = c.creditos + $pontosMeta WHERE mc.metas_id = $idMeta AND mc.status = 1 AND mc.colaboradores_id = $idColaborador");
 		}
@@ -67,7 +67,7 @@ foreach ($queryMetasGrupo as $metasGrupo) {
 		$atualizaStatusMetaValor = mysqli_query($con, "UPDATE metas_has_colaboradores_has_grupos SET metas_has_colaboradores_has_grupos.status = 1 WHERE metas_has_colaboradores_has_grupos.objetivo_conquistado = $objetivoMeta");
 		//Cadastrar pontos ao concluir a meta
 		$atualizouStatusMeta = mysqli_affected_rows($con);
-		if($atualizouStatusMeta = 1)
+		if($atualizouStatusMeta = 1) {
 			$pontosMetaGrupo = $metasGrupo['pontos'];
 			$atualizaValor = "UPDATE metas_has_colaboradores_has_grupos AS mc INNER JOIN (SELECT id, colaboradores_has_grupos.colaboradores_id from colaboradores_has_grupos)cg ON cg.id = mc.colaboradores_has_grupos_id INNER JOIN colaboradores AS c ON cg.colaboradores_id=c.id SET mc.objetivo_conquistado = mc.pontos_conquistados = mc.pontos_conquistados + $pontosMetaGrupo, c.pontos = c.pontos + $pontosMetaGrupo, c.creditos = c.creditos + $pontosMetaGrupo WHERE mc.metas_id = $idMeta AND mc.status = 1 AND cg.colaboradores_id = $idColaborador";
 			$queryAtualizaValor = mysqli_query($con, $atualizaValor);
@@ -87,7 +87,7 @@ foreach ($queryMetasGrupo as $metasGrupo) {
 		$atualizaStatusMetaQuantidade = mysqli_query($con, "UPDATE metas_has_colaboradores_has_grupos SET metas_has_colaboradores_has_grupos.status = 1 WHERE metas_has_colaboradores_has_grupos.objetivo_conquistado = $objetivoMeta");
 		//Cadastrar pontos ao concluir a meta
 		$atualizouStatusMeta = mysqli_affected_rows($con);
-		if($atualizouStatusMeta = 1)
+		if($atualizouStatusMeta = 1) {
 			$pontosMetaGrupo = $metasGrupo['pontos'];
 			$atualizaValor = "UPDATE metas_has_colaboradores_has_grupos AS mc INNER JOIN (SELECT id, colaboradores_has_grupos.colaboradores_id from colaboradores_has_grupos)cg ON cg.id = mc.colaboradores_has_grupos_id INNER JOIN colaboradores AS c ON cg.colaboradores_id=c.id SET mc.objetivo_conquistado = mc.pontos_conquistados = mc.pontos_conquistados + $pontosMetaGrupo, c.pontos = c.pontos + $pontosMetaGrupo, c.creditos = c.creditos + $pontosMetaGrupo WHERE mc.metas_id = $idMeta AND mc.status = 1 AND cg.colaboradores_id = $idColaborador";
 			$queryAtualizaValor = mysqli_query($con, $atualizaValor);
