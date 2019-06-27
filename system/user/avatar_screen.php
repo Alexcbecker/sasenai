@@ -90,7 +90,7 @@ function checkVisibility($param) {
 										<a class="nav-link active" id="hair-tab" data-toggle="tab" href="#hair" role="tab" aria-controls="hair" aria-selected="true">Cabelos</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="torso-tab" data-toggle="tab" href="#Dorso" role="tab" aria-controls="torso" aria-selected="false">Dorso</a>
+										<a class="nav-link" id="torso-tab" data-toggle="tab" href="#torso" role="tab" aria-controls="torso" aria-selected="false">Dorso</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" id="legs-tab" data-toggle="tab" href="#legs" role="tab" aria-controls="legs" aria-selected="false">Pernas</a>
@@ -216,9 +216,9 @@ function checkVisibility($param) {
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-12">
-				Rank
-				<div class="rank">
 
+				<div class="rank" style="margin-top:17px;">
+<img class="imgItems" src="../../images/real_items/construcao.png" style="height:300px; margin-top:70px;">
 				</div>
 			</div>
 		</div>
