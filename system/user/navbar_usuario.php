@@ -39,11 +39,11 @@ include "../../database/autenticacao/sessaovalidate.php";
                 </ul>
 
                 <span class="navbar-text ml-1" style="width: 150px;">
-                Créditos: <?php echo $_SESSION['pontos']; ?>
+                Créditos: <?php echo $_SESSION['creditos']; ?>
                 </span>
 
                 <span class="navbar-text" style="width: 150px;">
-                Pontos: <?php echo $_SESSION['creditos']; ?>
+                Pontos: <?php echo $_SESSION['pontos']; ?>
                 </span>
         </div>
     </nav>

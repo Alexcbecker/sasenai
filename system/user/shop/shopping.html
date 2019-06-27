@@ -56,8 +56,8 @@
                     <p style="text-align:center;"><img id="image_path_m" width="120" height="120"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="submit_buy()">comprar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submit_buy()">Comprar</button>
                 </div>
             </div>
         </div>
@@ -88,22 +88,22 @@
                 {
                     case "ok":
                         $("#buy_alert").addClass("alert-success");
-                        $("#alert_message").text("compra efetuada com sucesso.");
+                        $("#alert_message").text("Compra efetuada com sucesso.");
                         break;
 
                     case "invalid_value":
                         $("#buy_alert").addClass("alert-warning");
-                        $("#alert_message").text("saldo insuficiente.");
+                        $("#alert_message").text("Saldo insuficiente.");
                         break;
 
                     case "empty":
                         $("#buy_alert").addClass("alert-info");
-                        $("#alert_message").text("não há itens disponíveis.");
+                        $("#alert_message").text("Não há itens disponíveis.");
                         break;
 
                     case "error":
                         $("#buy_alert").addClass("alert-danger");
-                        $("#alert_message").text("error ao completar a compra.");
+                        $("#alert_message").text("Erro ao completar a compra.");
                         break;
                 }
 
@@ -134,7 +134,7 @@
                     tr += '<td>' + value.name + '</td>';
                     tr += '<td>' + value.value + '</td>';
                     tr += '<td>' + value.amount + '</td>';
-                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="buy_item(\'' + value.name + '\')">comprar</button></td>';
+                    tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="buy_item(\'' + value.name + '\')">Comprar</button></td>';
                     tr += '</tr>';
                 });
 

@@ -34,6 +34,7 @@ if ($_SESSION['id_sessao']  == session_id())
                     $conn->query("UPDATE itens SET quantidade='{$qnd}' WHERE nome='{$_POST['name']}'");
 
                     $error = 'ok';
+                    $_SESSION['creditos'] = $value;
                 }
                 else $error = 'invalid_value';
             }
