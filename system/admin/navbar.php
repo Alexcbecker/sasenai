@@ -16,7 +16,7 @@ include "../../database/autenticacao/sessaovalidate.php";
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-default-blue navbar-fixed-top" style="background-color: #00a7e1;">
 
-      <a class="navbar-brand" href="navbar.php?folder=&file=admin.php">
+      <a class="navbar-brand" href="navbar.php?folder=&file=tela_cadastro_pontos.php">
         <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top"
         alt="random image"> Olá <?php echo $_SESSION['nome']; ?>
       </a>
@@ -26,18 +26,11 @@ include "../../database/autenticacao/sessaovalidate.php";
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="navbar.php?folder=../ranking&file=ranking.html">Ranking</a>
+            <a class="nav-link" href="navbar.php?folder=&file=tela_cadastro_pontos.php">Pontos</a>
           </li>
-          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Usuários
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_cadastro_usuario.php">Cadastro de usuário</a>
-            <a class="dropdown-item" href="navbar.php?folder=users_cad&file=tela_editar_usuario.php">Editar usuário</a>
-          </div>
-
+          <li class="nav-item">
+            <a class="nav-link" href="navbar.php?folder=users&file=user_list.html">Usuário</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -71,15 +64,14 @@ include "../../database/autenticacao/sessaovalidate.php";
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            Grupos
+            Itens
             </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="navbar.php?folder=items&file=tela_cadastro_item.php">Cadastro de item</a>
             <a class="dropdown-item" href="navbar.php?folder=items&file=tela_editar_item.php">Editar item</a>
           </div>
-
             <li class="nav-item">
-              <a class="nav-link" href="navbar.php?folder=users&file=user_list.html">Usuário</a>
+              <a class="nav-link" href="navbar.php?folder=../ranking&file=ranking.html">Ranking</a>
             </li>
 
           <li class="nav-item active">
@@ -93,11 +85,9 @@ include "../../database/autenticacao/sessaovalidate.php";
         <div class="col-12">
           <?php
           if (isset($_GET['folder'])  &&  isset($_GET['file'])) {
-            if (@include $_GET['folder']."/".$_GET['file']) {
-
-            }
+            if (@include $_GET['folder']."/".$_GET['file']) {}
           }else{
-
+            // header("Location: navbar.php?folder=&file=tela_cadastro_pontos.php");
           }
           ?>
         </div>
