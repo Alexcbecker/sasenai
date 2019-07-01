@@ -10,7 +10,7 @@ if ($_SESSION['id_sessao']  == session_id())
 {
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-    mysqli_set_charset($conn, "utf8");
+    $conn->set_charset("utf8");
 
     $q = "SELECT * FROM colaboradores";
 

@@ -13,7 +13,7 @@
     <script>
         $(document).ready(function () { 
             var $seuCampoCpf = $("#cpf");
-            $seuCampoCpf.mask('000.000.000-00', {reverse: true});
+            //$seuCampoCpf.mask('000.000.000-00', {reverse: true});
         });
     </script>
 </head>

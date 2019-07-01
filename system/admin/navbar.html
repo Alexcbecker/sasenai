@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="../jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body style="background: whitesmoke">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="nav_bar" style="display: none;">
+    <a class="navbar-brand" href="" id="brand">
+      <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
+      <span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_b" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav_b">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="nav_list">
+        <li class="nav-item" id="points"><a class="nav-link" href="#" role="button" onclick="set_page('points')">Pontos</a></li>
+        <li class="nav-item" id="users"><a class="nav-link" href="#" role="button" onclick="set_page('users')">Usuários</a></li>
+        <li class="nav-item" id="groups"><a class="nav-link" href="#" role="button" onclick="set_page('groups')">Grupos</a></li>
+        <li class="nav-item" id="camps"><a class="nav-link" href="#" role="button" onclick="set_page('camps')">Campanhas</a></li>
+        <li class="nav-item" id="mets"><a class="nav-link" href="#" role="button" onclick="set_page('mets')">Metas</a></li>
+        <li class="nav-item" id="items"><a class="nav-link" href="#" role="button" onclick="set_page('items')">Itens</a></li>
+        <li class="nav-item" id="ranking"><a class="nav-link" href="#" role="button" onclick="set_page('ranking')">Ranking</a></li>
+      </ul>
+      <div class="navbar-nav my-2 my-lg-0">
+        <a class="nav-link" href="#" role="button" onclick="confirm_exit()">Sair</a>
+      </div>
+      
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row justify-content-center" id="content_main"></div>
+  </div>
+  </div>
+  <div class="modal fade" id="exit_m" tabindex="-1" role="dialog" aria-labelledby="adduser_m" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Comfirmar saida?</h5>
+        </div>
+        <div class="modal-body">
+          <form action="../../database/autenticacao/logout.php" style="text-align:right;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Sair</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function ()
+    {
+      $.getJSON("../../database/autenticacao/fetch_auth.php", function (data) 
+      {
+        $("#brand span").html("Olá " + data.name);
+        $("#nav_bar").show();
+
+        set_page("points");
+      });
+    });
+
+
+    function confirm_exit() { $("#exit_m").modal("show"); }
+
+
+    function set_page(name)
+    {
+      $("#content_main").hide();
+
+      $("#nav_b ul li").each(function () { $(this).removeClass("active"); });
+      $("#" + name).addClass("active");
+
+      var link = "";
+
+      switch (name)
+      {
+        case "points": link = "points/points.html"; break;
+        case "users": link = "users/user_list.html"; break;
+        case "groups": link = "teams/teams.html"; break;
+        case "camps": link = "campaigns/camp.html"; break;
+        case "mets": link = "goals/goals.html"; break;
+        case "items": link = "items/items.html"; break;
+        case "ranking": link = "../ranking/ranking.html";
+      }
+
+      $("#content_main").load(link);
+      $("#content_main").fadeIn("fast");
+    }
+  </script>
+</body>
+
+</html>

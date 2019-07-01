@@ -6,15 +6,44 @@ $dbname = "bd_fito";
 
 session_start();
 
-if ($_SESSION['id_sessao']  == session_id())
-{
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-    mysqli_set_charset($conn, "utf8");
+if ($_SESSION['id_sessao']  != session_id()) die;
 
-    $q = "DELETE FROM colaboradores WHERE cpf<>{$_SESSION['cpf']} AND cpf={$_POST['cpf']}";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+$conn->set_charset("utf8");
+
+$q = <<<S
+SELECT id FROM colaboradores WHERE cpf <> {$_SESSION['cpf']} AND cpf = {$_POST['cpf']} 
+AND id NOT IN (SELECT colaboradores_id FROM metas_has_colaboradores)
+AND id NOT IN (SELECT colaboradores_id FROM colaboradores_has_grupos)
+S;
+
+$result = $conn->query($q);
+
+if ($row = $result->fetch_assoc())
+{
+    $q = "SELECT id FROM avatares WHERE colaboradores_id = {$row['id']}";
+
     $result = $conn->query($q);
-    $result = $conn->query($q);
+    
+    while ($r = $result->fetch_assoc())
+    {
+        $q = "DELETE FROM avatares_has_itens WHERE avatares_id = {$r['id']}";
+        $conn->query($q);
+    }
+
+    $q = "DELETE FROM avatares WHERE colaboradores_id = {$row['id']}";
+    $conn->query($q);
+
+    $q = "DELETE FROM colaboradores WHERE id = {$row['id']}";
+    $conn->query($q);
+
+    echo "status:ok";
 }
-else die;
+else echo "status:error";
+ 
+
+// $q = "DELETE FROM colaboradores WHERE cpf<>{$_SESSION['cpf']} AND cpf={$_POST['cpf']}";
+// $result = $conn->query($q);
+
 ?>

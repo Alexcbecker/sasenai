@@ -2,10 +2,8 @@
 
 <head>
     <meta charset="utf-8">
-
-    <link href="../../css/componente_multiselecao.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
-
+    
     <style>
         td input[type="checkbox"] {
             float: none;
@@ -15,7 +13,7 @@
 </head>
 
 <body>
-    <div class="borda" style=" margin-top:3%;">
+    <div class="borda">
         <h3>Usuários</h3>
         <div class="alert collapse alert-dismissible fade show" role="alert" id="item_alert">
             <span id="alert_message"></span>
@@ -25,7 +23,7 @@
             <div class="row">
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_user_m">Adicionar</button>
-                    <!-- <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button> -->
+                    <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_checked()" disabled>Remover</button>
                 </div>
             </div>
 
@@ -202,7 +200,26 @@
                     var $td = $(this).find('td');
                     var p = $.post("users/user_remove.php", { cpf: $td[3].innerHTML });
 
-                    p.done(() => makelist());
+                    p.done(function (data) 
+                    {
+                        $("#item_alert").removeClass("alert-success");
+                        $("#item_alert").removeClass("alert-danger");
+
+                        if (data === "status:ok")
+                        {
+                            $("#alert_message").text("Usuário removido.");
+                            $("#item_alert").addClass("alert-success");
+                        }
+                        else
+                        {
+                            $("#alert_message").text("Não foi possível remover usuário por estar em campanha.");
+                            $("#item_alert").addClass("alert-danger");
+                        }
+
+                        $("#item_alert").show();
+
+                        makelist();
+                    });
                 }
             });
         }
@@ -270,6 +287,7 @@
             });
         });
 
+
         function alert_close()
         {
             $("#item_alert").hide();
@@ -302,6 +320,7 @@
                 $("#userlist tbody").append(tr);
             });
         }
+
 
         $("#suform").submit(function (event)
         {
@@ -388,7 +407,7 @@
         {
             $("#add_user_m").modal("toggle");
 
-            $form.trigger('reset');
+            $("#suform").trigger('reset');
 
             $("#cpf").removeClass("is-valid");
             $("#cpf").removeClass("is-invalid");
@@ -401,6 +420,7 @@
             makelist();
         }
 
+        alert_close();
         makelist();
     </script>
 
