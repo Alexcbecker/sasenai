@@ -41,6 +41,7 @@
                                     <th scope="col">Imagem</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Valor</th>
+                                    <th scope="col">Slot</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -71,11 +72,115 @@
         </div>
     </div>
 
-    <div class="modal fade" id="add_real_m" tabindex="-1" role="dialog" aria-labelledby="add_real_m" aria-hidden="true">
+    <div class="modal fade" id="add_virt_m" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar usuário</h5>
+                    <h5 class="modal-title">Adicionar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="items/add_virt_item.php" id="add_virt_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="v_name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="v_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="v_value">Valor</label>
+                            <input type="number" class="form-control" name="value" id="v_value" required>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="statusw">Slot</legend>
+                                <select name="slot" id="v_slotw" class="form-control form-control-sm">
+                                    <option value="Fundo" selected>Fundo</option>
+                                    <option value="Corpo">Corpo</option>
+                                    <option value="Pés">Pés</option>
+                                    <option value="Pernas">Pernas</option>
+                                    <option value="Torso">Torso</option>
+                                    <option value="Cabelo">Cabelo</option>
+                                    <option value="Acessórios de cabeça">Acessórios de cabeça</option>
+                                    <option value="Acessórios gerais">Acessórios gerais</option>
+                                </select>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="v_filename" name="filename" required>
+                                <label class="custom-file-label" for="v_filename">selectionar imagem</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_virt_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="items/edit_virt_item.php" id="edit_virt_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="v_namew">Nome</label>
+                            <input type="text" class="form-control" name="name" id="v_namew" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="v_valuew">Valor</label>
+                            <input type="number" class="form-control" name="value" id="v_valuew" required>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="statusw">Slot</legend>
+                                <select name="slot" id="v_slotw" class="form-control form-control-sm">
+                                    <option value="Fundo" selected>Fundo</option>
+                                    <option value="Corpo">Corpo</option>
+                                    <option value="Pés">Pés</option>
+                                    <option value="Pernas">Pernas</option>
+                                    <option value="Torso">Torso</option>
+                                    <option value="Cabelo">Cabelo</option>
+                                    <option value="Acessórios de cabeça">Acessórios de cabeça</option>
+                                    <option value="Acessórios gerais">Acessórios gerais</option>
+                                </select>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="v_filenamew" name="filename">
+                                <label class="custom-file-label" for="v_filenamew">selectionar imagem</label>
+                            </div>
+                        </div>
+
+                        <input type="number" style="display: none;" name="id" id="v_idw">
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_real_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar usuário</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -105,7 +210,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button id="subb" type="submit" class="btn btn-primary">Adicionar</button>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
                     </form>
                 </div>
@@ -113,7 +218,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="edit_real_m" tabindex="-1" role="dialog" aria-labelledby="edit_real_m" aria-hidden="true">
+    <div class="modal fade" id="edit_real_m" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -149,7 +254,7 @@
                         <input type="number" style="display: none;" name="id" id="idw">
 
                         <div class="modal-footer">
-                            <button id="subb" type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -159,15 +264,163 @@
 
 
     <script>
+        function add_virt_item()
+        {
+            unselect_virt_items();
+            $("#add_virt_m").modal("show");
+        }
+
+
+        $("#add_virt_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = new FormData($("#add_virt_form")[0]);
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: fields,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Item adicionado.");
+                            $("#add_virt_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_virt();
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao adicionar item.");
+                            $("#add_virt_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_virt();
+                    }
+                },
+                error: function (data)
+                {
+                    set_alert_danger("Erro ao adicionar item.");
+                    $("#add_virt_m").modal("toggle");
+                    $form.trigger('reset');
+                }
+            });
+        });
+
+
+        $("#edit_virt_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = new FormData($("#edit_virt_form")[0]);
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: fields,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Item editado.");
+                            $("#edit_virt_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_virt();
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao editar item.");
+                            $("#edit_virt_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_virt();
+                    }
+                },
+                error: function (data)
+                {
+                    set_alert_danger("Erro ao editar item.");
+                    $("#edit_virt_m").modal("toggle");
+                    $form.trigger('reset');
+                }
+            });
+        });
+
+
+        function edit_virt_item(key)
+        {
+            var $list = $("#vlist tbody tr");
+            var $td = $list.eq(key).find('td');
+
+            $.getJSON("items/fetch_virt_item.php", { name: $td[1].innerHTML }, function (data)
+            {
+                $("#v_namew").val(data.name);
+                $("#v_slotw").val(data.slot);
+                $("#v_valuew").val(data.value);
+                $("#v_idw").val(data.id);
+
+                $("#edit_virt_m").modal("show");
+            });
+        }
+
+
+        function select_virt_item(key)
+        {
+            var $list = $("#vlist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_virt_item").attr("disabled", false);
+        }
+
+
         function unselect_virt_items()
         {
+            var $list = $("#vlist tbody tr").removeClass("table-active");
+            $("#button_remove_virt_item").attr("disabled", true);
+        }
 
+
+        function remove_virt_selected()
+        {
+            $("#vlist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.post("items/remove_item.php", { name: $td[1].innerHTML }, function (data)
+                    {
+                        if (data == "status:ok")
+                        {
+                            set_alert_success("Item removido.");
+
+                            makelist_virt();
+                        }
+                        else set_alert_danger("Erro remover item.");
+                    });
+                }
+            });
         }
 
 
         function makelist_virtual()
         {
-            $("#table_real_warn").hide();
+            $("#table_virt_warn").hide();
             $("#vlist").hide();
 
             $("#tab_virt").show();
@@ -182,6 +435,30 @@
             $("#table_real_warn").show();
 
             unselect_virt_items();
+
+            $.getJSON("items/fetch_real_items.php", function (data)
+            {
+                if (data.length > 0)
+                {
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_virt_item(' + key + ')">';
+                        tr += '<td>' + '<img src="../../' + value.image_path + '" width="90" height="90">' + '</td>';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.value + '</td>';
+                        tr += '<td>' + value.slot + '</td>';
+                        tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_virt_item(\'' + key + '\')">Editar</button></td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#rlist tbody").append(tr);
+                    $("#table_real_warn").hide();
+
+                    if ($("#real_b").hasClass("active")) $("#rlist").fadeIn();
+                }
+            });
         }
 
 
@@ -226,8 +503,6 @@
                     if ($("#real_b").hasClass("active")) $("#rlist").fadeIn();
                 }
             });
-
-            unselect_real_items();
         }
 
 
@@ -370,7 +645,7 @@
                 {
                     var $td = $(this).find('td');
 
-                    $.post("items/remove_real_item.php", { name: $td[1].innerHTML }, function (data)
+                    $.post("items/remove_item.php", { name: $td[1].innerHTML }, function (data)
                     {
                         if (data == "status:ok")
                         {

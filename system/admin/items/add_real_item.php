@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bd_fito";
-
-session_start();
-
-if ($_SESSION['id_sessao']  != session_id()) die;
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-mysqli_set_charset($conn, "utf8");
+include '../../base_db.php';
 
 $path = "../../../images/real_items/";
 $r_path = "images/real_items/";
@@ -24,5 +13,5 @@ if (move_uploaded_file($_FILES['filename']['tmp_name'], "{$path}{$file_name}"))
 
     echo "status:ok";
 }
-else echo "status:error";   
+else echo "status:error";
 ?>
