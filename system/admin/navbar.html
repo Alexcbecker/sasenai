@@ -6,9 +6,10 @@
   <script src="../jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="../base.js"></script>
 </head>
 
-<body style="background: whitesmoke">
+<body style="background: whitesmoke;background-image: url('../../images/19228.jpg');background-repeat: no-repeat;background-size: cover;" >
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="nav_bar" style="display: none;">
     <a class="navbar-brand" href="" id="brand">
       <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
@@ -21,9 +22,9 @@
     <div class="collapse navbar-collapse" id="nav_b">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="nav_list">
         <li class="nav-item" id="points"><a class="nav-link" href="#" role="button" onclick="set_page('points')">Pontos</a></li>
-        <li class="nav-item" id="users"><a class="nav-link" href="#" role="button" onclick="set_page('users')">Usuários</a></li>
-        <li class="nav-item" id="groups"><a class="nav-link" href="#" role="button" onclick="set_page('groups')">Grupos</a></li>
-        <li class="nav-item" id="camps"><a class="nav-link" href="#" role="button" onclick="set_page('camps')">Campanhas</a></li>
+        <li class="nav-item" id="users"><a class="nav-link" href="#" role="button" onclick="set_page('users')">Usuário</a></li>
+        <li class="nav-item" id="groups"><a class="nav-link" href="#" role="button" onclick="set_page('groups')">Grupo</a></li>
+        <li class="nav-item" id="camps"><a class="nav-link" href="#" role="button" onclick="set_page('camps')">Campanha</a></li>
         <li class="nav-item" id="mets"><a class="nav-link" href="#" role="button" onclick="set_page('mets')">Metas</a></li>
         <li class="nav-item" id="items"><a class="nav-link" href="#" role="button" onclick="set_page('items')">Itens</a></li>
         <li class="nav-item" id="ranking"><a class="nav-link" href="#" role="button" onclick="set_page('ranking')">Ranking</a></li>
@@ -55,6 +56,8 @@
   </div>
 
   <script>
+    $.ajaxSetup ({cache: false});
+
     $(function ()
     {
       $.getJSON("../../database/autenticacao/fetch_auth.php", function (data) 
@@ -62,7 +65,7 @@
         $("#brand span").html("Olá " + data.name);
         $("#nav_bar").show();
 
-        set_page("points");
+        set_page("groups");
       });
     });
 
@@ -90,7 +93,11 @@
         case "ranking": link = "../ranking/ranking.html";
       }
 
-      $("#content_main").load(link);
+      $("#content_main").load(link, function(response, status) 
+      {
+         if (status == "error") alert("error load page");
+      });
+
       $("#content_main").fadeIn("fast");
     }
   </script>

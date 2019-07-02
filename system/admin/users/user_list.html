@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
-    
+
     <style>
         td input[type="checkbox"] {
             float: none;
@@ -15,7 +15,7 @@
 <body>
     <div class="borda">
         <h3>Usuários</h3>
-        <div class="alert collapse alert-dismissible fade show" role="alert" id="item_alert">
+        <div class="alert collapse alert-dismissible fade show" style="display: none;" role="alert" id="item_alert">
             <span id="alert_message"></span>
             <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
         </div>
@@ -29,7 +29,7 @@
 
             <div class="row" style="margin-top:2%;">
                 <div class="table-responsive">
-                    <table class="table table-striped" id="userlist">
+                    <table class="table table-hover" id="userlist">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col"></th>
@@ -202,21 +202,8 @@
 
                     p.done(function (data) 
                     {
-                        $("#item_alert").removeClass("alert-success");
-                        $("#item_alert").removeClass("alert-danger");
-
-                        if (data === "status:ok")
-                        {
-                            $("#alert_message").text("Usuário removido.");
-                            $("#item_alert").addClass("alert-success");
-                        }
-                        else
-                        {
-                            $("#alert_message").text("Não foi possível remover usuário por estar em campanha.");
-                            $("#item_alert").addClass("alert-danger");
-                        }
-
-                        $("#item_alert").show();
+                        if (data === "status:ok") set_alert_success("Usuário removido.");
+                        else set_alert_danger("Não foi possível remover usuário por estar em campanha.");
 
                         makelist();
                     });
@@ -262,22 +249,8 @@
 
             p.done(function (data)
             {
-                $("#item_alert").removeClass("alert-success");
-                $("#item_alert").removeClass("alert-danger");
-
-                if (data === "status:ok")
-                {
-                    $("#alert_message").text("Usuário editado com sucesso.");
-                    $("#item_alert").addClass("alert-success");
-
-                }
-                else
-                {
-                    $("#alert_message").text("Erro ao editar usuário.");
-                    $("#item_alert").addClass("alert-danger");
-                }
-
-                $("#item_alert").show();
+                if (data === "status:ok") set_alert_success("Usuário editado com sucesso.");
+                else set_alert_danger("Erro ao editar usuário.");
 
                 $("#edit_user_m").modal("toggle");
 
@@ -288,10 +261,7 @@
         });
 
 
-        function alert_close()
-        {
-            $("#item_alert").hide();
-        }
+
 
 
         function makelist()
@@ -369,9 +339,6 @@
 
                     p.done(function (data)
                     {
-                        $("#item_alert").removeClass("alert-success");
-                        $("#item_alert").removeClass("alert-danger");
-
                         switch (data)
                         {
                             case "status:cpfinvalid":
@@ -381,18 +348,13 @@
                                 break;
 
                             case "status:ok":
-                                $("#alert_message").text("Usuário cadastrado com sucesso.");
-                                $("#item_alert").addClass("alert-success");
-                                $("#item_alert").show();
-
+                                set_alert_success("Usuário cadastrado com sucesso.");
                                 clear_form();
                                 break;
 
 
                             default:
-                                $("#alert_message").text("Erro ao adicionar usuário.");
-                                $("#item_alert").addClass("alert-danger");
-                                $("#item_alert").show();
+                                set_alert_danger("Erro ao adicionar usuário.");
 
                                 clear_form();
                                 break;
@@ -420,8 +382,7 @@
             makelist();
         }
 
-        alert_close();
-        makelist();
+        $(function () { makelist(); });
     </script>
 
 </body>

@@ -2,17 +2,398 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
 </head>
 
 <body>
     <div class="borda">
         <h3>Itens</h3>
-        
+        <div class="alert collapse alert-dismissible fade show" style="display: none;" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" id="virt_b" class="btn btn-secondary btn-sm" onclick="makelist_virtual()">Virtual</button>
+                        <button type="button" id="real_b" class="btn btn-secondary btn-sm" onclick="makelist_real()">Físico</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_virt">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="add_virt_item()">Adicionar</button>
+                        <button type="button" id="button_remove_virt_item" class="btn btn-secondary btn-sm" onclick="remove_virt_selected()" disabled>Remover</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_real">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="add_real_item()">Adicionar</button>
+                        <button type="button" id="button_remove_real_item" class="btn btn-secondary btn-sm" onclick="remove_real_selected()" disabled>Remover</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <div id="main_virt">
+                        <table class="table table-hover" id="vlist">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Imagem</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Valor</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <h6 style="text-align: center;" id="table_virt_warn">Nenhum item virtual cadastro.</h6>
+                    </div>
+                    <div id="main_real">
+                        <table class="table table-hover" id="rlist">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Imagem</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Valor</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <h6 style="text-align: center;" id="table_real_warn">Nenhum item real cadastrado.</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
+    <div class="modal fade" id="add_real_m" tabindex="-1" role="dialog" aria-labelledby="add_real_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="items/add_real_item.php" id="add_real_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="value">Valor</label>
+                            <input type="number" class="form-control" name="value" id="value" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Quantidade</label>
+                            <input type="number" class="form-control" name="quantity" id="quantity" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="filename" name="filename" required>
+                                <label class="custom-file-label" for="filename">selectionar imagem</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="subb" type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_real_m" tabindex="-1" role="dialog" aria-labelledby="edit_real_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="items/edit_real_item.php" id="edit_real_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="namew">Nome</label>
+                            <input type="text" class="form-control" name="name" id="namew" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="valuew">Valor</label>
+                            <input type="number" class="form-control" name="value" id="valuew" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantityw">Quantidade</label>
+                            <input type="number" class="form-control" name="quantity" id="quantityw" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="filenamew" name="filename">
+                                <label class="custom-file-label" for="filenamew">selectionar imagem</label>
+                            </div>
+                        </div>
+
+                        <input type="number" style="display: none;" name="id" id="idw">
+
+                        <div class="modal-footer">
+                            <button id="subb" type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+        function unselect_virt_items()
+        {
+
+        }
+
+
+        function makelist_virtual()
+        {
+            $("#table_real_warn").hide();
+            $("#vlist").hide();
+
+            $("#tab_virt").show();
+            $("#tab_real").hide();
+
+            $("#main_virt").show();
+            $("#main_real").hide();
+
+            $("#real_b").removeClass("active");
+            $("#virt_b").addClass("active");
+
+            $("#table_real_warn").show();
+
+            unselect_virt_items();
+        }
+
+
+        function makelist_real()
+        {
+            $("#table_real_warn").show();
+            $("#rlist").hide();
+
+            $("#tab_virt").hide();
+            $("#tab_real").show();
+
+            $("#main_virt").hide();
+            $("#main_real").show();
+
+            $("#real_b").addClass("active");
+            $("#virt_b").removeClass("active");
+
+            $("#rlist tbody").empty();
+
+            unselect_real_items();
+
+            $.getJSON("items/fetch_real_items.php", function (data)
+            {
+                if (data.length > 0)
+                {
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_real_item(' + key + ')">';
+                        tr += '<td>' + '<img src="../../' + value.image_path + '" width="90" height="90">' + '</td>';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.value + '</td>';
+                        tr += '<td>' + value.amount + '</td>';
+                        tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_real_item(\'' + key + '\')">Editar</button></td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#rlist tbody").append(tr);
+                    $("#table_real_warn").hide();
+
+                    if ($("#real_b").hasClass("active")) $("#rlist").fadeIn();
+                }
+            });
+
+            unselect_real_items();
+        }
+
+
+        function add_real_item()
+        {
+            unselect_real_items();
+            $("#add_real_m").modal("show");
+        }
+
+
+        $("#add_real_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = new FormData($("#add_real_form")[0]);
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: fields,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Item adicionado.");
+                            $("#add_real_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_real();
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao adicionar item.");
+                            $("#add_real_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_real();
+                    }
+                },
+                error: function (data)
+                {
+                    set_alert_danger("Erro ao adicionar item.");
+                    $("#add_real_m").modal("toggle");
+                    $form.trigger('reset');
+                }
+            });
+        });
+
+
+        $("#edit_real_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = new FormData($("#edit_real_form")[0]);
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: fields,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Item editado.");
+                            $("#edit_real_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_real();
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao editar item.");
+                            $("#edit_real_m").modal("toggle");
+                            $form.trigger('reset');
+                            makelist_real();
+                    }
+                },
+                error: function (data)
+                {
+                    set_alert_danger("Erro ao editar item.");
+                    $("#edit_real_m").modal("toggle");
+                    $form.trigger('reset');
+                }
+            });
+        });
+
+
+        function edit_real_item(key)
+        {
+            var $list = $("#rlist tbody tr");
+            var $td = $list.eq(key).find('td');
+
+            $.getJSON("items/fetch_real_item.php", { name: $td[1].innerHTML }, function (data)
+            {
+                $("#namew").val(data.name);
+                $("#quantityw").val(data.amount);
+                $("#valuew").val(data.value);
+                $("#idw").val(data.id);
+
+                $("#edit_real_m").modal("show");
+            });
+        }
+
+
+        function select_real_item(key)
+        {
+            var $list = $("#rlist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_real_item").attr("disabled", false);
+        }
+
+
+        function unselect_real_items()
+        {
+            var $list = $("#rlist tbody tr").removeClass("table-active");
+            $("#button_remove_real_item").attr("disabled", true);
+        }
+
+
+        function remove_real_selected()
+        {
+            $("#rlist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.post("items/remove_real_item.php", { name: $td[1].innerHTML }, function (data)
+                    {
+                        if (data == "status:ok")
+                        {
+                            set_alert_success("Item removido.");
+
+                            makelist_real();
+                        }
+                        else set_alert_danger("Erro remover item.");
+                    });
+                }
+            });
+        }
+
+
+        $(function () { makelist_real(); });
+
+        $('.custom-file-input').on('change', function ()
+        {
+            let filename = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(filename);
+        });
     </script>
+
 </body>
 
 </html>

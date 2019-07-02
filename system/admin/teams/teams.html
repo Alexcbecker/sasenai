@@ -2,17 +2,549 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
+
+    <style>
+        td input[type="checkbox"] {
+            float: none;
+            margin: 5px 5px auto auto;
+        }
+    </style>
 </head>
 
 <body>
     <div class="borda">
-        <h3>Grupos</h3>
-        
+        <h3>Grupo</h3>
+        <div class="alert collapse alert-dismissible fade show" style="display: none;" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" id="group_b" class="btn btn-secondary btn-sm" onclick="makelist_group()">Grupos</button>
+                        <button type="button" id="users_b" class="btn btn-secondary btn-sm" onclick="makelist_users()">Colaboradores</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_group">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="add_group()">Adicionar</button>
+                        <button type="button" id="button_remove" class="btn btn-secondary btn-sm" onclick="remove_selected()" disabled>Remover</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_users">
+                        <button type="button" id="button_add_user" class="btn btn-success btn-sm" onclick="add_user()" disabled>Adicionar Usuário</button>
+                        <button type="button" id="button_remove_user" class="btn btn-secondary btn-sm" onclick="remove_user_selected()" disabled>Desativar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <div id="main_group" style="display: none;">
+                        <table class="table table-hover" id="grouplist">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <h6 style="text-align: center;" id="table_group_warn">Nenhum grupo ainda foi adicionado.</h6>
+                    </div>
+                    <div id="main_users" style="display: none;">
+                        <label for="group_select">Grupo</label>
+                        <select class="form-control form-control-sm" id="group_select"></select>
+                        <div style="margin-top:2%;">
+                            <table class="table table-hover" id="userlist">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Cpf</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <h6 style="text-align: center;" id="table_user_warn">Nenhum usuário ainda foi adicionado.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_group_m" tabindex="-1" role="dialog" aria-labelledby="add_group_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar grupo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="teams/group_add.php" id="add_group_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="desc" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_group_m" tabindex="-1" role="dialog" aria-labelledby="edit_group_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar grupo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="teams/group_edit.php" id="edit_group_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="namew" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="descw" required></textarea>
+                        </div>
+                        <div class="fomr-group">
+                            <input type="text" class="form-control" name="id" id="idw" style="display: none">
+                        </div>
+                        <fieldset class="form-group">
+                            <label for="statusw">Status</legend>
+                                <select name="status" id="statusw" class="form-control form-control-sm">
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Desativado">Desativado</option>
+                                </select>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_user_group_m" tabindex="-1" role="dialog" aria-labelledby="add_user_group_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="teams/group_add_user.php" id="add_user_group_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <select class="form-control form-control-sm" name="value" id="user_name_select" required></select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        function select_item(key)
+        {
+            var $list = $("#grouplist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove").attr("disabled", false);
+        }
+
+
+        function unselect_items() 
+        {
+            var $list = $("#grouplist tbody tr").removeClass("table-active");
+            $("#button_remove").attr("disabled", true);
+        }
+
+
+        function remove_selected()
+        {
+            $("#grouplist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.getJSON("teams/fetch_group.php", { name: $td[0].innerHTML }, function (data)
+                    {
+                        $.post("teams/group_remove.php", { id: data.id }, function (data)
+                        {
+                            if (data === "status:ok") 
+                            {
+                                set_alert_success("Grupo removido.");
+                                makelist_group();
+                            }
+                            else set_alert_danger("Erro ao remover grupo.");
+                        });
+                    });
+                }
+            });
+        }
+
+
+        function edit_item(key)
+        {
+            var $list = $("#grouplist tbody tr");
+            var $td = $list.eq(key).find('td');
+
+            $.getJSON("teams/fetch_group.php", { name: $td[0].innerHTML }, function (data)
+            {
+                $("#namew").val(data.name);
+                $("#descw").val(data.desc);
+                $("#idw").val(data.id);
+                $("#statusw").val(data.status);
+
+                $("#edit_group_m").modal("show");
+            });
+        }
+
+
+        $("#edit_group_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = $form.serializeArray();
+
+            var p = $.post(url, fields);
+
+            p.done(function (data)
+            {
+                $("#namew").removeClass("is-invalid");
+
+                switch (data)
+                {
+                    case "status:name":
+                        $("#namew").addClass("is-invalid");
+                        break;
+
+                    case "status:ok":
+                        set_alert_success("Grupo editado.");
+                        $("#edit_group_m").modal("toggle");
+                        $form.trigger('reset');
+                        makelist_group();
+                        break;
+
+                    default:
+                        set_alert_danger("Erro ao editar grupo.");
+                        $("#edit_group_m").modal("toggle");
+                        $form.trigger('reset');
+                        makelist_group();
+                }
+            });
+        });
+
+
+        function add_group()
+        {
+            unselect_items();
+            $("#add_group_m").modal("show");
+        }
+
+
+        $("#add_group_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = $form.serializeArray();
+
+            var p = $.post(url, fields);
+
+            p.done(function (data)
+            {
+                $("#name").removeClass("is-invalid");
+
+                switch (data)
+                {
+                    case "status:name":
+                        $("#name").addClass("is-invalid");
+                        break;
+
+                    case "status:ok":
+                        set_alert_success("Grupo adicionado.");
+                        clear_form();
+                        break;
+
+                    default:
+                        set_alert_danger("Erro ao adicionar grupo.");
+                        clear_form();
+                        break;
+                }
+            });
+        });
+
+
+        function clear_form()
+        {
+            $("#add_group_m").modal("toggle");
+
+            $("#name").removeClass("is-invalid");
+            $("#add_group_form").trigger('reset');
+
+            makelist_group();
+        }
+
+
+        function makelist_group()
+        {
+            $("#tab_group").show();
+            $("#tab_users").hide();
+
+            $("#main_group").show();
+            $("#main_users").hide();
+
+            $("#users_b").removeClass("active");
+            $("#group_b").addClass("active");
+
+            unselect_items();
+
+            $("#grouplist").hide();
+            $("#table_group_warn").hide();
+
+            $.getJSON("teams/fetch_groups.php", function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#grouplist tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_item(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.desc + '</td>';
+                        tr += '<td>' + value.status + '</td>';
+                        tr += '<td style="text-align:center;"><button type="button" class="btn btn-secondary btn-sm" onclick="edit_item(' + key + ')">Editar</button></td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#grouplist tbody").append(tr);
+
+                    if ($("#group_b").hasClass("active")) $("#grouplist").fadeIn();
+                }
+                else if ($("#group_b").hasClass("active")) $("#table_group_warn").show();
+            });
+        }
+
+
+        function makelist_users()
+        {
+            $("#tab_group").hide();
+            $("#tab_users").show();
+
+            $("#main_group").hide();
+            $("#main_users").show();
+
+            $("#users_b").addClass("active");
+            $("#group_b").removeClass("active");
+
+            $("#group_select").empty();
+            $("#userlist").hide();
+
+            $("#button_add_user").attr("disabled", true);
+            $("#button_remove_user").attr("disabled", true);
+
+            $.getJSON("teams/fetch_groups.php", function (data)
+            {
+                if (data.length > 0 && $("#users_b").hasClass("active"))
+                {
+                    $("#button_add_user").attr("disabled", false);
+
+                    var bd = "";
+
+                    $.each(data, function (key, value)
+                    {
+                        if (key == 0) makelist_users_table(value.id);
+
+                        bd += "<option>" + value.name + "</option>";
+                    });
+
+                    $("#group_select").append(bd);
+                }
+            });
+        }
+
+
+        $("#group_select").on("change", function ()
+        {
+            $.getJSON("teams/fetch_group.php", { name: $("#group_select option:selected").text() }, function (data)
+            {
+                alert_close();
+                makelist_users_table(data.id);
+            });
+        });
+
+
+        function makelist_users_table(group_id)
+        {
+            $("#userlist").hide();
+            $("#table_user_warn").hide();
+            unselect_users();
+
+            $.getJSON("teams/fetch_group_users.php", { id: group_id }, function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#userlist tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_user(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.type + '</td>';
+                        tr += '<td>' + value.cpf + '</td>';
+                        tr += '<td>' + value.status + '</td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#userlist tbody").append(tr);
+                    if ($("#users_b").hasClass("active")) $("#userlist").fadeIn();
+                }
+                else if ($("#users_b").hasClass("active")) $("#table_user_warn").show();
+            });
+        }
+
+
+        function select_user(key)
+        {
+            var $list = $("#userlist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_user").attr("disabled", false);
+        }
+
+
+        function unselect_users() 
+        {
+            var $list = $("#userlist tbody tr").removeClass("table-active");
+            $("#button_remove_user").attr("disabled", true);
+        }
+
+
+        function remove_user_selected()
+        {
+            $("#userlist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.post("teams/group_user_remove.php", { value: $td[2].innerHTML }, function (data)
+                    {
+                        if (data === "status:ok")
+                        {
+                            set_alert_success("Usuário desativado.");
+
+                            $.getJSON("teams/fetch_group.php", { name: $("#group_select option:selected").text() }, function (cdata) { makelist_users_table(cdata.id); });
+                        }
+                        else set_alert_danger("Erro ao desativar usuário.");
+                    });
+                }
+            });
+        }
+
+
+        function add_user()
+        {
+            unselect_users();
+
+            $.getJSON("teams/fetch_users_add_group.php", function (data)
+            {
+                $("#user_name_select").empty();
+
+                var bd = "";
+
+                $.each(data, function (key, value)
+                {
+                    bd += "<option value=\"" + value.id + "\">" + value.name + " (" + value.type + ")" + "</option>";
+                });
+
+                $("#user_name_select").append(bd);
+
+                $("#add_user_group_m").modal("show");
+            });
+        }
+
+
+        $("#add_user_group_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            $.getJSON("teams/fetch_group.php", { name: $("#group_select option:selected").text() }, function (data)
+            {
+                var id = data.id;
+
+                var p = $.post(url, { group_id: id, user_id: $("#user_name_select option:selected").val() });
+
+                p.done(function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Usuário adicionado ao grupo " + $("#group_select option:selected").text());
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao adicionar usuário.");
+                            break;
+                    }
+
+                    makelist_users_table(id);
+                });
+            });
+
+
+        });
+
+        $(function () { makelist_group(); });
     </script>
+
 </body>
 
 </html>
