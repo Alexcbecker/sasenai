@@ -1,7 +1,9 @@
 <?php
 include '../../base_db.php';
 
-const $slots = ["Fundo" => 0, "Corpo" => 1, "Pés" => 2, "Pernas" => 3, "Torso" => 4, "Cabelo" => 5, "Acessórios de cabeça" => 6, "Acessórios gerais" => 7];
+const slots = ["Fundo" => 0, "Corpo" => 1, "Pés" => 2, "Pernas" => 3, "Torso" => 4, "Cabelo" => 5, "Acessórios de cabeça" => 6, "Acessórios gerais" => 7];
+
+$slot = slots[$_POST['slot']];
 
 if (isset($_FILES['filename']))
 {
@@ -11,7 +13,7 @@ if (isset($_FILES['filename']))
 
     if (move_uploaded_file($_FILES['filename']['tmp_name'], "{$path}{$file_name}"))
     {
-        $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, caminho = '{$r_path}{$file_name}', slot = {$slots[$_POST['slot']]} WHERE id = {$_POST['id']}";
+        $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, caminho = '{$r_path}{$file_name}', slot = {$slot} WHERE id = {$_POST['id']}";
 
         $conn->query($q);
     
@@ -19,7 +21,7 @@ if (isset($_FILES['filename']))
     }
     else
     {
-        $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, {$slots[$_POST['slot']]} WHERE id = {$_POST['id']}";
+        $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, slot = {$slot} WHERE id = {$_POST['id']}";
     
         $conn->query($q);
     
@@ -28,7 +30,7 @@ if (isset($_FILES['filename']))
 }
 else 
 {
-    $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, {$slots[$_POST['slot']]} WHERE id = {$_POST['id']}";
+    $q = "UPDATE itens SET nome = '{$_POST['name']}', valor = {$_POST['value']}, slot = {$slot} WHERE id = {$_POST['id']}";
     
     $conn->query($q);
     

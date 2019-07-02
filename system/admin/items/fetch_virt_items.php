@@ -1,9 +1,9 @@
 <?php
 include '../../base_db.php';
 
-const $slots = ["Fundo", "Corpo", "Pés", "Pernas", "Torso", "Cabelo", "Acessórios de cabeça", "Acessórios gerais"];
+const slots = ["Fundo", "Corpo", "Pés", "Pernas", "Torso", "Cabelo", "Acessórios de cabeça", "Acessórios gerais"];
 
-$q = "SELECT nome, valor, quantidade, caminho, id FROM itens WHERE tipo=2";
+$q = "SELECT nome, valor, caminho, id, slot FROM itens WHERE tipo=1";
 
 $result = $conn->query($q);
 
@@ -18,7 +18,7 @@ if ($result->num_rows > 0)
         $rowa['id'] = $row['id'];
         $rowa['name'] = $row['nome'];
         $rowa['value'] = $row['valor'];
-        $rowa['slot'] = $slots[$row['slot']];
+        $rowa['slot'] = slots[(int)$row['slot']];
         $rowa['image_path'] = $row['caminho'];
 
         array_push($data, $rowa);

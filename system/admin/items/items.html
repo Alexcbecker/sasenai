@@ -95,7 +95,7 @@
 
                         <fieldset class="form-group">
                             <label for="statusw">Slot</legend>
-                                <select name="slot" id="v_slotw" class="form-control form-control-sm">
+                                <select name="slot" id="v_slot" class="form-control form-control-sm">
                                     <option value="Fundo" selected>Fundo</option>
                                     <option value="Corpo">Corpo</option>
                                     <option value="Pés">Pés</option>
@@ -145,9 +145,9 @@
                         </div>
 
                         <fieldset class="form-group">
-                            <label for="statusw">Slot</legend>
+                            <label for="v_slotw">Slot</legend>
                                 <select name="slot" id="v_slotw" class="form-control form-control-sm">
-                                    <option value="Fundo" selected>Fundo</option>
+                                    <option value="Fundo">Fundo</option>
                                     <option value="Corpo">Corpo</option>
                                     <option value="Pés">Pés</option>
                                     <option value="Pernas">Pernas</option>
@@ -296,14 +296,13 @@
                             set_alert_success("Item adicionado.");
                             $("#add_virt_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_virt();
+                            makelist_virtual();
                             break;
 
                         default:
                             set_alert_danger("Erro ao adicionar item.");
                             $("#add_virt_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_virt();
                     }
                 },
                 error: function (data)
@@ -341,14 +340,13 @@
                             set_alert_success("Item editado.");
                             $("#edit_virt_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_virt();
+                            makelist_virtual();
                             break;
 
                         default:
                             set_alert_danger("Erro ao editar item.");
                             $("#edit_virt_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_virt();
                     }
                 },
                 error: function (data)
@@ -369,9 +367,9 @@
             $.getJSON("items/fetch_virt_item.php", { name: $td[1].innerHTML }, function (data)
             {
                 $("#v_namew").val(data.name);
-                $("#v_slotw").val(data.slot);
                 $("#v_valuew").val(data.value);
                 $("#v_idw").val(data.id);
+                $("#v_slotw").val(data.slot);
 
                 $("#edit_virt_m").modal("show");
             });
@@ -409,7 +407,7 @@
                         {
                             set_alert_success("Item removido.");
 
-                            makelist_virt();
+                            makelist_virtual();
                         }
                         else set_alert_danger("Erro remover item.");
                     });
@@ -420,7 +418,7 @@
 
         function makelist_virtual()
         {
-            $("#table_virt_warn").hide();
+            $("#table_virt_warn").show();
             $("#vlist").hide();
 
             $("#tab_virt").show();
@@ -432,12 +430,13 @@
             $("#real_b").removeClass("active");
             $("#virt_b").addClass("active");
 
-            $("#table_real_warn").show();
+            $("#vlist tbody").empty();
 
             unselect_virt_items();
 
-            $.getJSON("items/fetch_real_items.php", function (data)
+            $.getJSON("items/fetch_virt_items.php", function (data)
             {
+
                 if (data.length > 0)
                 {
                     var tr = '';
@@ -453,10 +452,10 @@
                         tr += '</tr>';
                     });
 
-                    $("#rlist tbody").append(tr);
-                    $("#table_real_warn").hide();
+                    $("#vlist tbody").append(tr);
+                    $("#table_virt_warn").hide();
 
-                    if ($("#real_b").hasClass("active")) $("#rlist").fadeIn();
+                    if ($("#virt_b").hasClass("active")) $("#vlist").fadeIn("slow");
                 }
             });
         }
@@ -500,7 +499,7 @@
                     $("#rlist tbody").append(tr);
                     $("#table_real_warn").hide();
 
-                    if ($("#real_b").hasClass("active")) $("#rlist").fadeIn();
+                    if ($("#real_b").hasClass("active")) $("#rlist").fadeIn("slow");
                 }
             });
         }
@@ -545,7 +544,6 @@
                             set_alert_danger("Erro ao adicionar item.");
                             $("#add_real_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_real();
                     }
                 },
                 error: function (data)
@@ -590,7 +588,6 @@
                             set_alert_danger("Erro ao editar item.");
                             $("#edit_real_m").modal("toggle");
                             $form.trigger('reset');
-                            makelist_real();
                     }
                 },
                 error: function (data)
@@ -660,7 +657,7 @@
         }
 
 
-        $(function () { makelist_real(); });
+        $(function () { makelist_virtual(); });
 
         $('.custom-file-input').on('change', function ()
         {

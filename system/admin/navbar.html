@@ -9,7 +9,7 @@
   <script src="../base.js"></script>
 </head>
 
-<body style="background: whitesmoke;background-image: url('../../images/19228.jpg');background-repeat: no-repeat;background-size: cover;" >
+<body style="background: whitesmoke;background-image: url('../../images/19228.jpg');background-repeat: no-repeat;background-attachment: fixed; background-size: cover; width: 100%; height: 100%;">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="nav_bar" style="display: none;">
     <a class="navbar-brand" href="" id="brand">
       <img src="../../images/image_login/logo_fito.png" width="30" height="30" class="dinline-block align-top" alt="random image">
@@ -35,10 +35,15 @@
       
     </div>
   </nav>
+  
+  <div >
+  </div>
+  
   <div class="container-fluid">
     <div class="row justify-content-center" id="content_main"></div>
   </div>
   </div>
+  
   <div class="modal fade" id="exit_m" tabindex="-1" role="dialog" aria-labelledby="adduser_m" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -65,7 +70,7 @@
         $("#brand span").html("Olá " + data.name);
         $("#nav_bar").show();
 
-        set_page("groups");
+        set_page("items");
       });
     });
 
