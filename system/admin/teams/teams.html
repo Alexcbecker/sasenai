@@ -360,7 +360,7 @@
 
                     $("#grouplist tbody").append(tr);
 
-                    if ($("#group_b").hasClass("active")) $("#grouplist").fadeIn();
+                    if ($("#group_b").hasClass("active")) $("#grouplist").fadeIn("slow");
                 }
                 else if ($("#group_b").hasClass("active")) $("#table_group_warn").show();
             });
@@ -439,7 +439,7 @@
                     });
 
                     $("#userlist tbody").append(tr);
-                    if ($("#users_b").hasClass("active")) $("#userlist").fadeIn();
+                    if ($("#users_b").hasClass("active")) $("#userlist").fadeIn("slow");
                 }
                 else if ($("#users_b").hasClass("active")) $("#table_user_warn").show();
             });
