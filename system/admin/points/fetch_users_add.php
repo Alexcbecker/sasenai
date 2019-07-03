@@ -3,7 +3,7 @@ include '../../base_db.php';
 
 $q = <<<S
 SELECT * FROM colaboradores
-WHERE colaboradores.id NOT IN (SELECT colaboradores_id FROM metas_has_colaboradores)
+WHERE colaboradores.id NOT IN (SELECT colaboradores_id FROM metas_has_colaboradores) AND tipo != 1 AND colaboradores.status = 0
 ORDER BY colaboradores.nome
 S;
 

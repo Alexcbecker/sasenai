@@ -34,8 +34,8 @@
                         <button type="button" id="users_b" class="btn btn-secondary" onclick="makelist_users_b()">Colaboradores</button>
                     </div>
                     <div class="btn-group mr-2" role="group">
-                    <button type="button" class="btn btn-primary" onclick="add_goal_usergroup()">Adicionar participante</button>
-                    <button type="button" class="btn btn-secondary" onclick="set_goal()" id="button_goal">Finalizar</button>
+                        <button type="button" class="btn btn-primary" onclick="add_goal_usergroup()">Adicionar participante</button>
+                        <button type="button" class="btn btn-secondary" onclick="set_goal()" id="button_goal">Finalizar</button>
                     </div>
                 </div>
             </div>
@@ -95,8 +95,8 @@
                             <label for="name">Nome</label>
                             <select class="form-control" name="name" id="group_name_select" required></select>
                         </div>
-                        <input type="text" class="form-control" name="user_id" id="group_id">
-                        <input type="text" class="form-control" name="goal_id" id="group_goal_id">
+                        <input type="text" class="form-control" name="user_id" id="group_id" style="display: none">
+                        <input type="text" class="form-control" name="goal_id" id="group_goal_id" style="display: none">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
@@ -121,8 +121,8 @@
                             <label for="name">Nome</label>
                             <select class="form-control" name="name" id="user_name_select" required></select>
                         </div>
-                        <input type="text" class="form-control" name="user_id" id="user_id">
-                        <input type="text" class="form-control" name="goal_id" id="user_goal_id">
+                        <input type="text" class="form-control" name="user_id" id="user_id" style="display: none">
+                        <input type="text" class="form-control" name="goal_id" id="user_goal_id" style="display: none">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
@@ -131,7 +131,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="add_group_m" tabindex="-1" role="dialog" aria-labelledby="add_group_m" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -146,7 +146,6 @@
                         <div class="form-group">
                             <label for="name">Nome</label>
                             <input type="text" class="form-control" name="name" id="name" required>
-                            <div class="invalid-feedback">Nome já existe.</div>
                         </div>
                         <div class="form-group">
                             <label for="desc">Descrição</label>
@@ -277,23 +276,22 @@
             {
                 $.getJSON("campaigns/fetch_camp_goal.php", { name: $("#goal_select option:selected").text(), camp_id: data.id }, function (cdata) 
                 {
-                    if ($("#group_b").hasClass("active"))
-                    {
-                        $.getJSON("points/fetch_groups_add.php", function (data)
-                        {
-                            
-                            $("#group_id").val(data.id);
-                            $("#group_goal_id").val(cdata.id);
-                            $("#add_group_m").modal("show");
-                        });
-                    }
-                    else if ($("#users_b").hasClass("active"))
+                    if ($("#users_b").hasClass("active"))
                     {
                         $.getJSON("points/fetch_users_add.php", function (data)
                         {
-
-                            $("#user_id").val(data.cpf);
+                            $("#user_name_select").empty();
                             $("user_goal_id").val(cdata.id);
+                            
+                            var bd = "";
+
+                            $.each(data, function (key, value)
+                            {
+                                bd += "<option value=\"" + value.id + "\">" + value.name + "</option>";
+                            });
+
+                            $("#user_name_select").append(bd);
+
                             $("#add_user_m").modal("show");
                         });
                     }

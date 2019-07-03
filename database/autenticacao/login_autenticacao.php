@@ -53,7 +53,7 @@ else
             $_SESSION['status']     = $buscaUsuario[0]['status'];
 
 
-            header("Location: ../../system/user/navbar_lider.html");
+            header("Location: ../../system/user/navbar_lider.php");
           }
           else if ($buscaUsuario[0]['tipo']==3)
           {
@@ -71,7 +71,7 @@ else
             $_SESSION['grupos_id']  = $buscaUsuario[0]['grupos_id'];
             $_SESSION['status']     = $buscaUsuario[0]['status'];
 
-            header("Location: ../../system/user/navbar_usuario.html");
+            header("Location: ../../system/user/navbar_usuario.php");
           }
           else
           {

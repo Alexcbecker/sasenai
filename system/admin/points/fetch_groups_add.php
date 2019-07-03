@@ -3,9 +3,8 @@ include '../../base_db.php';
 
 $q = <<<S
 SELECT * FROM grupos
-NOT IN (SELECT DISTINCT grupos_id AS id FROM colaboradores_has_grupos
-INNER JOIN (SELECT colaboradores_has_grupos_id AS id FROM metas_has_colaboradores_has_grupos) AS s ON s.id = colaboradores_has_grupos.id) AS c ON c.id = grupos.id
-WHERE grupos.status = 0
+WHERE grupos.id NOT IN (SELECT DISTINCT grupos_id AS id FROM colaboradores_has_grupos
+INNER JOIN (SELECT colaboradores_has_grupos_id AS id FROM metas_has_colaboradores_has_grupos) AS s ON s.id = colaboradores_has_grupos.id) AND grupos.status = 0
 ORDER BY grupos.nome
 S;
 
