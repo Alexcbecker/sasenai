@@ -21,29 +21,28 @@
 
     <div class="collapse navbar-collapse" id="nav_b">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="nav_list">
-        <li class="nav-item" id="points"><a class="nav-link" href="#" role="button" onclick="set_page('points')">Pontos</a></li>
+        <li class="nav-item" id="points"><a class="nav-link" href="#" role="button" onclick="set_page('points')">Metas</a></li>
+        <li class="nav-item" id="camps"><a class="nav-link" href="#" role="button" onclick="set_page('camps')">Campanha</a></li>
+        <li class="nav-item" id="ranking"><a class="nav-link" href="#" role="button" onclick="set_page('ranking')">Ranking</a></li>
         <li class="nav-item" id="users"><a class="nav-link" href="#" role="button" onclick="set_page('users')">Usuário</a></li>
         <li class="nav-item" id="groups"><a class="nav-link" href="#" role="button" onclick="set_page('groups')">Grupo</a></li>
-        <li class="nav-item" id="camps"><a class="nav-link" href="#" role="button" onclick="set_page('camps')">Campanha</a></li>
-        <li class="nav-item" id="mets"><a class="nav-link" href="#" role="button" onclick="set_page('mets')">Metas</a></li>
         <li class="nav-item" id="items"><a class="nav-link" href="#" role="button" onclick="set_page('items')">Itens</a></li>
-        <li class="nav-item" id="ranking"><a class="nav-link" href="#" role="button" onclick="set_page('ranking')">Ranking</a></li>
       </ul>
       <div class="navbar-nav my-2 my-lg-0">
         <a class="nav-link" href="#" role="button" onclick="confirm_exit()">Sair</a>
       </div>
-      
+
     </div>
   </nav>
-  
-  <div >
+
+  <div>
   </div>
-  
+
   <div class="container-fluid">
     <div class="row justify-content-center" id="content_main"></div>
   </div>
   </div>
-  
+
   <div class="modal fade" id="exit_m" tabindex="-1" role="dialog" aria-labelledby="adduser_m" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -61,7 +60,7 @@
   </div>
 
   <script>
-    $.ajaxSetup ({cache: false});
+    $.ajaxSetup({ cache: false });
 
     $(function ()
     {
@@ -70,7 +69,7 @@
         $("#brand span").html("Olá " + data.name);
         $("#nav_bar").show();
 
-        set_page("items");
+        set_page("points");
       });
     });
 
@@ -93,17 +92,13 @@
         case "users": link = "users/user_list.html"; break;
         case "groups": link = "teams/teams.html"; break;
         case "camps": link = "campaigns/camp.html"; break;
-        case "mets": link = "goals/goals.html"; break;
         case "items": link = "items/items.html"; break;
         case "ranking": link = "../ranking/ranking.html";
       }
 
-      $("#content_main").load(link, function(response, status) 
-      {
-         if (status == "error") alert("error load page");
-      });
+      $("#content_main").load(link, function (response, status) { if (status == "error") alert("error abrir página"); });
 
-      $("#content_main").fadeIn("fast");
+      $("#content_main").fadeIn();
     }
   </script>
 </body>

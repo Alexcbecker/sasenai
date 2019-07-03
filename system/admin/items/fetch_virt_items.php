@@ -3,7 +3,7 @@ include '../../base_db.php';
 
 const slots = ["Fundo", "Corpo", "Pés", "Pernas", "Torso", "Cabelo", "Acessórios de cabeça", "Acessórios gerais"];
 
-$q = "SELECT nome, valor, caminho, id, slot FROM itens WHERE tipo=1";
+$q = "SELECT nome, valor, caminho, id, slot FROM itens WHERE tipo=1 ORDER BY nome";
 
 $result = $conn->query($q);
 

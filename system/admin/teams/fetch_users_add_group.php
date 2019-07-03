@@ -1,21 +1,10 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bd_fito";
-
-session_start();
-
-if ($_SESSION['id_sessao']  != session_id()) die;
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-mysqli_set_charset($conn, "utf8");
+include '../../base_db.php';
 
 $q = <<<S
 SELECT id, nome, tipo, cpf FROM colaboradores
 WHERE id NOT IN (SELECT colaboradores_id FROM colaboradores_has_grupos WHERE status = 0) AND tipo != 1
-ORDER BY colaboradores.tipo
+ORDER BY colaboradores.tipo, nome
 S;
 
 $result = $conn->query($q);

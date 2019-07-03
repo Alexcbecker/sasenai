@@ -47,7 +47,7 @@ $(document).ready(function(){
 				} else {
 					$(slot).attr('src', msg);
 
-					$(slot).fadeIn("slow");
+					$(slot).fadeIn();
   					$(slot).fadeIn(4000);
 				}
 			}

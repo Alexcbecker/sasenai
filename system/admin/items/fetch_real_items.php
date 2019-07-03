@@ -1,7 +1,7 @@
 <?php
 include '../../base_db.php';
 
-$q = "SELECT nome, valor, quantidade, caminho, id FROM itens WHERE tipo=2";
+$q = "SELECT nome, valor, quantidade, caminho, id FROM itens WHERE tipo=2 ORDER BY nome";
 
 $result = $conn->query($q);
 

@@ -23,7 +23,7 @@ unset($_SESSION);
 session_destroy();
 ?>
 
-<body style="background-color: #00a7e1;">
+<body style="background-color: #202020;">
   <div class="container">
     <center>
     <img src="images/image_login/logo_fito.png" width=”20px” height=”20px” >

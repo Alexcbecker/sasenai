@@ -1,7 +1,7 @@
 <?php
 include '../../base_db.php';
 
-$q =  "SELECT id, nome, descricao, status FROM grupos ORDER BY nome";
+$q =  "SELECT * FROM metas WHERE campanhas_id = {$_GET['camp_id']} ORDER BY nome";
 
 $result = $conn->query($q);
 
@@ -16,7 +16,8 @@ if ($result->num_rows > 0)
         $rowa['id'] = $row['id'];
         $rowa['name'] = $row['nome'];
         $rowa['desc'] = $row['descricao'];
-        $rowa['status'] = $row['status'] == 0 ? 'Ativo' : 'Desativado';
+        $rowa['objective'] = $row['objetivo'];
+        $rowa['points'] = $row['pontos'];
 
         array_push($data, $rowa);
     }

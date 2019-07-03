@@ -1,33 +1,24 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bd_fito";
+include '../../base_db.php';
 
-session_start();
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+$conn->set_charset("utf8");
 
-if ($_SESSION['id_sessao']  == session_id())
+$status = "error";
+
+$sx = $_POST['sex'] == 'Masculino' ? 1 : 2;
+$cpf = $_POST['cpf'];
+
+if ($_POST['cpf'] != $_SESSION['cpf'])
 {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-    $conn->set_charset("utf8");
-
-    $status = "error";
-
-    $sx = $_POST['sex'] == 'Masculino' ? 1 : 2;
-    $cpf = $_POST['cpf'];
-
-    if ($_POST['cpf'] != $_SESSION['cpf'])
-    {
-        $st = $_POST['status'] == 'Ativo' ? 0 : 1;
-        $ty = $_POST['usertype'] == 'Administrador' ? '1' : ($_POST['usertype'] == 'Líder' ? '2' : '3');
-        $q = "UPDATE colaboradores SET email = '{$_POST['email']}', nome = '{$_POST['name']}', sexo = {$sx}, tipo = {$ty}, status = $st WHERE cpf='{$cpf}'";
-    }
-    else $q = "UPDATE colaboradores SET email = '{$_POST['email']}', nome = '{$_POST['name']}', sexo = {$sx} WHERE cpf='{$cpf}'";
-
-    if ($conn->query($q) === TRUE) $status = "ok";
-
-    echo "status:{$status}";
+    $st = $_POST['status'] == 'Ativo' ? 0 : 1;
+    $ty = $_POST['usertype'] == 'Administrador' ? '1' : ($_POST['usertype'] == 'Líder' ? '2' : '3');
+    $q = "UPDATE colaboradores SET email = '{$_POST['email']}', nome = '{$_POST['name']}', sexo = {$sx}, tipo = {$ty}, status = $st WHERE cpf='{$cpf}'";
 }
-else die;
+else $q = "UPDATE colaboradores SET email = '{$_POST['email']}', nome = '{$_POST['name']}', sexo = {$sx} WHERE cpf='{$cpf}'";
+
+if ($conn->query($q) === TRUE) $status = "ok";
+
+echo "status:{$status}";
 ?>

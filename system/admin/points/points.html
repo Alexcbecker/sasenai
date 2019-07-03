@@ -2,17 +2,404 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
 </head>
 
 <body>
     <div class="borda">
-        <h3>Pontos</h3>
-        
+        <h3>Metas</h3>
+        <div class="alert collapse alert-dismissible fade show" style="display: none;" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="container">
+            <div class="row" id="select_main">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Campanha</span>
+                    </div>
+                    <select class="form-control form-control-sm" id="camp_select"></select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3" id="goal_select_t">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Meta</span>
+                    </div>
+                    <select class="form-control form-control-sm" id="goal_select"></select>
+                </div>
+
+                <div class="btn-toolbar" role="toolbar" id="button_select">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" id="group_b" class="btn btn-secondary" onclick="makelist_group_b()">Grupos</button>
+                        <button type="button" id="users_b" class="btn btn-secondary" onclick="makelist_users_b()">Colaboradores</button>
+                    </div>
+                    <div class="btn-group mr-2" role="group">
+                    <button type="button" class="btn btn-primary" onclick="add_camp()">Adicionar participante</button>
+                    <button type="button" class="btn btn-secondary" onclick="set_goal()" id="button_goal">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <div style="margin-top:2%;">
+                <h6 style="text-align: center;" id="camp_warn"></h6>
+
+                <div class="row">
+                    <div class="table-responsive">
+                        <div id="main_group" style="display: none;">
+                            <table class="table table-hover" id="grouplist">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="main_users" style="display: none;">
+                            <table class="table table-hover" id="userlist">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Cpf</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_group_m" tabindex="-1" role="dialog" aria-labelledby="add_group_m" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar grupo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="teams/group_add.php" id="add_group_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="desc" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        function makelist()
+        {
+            $("#select_main").hide();
+
+            $("#goal_select_t").hide();
+            $("#button_select").hide();
+
+            $("#group_b").attr("disabled", true);
+            $("#users_b").attr("disabled", true);
+
+            $("#main_group").hide();
+            $("#main_users").hide();
+
+            $.getJSON("campaigns/fetch_camps.php", function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#camp_warn").hide();
+                    $("#select_main").show();
+
+                    $("#group_b").attr("disabled", false);
+                    $("#users_b").attr("disabled", false);
+                    $("#group_b").addClass("active");
+
+                    var bd = "";
+
+                    $.each(data, function (key, value)
+                    {
+                        if (key == 0) makelist_goals(value.id);
+
+                        bd += "<option>" + value.name + "</option>";
+                    });
+
+                    $("#camp_select").append(bd);
+                }
+                else 
+                {
+                    $("#camp_warn").show();
+                    $("#camp_warn").html("Nenhuma campanha cadastrada.");
+                }
+            });
+        }
+
+
+        $("#camp_select").on("change", function ()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data) 
+            {
+                $("#goal_select_t").hide();
+                $("#button_select").hide();
+
+                $("#main_group").hide();
+                $("#main_users").hide();
+
+                makelist_goals(data.id);
+            });
+        });
+
+
+        function makelist_goals(id)
+        {
+            $("#goal_select").empty();
+
+            $.getJSON("campaigns/fetch_camp_goals.php", { camp_id: id }, function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#goal_select_t").show();
+                    $("#button_select").show();
+
+                    $("#camp_warn").hide();
+
+                    var bd = "";
+
+                    $.each(data, function (key, value)
+                    {
+                        if (key == 0) 
+                        {
+                            if ($("#group_b").hasClass("active")) makelist_group(value.id);
+                            else if ($("#users_b").hasClass("active")) makelist_users(value.id);
+                        }
+
+                        bd += "<option>" + value.name + "</option>";
+                    });
+
+                    $("#goal_select").append(bd);
+                }
+                else 
+                {
+                    $("#camp_warn").show();
+                    $("#camp_warn").html("Nenhuma meta nesta campanha.");
+                }
+            });
+        }
+
+
+        $("#goal_select").on("change", function ()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data) 
+            {
+                $.getJSON("campaigns/fetch_camp_goal.php", { name: $("#goal_select option:selected").text(), camp_id: data.id }, function (cdata) 
+                {
+                    if ($("#group_b").hasClass("active")) makelist_group(cdata.id);
+                    else if ($("#users_b").hasClass("active")) makelist_users(cdata.id);
+                });
+            });
+        });
+
+
+        // group list
+
+        function select_group(key)
+        {
+            var $list = $("#grouplist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_goal").attr("disabled", false);
+        }
+
+
+        function unselect_groups() 
+        {
+            var $list = $("#grouplist tbody tr").removeClass("table-active");
+            //$("#button_goal").attr("disabled", true);
+        }
+
+        function makelist_group_b()
+        {
+            $("#users_b").removeClass("active");
+            $("#group_b").addClass("active");
+
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, (data) => makelist_goals(data.id));
+        }
+
+        function makelist_group(cid)
+        {
+            $("#main_group").hide();
+            $("#main_users").hide();
+
+            $("#users_b").removeClass("active");
+            $("#group_b").addClass("active");
+
+            unselect_groups();
+
+            $("#camp_warn").hide();
+
+            $.getJSON("points/fetch_groups_camp.php", { id: cid }, function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#camp_warn").hide();
+                    $("#main_group").show();
+
+                    $("#grouplist tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_item(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.desc + '</td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#grouplist tbody").append(tr);
+
+                    if ($("#group_b").hasClass("active")) $("#grouplist").fadeIn();
+                }
+                else if ($("#group_b").hasClass("active")) 
+                {
+                    $("#camp_warn").show();
+                    $("#camp_warn").html("Nenhum participante nesta campanha.");
+                }
+            });
+        }
+
+
+        // users
+
+        function makelist_users(cid)
+        {
+            $("#main_group").hide();
+            $("#main_users").hide();
+
+            $("#users_b").addClass("active");
+            $("#group_b").removeClass("active");
+
+            unselect_users();
+
+            $("#camp_warn").hide();
+
+            $.getJSON("points/fetch_users_camp.php", { id: cid }, function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#camp_warn").hide();
+                    $("#main_users").show();
+
+                    $("#userlist tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_user(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.type + '</td>';
+                        tr += '<td>' + value.cpf + '</td>';
+                    });
+
+                    $("#userlist tbody").append(tr);
+                }
+                else if ($("#users_b").hasClass("active")) 
+                {
+                    $("#camp_warn").show();
+                    $("#camp_warn").html("Nenhum participante nesta campanha.");
+                }
+            });
+        }
+
+
+        function makelist_users_b()
+        {
+            $("#users_b").addClass("active");
+            $("#group_b").removeClass("active");
+
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, (data) => makelist_goals(data.id));
+        }
+
+
+
+        function select_user(key)
+        {
+            var $list = $("#userlist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_user").attr("disabled", false);
+        }
+
+
+        function unselect_users() 
+        {
+            var $list = $("#userlist tbody tr").removeClass("table-active");
+            $("#button_remove_user").attr("disabled", true);
+        }
+
+
+
+
+
+
+
+
+        $("#add_user_group_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            $.getJSON("teams/fetch_group.php", { name: $("#group_select option:selected").text() }, function (data)
+            {
+                var id = data.id;
+
+                var p = $.post(url, { group_id: id, user_id: $("#user_name_select option:selected").val() });
+
+                p.done(function (data)
+                {
+                    switch (data)
+                    {
+                        case "status:ok":
+                            set_alert_success("Usuário adicionado ao grupo " + $("#group_select option:selected").text());
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao adicionar usuário.");
+                            break;
+                    }
+
+                    $("#add_user_group_m").modal("toggle");
+                    makelist_users_table(id);
+                });
+            });
+        });
+
+        $(function () { makelist(); });
     </script>
+
 </body>
 
 </html>

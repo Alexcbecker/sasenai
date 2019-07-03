@@ -1,65 +1,51 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bd_fito";
+include '../../base_db.php';
 
-session_start();
+$status = "error";
 
-if ($_SESSION['id_sessao']  == session_id())
+$cpf = $_POST['cpf'];
+
+$q = "SELECT cpf FROM colaboradores WHERE cpf={$cpf}";
+$r = $conn->query($q);
+
+if ($r->num_rows == 0)
 {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-    mysqli_set_charset($conn, "utf8");
+    $sx = $_POST['sex'] == 'Masculino' ? 1 : 2;
+    $ty = $_POST['usertype'] == 'Administrador' ? '1' : ($_POST['usertype'] == 'Líder' ? '2' : '3');
 
-    $status = "error";
+    $q = "INSERT INTO colaboradores (id, email, senha, cpf, nome, tipo, sexo, status, pontos, creditos) VALUES (null, '{$_POST['email']}', '{$_POST['password']}', '{$cpf}', '{$_POST['name']}', {$ty}, {$sx}, 0, 0, 0)";
 
-    $cpf = $_POST['cpf'];
-
-    $q = "SELECT cpf FROM colaboradores WHERE cpf={$cpf}";
-    $r = $conn->query($q);
-
-    if ($r->num_rows == 0)
+    if ($conn->query($q) === TRUE)
     {
-        $sx = $_POST['sex'] == 'Masculino' ? 1 : 2;
-        $ty = $_POST['usertype'] == 'Administrador' ? '1' : ($_POST['usertype'] == 'Líder' ? '2' : '3');
+        $q = "SELECT id FROM colaboradores WHERE cpf={$cpf}";
+        $r = $conn->query($q);
 
-        $q = "INSERT INTO colaboradores (id, email, senha, cpf, nome, tipo, sexo, status, pontos, creditos)
-        VALUES (null, '{$_POST['email']}', '{$_POST['password']}', '{$cpf}', '{$_POST['name']}', {$ty}, {$sx}, 0, 0, 0)";
-
-        if ($conn->query($q) === TRUE)
+        if ($r->num_rows == 1)
         {
-            $q = "SELECT id FROM colaboradores WHERE cpf={$cpf}";
-            $r = $conn->query($q);
-
-            if ($r->num_rows == 1)
+            if ($row = $r->fetch_assoc())
             {
-                if ($row = $r->fetch_assoc())
+                $q = "INSERT INTO avatares (id, colaboradores_id) VALUES (null, {$row['id']})";
+
+                if ($conn->query($q) === TRUE)
                 {
-                    $q = "INSERT INTO avatares (id, colaboradores_id) VALUES (null, {$row['id']})";
+                    $q = "SELECT id FROM avatares WHERE colaboradores_id={$row['id']}";
+                    $r = $conn->query($q);
 
-                    if ($conn->query($q) === TRUE)
+                    if ($r->num_rows == 1)
                     {
-                        $q = "SELECT id FROM avatares WHERE colaboradores_id={$row['id']}";
-                        $r = $conn->query($q);
-
-                        if ($r->num_rows == 1)
+                        if ($row = $r->fetch_assoc())
                         {
-                            if ($row = $r->fetch_assoc())
-                            {
-                                $q = "INSERT INTO avatares_has_itens (avatares_id, itens_id, status) VALUES ({$row['id']}, 2, 1)";
+                            $q = "INSERT INTO avatares_has_itens (avatares_id, itens_id, status) VALUES ({$row['id']}, 2, 1)";
 
-                                if ($conn->query($q) === TRUE) $status = "ok";
-                            }
+                            if ($conn->query($q) === TRUE) $status = "ok";
                         }
                     }
-                }
+                    }
             }
         }
     }
-    else $status = "cpfinvalid";
-
-    echo "status:{$status}";
 }
-else die;
+else $status = "cpfinvalid";
+
+echo "status:{$status}";
 ?>

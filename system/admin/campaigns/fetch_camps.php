@@ -1,7 +1,7 @@
 <?php
 include '../../base_db.php';
 
-$q =  "SELECT id, nome, descricao, status FROM grupos ORDER BY nome";
+$q =  "SELECT * FROM campanhas ORDER BY nome";
 
 $result = $conn->query($q);
 
@@ -16,7 +16,9 @@ if ($result->num_rows > 0)
         $rowa['id'] = $row['id'];
         $rowa['name'] = $row['nome'];
         $rowa['desc'] = $row['descricao'];
-        $rowa['status'] = $row['status'] == 0 ? 'Ativo' : 'Desativado';
+        $rowa['date_start'] = $row['data_inicial'];
+        $rowa['date_end'] = $row['data_final'];
+        $rowa['type'] = $row['tipo_participantes'] == 0 ? "Invividual" : "Grupo"; 
 
         array_push($data, $rowa);
     }

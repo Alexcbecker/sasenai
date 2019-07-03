@@ -2,17 +2,742 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css" />
+    <link rel="stylesheet" href="../../css/style_base_cadastro_editar.css">
 </head>
 
 <body>
     <div class="borda">
-        <h3>Campanhas</h3>
-        
+        <h3>Campanha</h3>
+        <div class="alert collapse alert-dismissible fade show" style="display: none;" role="alert" id="item_alert">
+            <span id="alert_message"></span>
+            <button type="button" class="close" onclick="alert_close()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" id="camp_b" class="btn btn-secondary" onclick="makelist_camp()">Campanhas</button>
+                        <button type="button" id="goal_b" class="btn btn-secondary" onclick="makelist_goal()">Metas</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_camp">
+                        <button type="button" class="btn btn-primary" onclick="add_camp()">Adicionar</button>
+                        <button type="button" id="button_remove_camp" class="btn btn-success" onclick="remove_camp_selected()" disabled>Remover</button>
+                        <button type="button" id="button_edit_camp" class="btn btn-secondary" onclick="edit_camp_selected()" disabled>Editar</button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" style="display: none;" id="tab_goal">
+                        <button type="button" id="button_add_goal" class="btn btn-primary" onclick="add_goal()" disabled>Adicionar Meta</button>
+                        <button type="button" id="button_remove_goal" class="btn btn-success" onclick="remove_goal_selected()" disabled>Remover</button>
+                        <button type="button" id="button_edit_goal" class="btn btn-secondary" onclick="edit_goal_selected()" disabled>Editar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:2%;">
+                <div class="table-responsive">
+                    <div id="main_camp" style="display: none;">
+                        <table class="table table-hover" id="camplist">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Início</th>
+                                    <th scope="col">Fim</th>
+                                    <th scope="col">Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <h6 style="text-align: center;" id="table_camp_warn">Nenhuma campanha ainda foi adicionada.</h6>
+                    </div>
+                    <div id="main_goal" style="display: none;">
+                        <div class="input-group input-group-sm mb-3" id="camp_select_b">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Campanha</span>
+                            </div>
+                            <select class="form-control form-control-sm" id="camp_select"></select>
+                        </div>
+
+                        <div style="margin-top:2%;">
+                            <table class="table table-hover" id="goal_list">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Descrição</th>
+                                        <th scope="col">Pontos</th>
+                                        <th scope="col">Objetivo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <h6 style="text-align: center;" id="table_goal_warn"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_camp_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar campanha</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="campaigns/camp_add.php" id="add_camp_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="desc"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="date_start">Início</label>
+                                <input type="date" class="form-control" name="date_start" id="date_start" required></input>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="date_end">Fim</label>
+                                <input type="date" class="form-control" name="date_end" id="date_end" required></input>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="type">Tipo</legend>
+                                <select name="type" id="type" class="form-control">
+                                    <option value="Invividual" selected>Invividual</option>
+                                    <option value="Grupo">Grupo</option>
+                                </select>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_camp_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar campanha</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="campaigns/camp_edit.php" id="edit_camp_form">
+                        <div class="form-group">
+                            <label for="namew">Nome</label>
+                            <input type="text" class="form-control" name="name" id="namew" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descw">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="descw"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="date_startw">Início</label>
+                                <input type="date" class="form-control" name="date_start" id="date_startw" required></input>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="date_endw">Fim</label>
+                                <input type="date" class="form-control" name="date_end" id="date_endw" required></input>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="typew">Tipo</legend>
+                                <select name="type" id="typew" class="form-control">
+                                    <option value="Invividual">Invividual</option>
+                                    <option value="Grupo">Grupo</option>
+                                </select>
+                        </fieldset>
+                        <input type="text" name="id" id="idw" style="display: none"></input>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_goal_camp_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar meta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="campaigns/camp_add_goal.php" id="add_goal_camp_form">
+                        <div class="form-group">
+                            <label for="g_name">Nome</label>
+                            <input type="text" class="form-control" name="name" id="g_name" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="g_desc">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="g_desc"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="g_points">Pontos</label>
+                            <input type="number" class="form-control" name="points" id="g_points" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="g_objective">Objetivo</label>
+                            <input type="number" class="form-control" name="objective" id="g_objective" required>
+                        </div>
+                        <input type="text" name="camp_id" id="camp_id" style="display: none"></input>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_goal_camp_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar meta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="campaigns/camp_edit_goal.php" id="edit_goal_camp_form">
+                        <div class="form-group">
+                            <label for="g_namew">Nome</label>
+                            <input type="text" class="form-control" name="name" id="g_namew" required>
+                            <div class="invalid-feedback">Nome já existe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="g_descw">Descrição</label>
+                            <textarea rows="3" class="form-control" name="desc" id="g_descw"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="g_pointsw">Pontos</label>
+                            <input type="number" class="form-control" name="points" id="g_pointsw" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="g_objectivew">Objetivo</label>
+                            <input type="number" class="form-control" name="objective" id="g_objectivew" required>
+                        </div>
+                        <input type="text" name="camp_id" id="camp_idw" style="display: none"></input>
+                        <input type="text" name="id" id="g_idw" style="display: none"></input>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        function select_camp_item(key)
+        {
+            var $list = $("#camplist tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_camp").attr("disabled", false);
+            $("#button_edit_camp").attr("disabled", false);
+        }
+
+
+        function unselect_camp_items() 
+        {
+            var $list = $("#camplist tbody tr").removeClass("table-active");
+            $("#button_remove_camp").attr("disabled", true);
+            $("#button_edit_camp").attr("disabled", true);
+        }
+
+
+        function remove_camp_selected()
+        {
+            $("#camplist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.getJSON("campaigns/fetch_camp.php", { name: $td[0].innerHTML }, function (data)
+                    {
+                        $.post("campaigns/camp_remove.php", { id: data.id }, function (data)
+                        {
+                            if (data === "status:ok") 
+                            {
+                                set_alert_success("Campanha removida.");
+                                makelist_camp();
+                            }
+                            else set_alert_danger("Erro ao remover campanha.");
+                        });
+                    });
+                }
+            });
+        }
+
+
+        function edit_camp_selected()
+        {
+            $("#camplist tbody tr").each(function (key, value)
+            {
+                if ($(this).hasClass("table-active"))
+                {
+                    var $td = $(this).find('td');
+
+                    $.getJSON("campaigns/fetch_camp.php", { name: $td[0].innerHTML }, function (data)
+                    {
+                        $("#namew").val(data.name);
+                        $("#descw").val(data.desc);
+                        $("#idw").val(data.id);
+                        $("#date_startw").val(data.date_start);
+                        $("#date_endw").val(data.date_end);
+                        $("#typew").val(data.type);
+                        $("#idw").val(data.id);
+
+                        $("#edit_camp_m").modal("show");
+                    });
+                }
+            });
+        }
+
+
+        $("#edit_camp_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = $form.serializeArray();
+
+            var p = $.post(url, fields);
+
+            p.done(function (data)
+            {
+                $("#namew").removeClass("is-invalid");
+
+                switch (data)
+                {
+                    case "status:name":
+                        $("#namew").addClass("is-invalid");
+                        break;
+
+                    case "status:ok":
+                        set_alert_success("Campanha editada.");
+                        $("#edit_camp_m").modal("toggle");
+                        $form.trigger('reset');
+                        makelist_camp();
+                        break;
+
+                    default:
+                        set_alert_danger("Erro ao editar campanha.");
+                        $("#edit_camp_m").modal("toggle");
+                        $form.trigger('reset');
+                        makelist_camp();
+                }
+            });
+        });
+
+
+        function add_camp()
+        {
+            unselect_camp_items();
+            $("#add_camp_m").modal("show");
+        }
+
+
+        $("#add_camp_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            var fields = $form.serializeArray();
+
+            var p = $.post(url, fields);
+
+            p.done(function (data)
+            {
+                $("#name").removeClass("is-invalid");
+
+                switch (data)
+                {
+                    case "status:name":
+                        $("#name").addClass("is-invalid");
+                        break;
+
+                    case "status:ok":
+                        set_alert_success("Grupo adicionado.");
+                        clear_form();
+                        break;
+
+                    default:
+                        set_alert_danger("Erro ao adicionar campanha.");
+                        clear_form();
+                        break;
+                }
+            });
+        });
+
+
+        function clear_form()
+        {
+            $("#add_camp_m").modal("toggle");
+
+            $("#name").removeClass("is-invalid");
+            $("#add_camp_form").trigger('reset');
+
+            makelist_camp();
+        }
+
+
+        function makelist_camp()
+        {
+            $("#tab_camp").show();
+            $("#tab_goal").hide();
+
+            $("#main_camp").show();
+            $("#main_goal").hide();
+
+            $("#goal_b").removeClass("active");
+            $("#camp_b").addClass("active");
+
+            unselect_camp_items();
+
+            $("#camplist").hide();
+            $("#table_camp_warn").hide();
+
+            $.getJSON("campaigns/fetch_camps.php", function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#camplist tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_camp_item(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.desc + '</td>';
+                        tr += '<td>' + value.date_start + '</td>';
+                        tr += '<td>' + value.date_end + '</td>';
+                        tr += '<td>' + value.type + '</td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#camplist tbody").append(tr);
+
+                    if ($("#camp_b").hasClass("active")) $("#camplist").fadeIn();
+                }
+                else if ($("#camp_b").hasClass("active")) $("#table_camp_warn").show();
+            });
+        }
+
+
+        function makelist_goal()
+        {
+            $("#tab_camp").hide();
+            $("#tab_goal").show();
+
+            $("#main_camp").hide();
+            $("#main_goal").show();
+
+            $("#goal_b").addClass("active");
+            $("#camp_b").removeClass("active");
+
+            $("#camp_select").empty();
+            $("#goal_list").hide();
+
+            $("#button_add_goal").attr("disabled", true);
+            $("#button_remove_goal").attr("disabled", true);
+
+            $("#table_goal_warn").hide();
+            $("#camp_select_b").hide();
+
+            $.getJSON("campaigns/fetch_camps.php", function (data)
+            {
+                if ($("#goal_b").hasClass("active"))
+                {
+                    if (data.length > 0)
+                    {
+                        $("#button_add_goal").attr("disabled", false);
+
+                        var bd = "";
+
+                        $.each(data, function (key, value)
+                        {
+                            if (key == 0) makelist_goal_table(value.id);
+
+                            bd += "<option>" + value.name + "</option>";
+                        });
+
+                        $("#camp_select").append(bd);
+                        $("#camp_select_b").show();
+                    }
+                    else
+                    {
+                        $("#table_goal_warn").html("Nemunha campanha cadastrada.")
+                        $("#table_goal_warn").show();
+                    }
+                }
+            });
+        }
+
+
+        $("#camp_select").on("change", function ()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                alert_close();
+                makelist_goal_table(data.id);
+            });
+        });
+
+
+        function makelist_goal_table(id)
+        {
+            $("#goal_list").hide();
+            $("#table_goal_warn").hide();
+            unselect_goals();
+
+            $.getJSON("campaigns/fetch_camp_goals.php", { camp_id: id }, function (data)
+            {
+                if (data.length > 0)
+                {
+                    $("#goal_list tbody").empty();
+                    var tr = '';
+
+                    $.each(data, function (key, value)
+                    {
+                        tr += '<tr onclick="select_goal(' + key + ')">';
+                        tr += '<td>' + value.name + '</td>';
+                        tr += '<td>' + value.desc + '</td>';
+                        tr += '<td>' + value.points + '</td>';
+                        tr += '<td>' + value.objective + '</td>';
+                        tr += '</tr>';
+                    });
+
+                    $("#goal_list tbody").append(tr);
+                    if ($("#goal_b").hasClass("active")) $("#goal_list").fadeIn();
+                }
+                else if ($("#goal_b").hasClass("active")) 
+                {
+                    $("#table_goal_warn").html("Nenhuma meta cadastrada.");
+                    $("#table_goal_warn").show();
+                }
+            });
+        }
+
+
+        function select_goal(key)
+        {
+            var $list = $("#goal_list tbody tr");
+            $list.removeClass("table-active");
+            $list.eq(key).addClass("table-active");
+
+            $("#button_remove_goal").attr("disabled", false);
+            $("#button_edit_goal").attr("disabled", false);
+        }
+
+
+        function unselect_goals() 
+        {
+            var $list = $("#goal_list tbody tr").removeClass("table-active");
+            $("#button_remove_goal").attr("disabled", true);
+            $("#button_edit_goal").attr("disabled", true);
+        }
+
+
+        function remove_goal_selected()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                id = data.id;
+
+                $("#goal_list tbody tr").each(function (key, value)
+                {
+                    if ($(this).hasClass("table-active"))
+                    {
+                        var $td = $(this).find('td');
+
+                        $.post("campaigns/camp_remove_goal.php", { name: $td[0].innerHTML, camp_id: id }, function (cdata)
+                        {
+                            if (cdata === "status:ok")
+                            {
+                                set_alert_success("Meta removida.");
+
+                                makelist_goal_table(id);
+                            }
+                            else set_alert_danger("Erro ao remover meta.");
+                        });
+                    }
+                });
+            });
+        }
+
+
+        function add_goal()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                unselect_goals();
+                $("#camp_id").val(data.id);
+                $("#add_goal_camp_m").modal("show");
+            });
+        }
+
+
+        $("#add_goal_camp_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                var id = data.id;
+
+                var fields = $form.serializeArray();
+
+                var p = $.post(url, fields);
+
+                p.done(function (cdata)
+                {
+                    $("#g_name").removeClass("is-invalid");
+
+                    switch (cdata)
+                    {
+                        case "status:name":
+                            $("#g_name").addClass("is-invalid");
+                            break;
+
+                        case "status:ok":
+                            set_alert_success("Meta adicionada à campanha " + $("#camp_select option:selected").text());
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao adicionar meta.");
+                            break;
+                    }
+
+                    $("#add_goal_camp_m").modal("toggle");
+                    makelist_goal_table(id);
+                });
+            });
+        });
+
+
+        function edit_goal_selected()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                id = data.id;
+
+                $("#goal_list tbody tr").each(function (key, value)
+                {
+                    if ($(this).hasClass("table-active"))
+                    {
+                        var $td = $(this).find('td');
+
+                        $.getJSON("campaigns/fetch_camp_goal.php", { name: $td[0].innerHTML, camp_id: id }, function (cdata)
+                        {
+                            $("#g_namew").val(cdata.name);
+                            $("#g_descw").val(cdata.desc);
+                            $("#g_idw").val(cdata.id);
+                            $("#g_pointsw").val(cdata.points);
+                            $("#g_objectivew").val(cdata.objective);
+                            $("#camp_idw").val(id);
+
+                            $("#edit_goal_camp_m").modal("show");
+                        });
+                    }
+                });
+            });
+
+        }
+
+
+        $("#edit_goal_camp_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var $form = $(this);
+
+            var url = $form.attr("action");
+
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data)
+            {
+                var id = data.id;
+
+                var fields = $form.serializeArray();
+
+                var p = $.post(url, fields);
+
+                p.done(function (cdata)
+                {
+                    $("#g_namew").removeClass("is-invalid");
+
+                    switch (cdata)
+                    {
+                        case "status:name":
+                            $("#g_namew").addClass("is-invalid");
+                            break;
+
+                        case "status:ok":
+                            set_alert_success("Meta editada.");
+                            break;
+
+                        default:
+                            set_alert_danger("Erro ao editar meta.");
+                            break;
+                    }
+
+                    $("#edit_goal_camp_m").modal("toggle");
+                    makelist_goal_table(id);
+                });
+            });
+
+
+        });
+
+        $(function () { makelist_camp(); });
     </script>
+
 </body>
 
 </html>

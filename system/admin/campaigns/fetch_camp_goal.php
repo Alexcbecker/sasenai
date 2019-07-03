@@ -1,7 +1,7 @@
 <?php
 include '../../base_db.php';
 
-$q =  "SELECT id, nome, descricao, status FROM grupos WHERE nome = '{$_GET['name']}'";
+$q =  "SELECT * FROM metas WHERE nome = '{$_GET['name']}' AND campanhas_id = {$_GET['camp_id']}";
 
 $result = $conn->query($q);
 
@@ -14,7 +14,8 @@ if ($result->num_rows > 0)
         $data['id'] = $row['id'];
         $data['name'] = $row['nome'];
         $data['desc'] = $row['descricao'];
-        $data['status'] = $row['status'] == 0 ? 'Ativo' : 'Desativado';
+        $data['objective'] = $row['objetivo'];
+        $data['points'] = $row['pontos'];
     }
 }
 
