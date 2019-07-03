@@ -34,7 +34,7 @@
                         <button type="button" id="users_b" class="btn btn-secondary" onclick="makelist_users_b()">Colaboradores</button>
                     </div>
                     <div class="btn-group mr-2" role="group">
-                    <button type="button" class="btn btn-primary" onclick="add_camp()">Adicionar participante</button>
+                    <button type="button" class="btn btn-primary" onclick="add_goal_usergroup()">Adicionar participante</button>
                     <button type="button" class="btn btn-secondary" onclick="set_goal()" id="button_goal">Finalizar</button>
                     </div>
                 </div>
@@ -80,6 +80,58 @@
         </div>
     </div>
 
+    <div class="modal fade" id="add_group_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar grupo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="points/add_group_goal.php" id="add_group_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <select class="form-control" name="name" id="group_name_select" required></select>
+                        </div>
+                        <input type="text" class="form-control" name="user_id" id="group_id">
+                        <input type="text" class="form-control" name="goal_id" id="group_goal_id">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_user_m" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="points/add_user_goal.php" id="add_user_form">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <select class="form-control" name="name" id="user_name_select" required></select>
+                        </div>
+                        <input type="text" class="form-control" name="user_id" id="user_id">
+                        <input type="text" class="form-control" name="goal_id" id="user_goal_id">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal fade" id="add_group_m" tabindex="-1" role="dialog" aria-labelledby="add_group_m" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -219,6 +271,82 @@
         });
 
 
+        function add_goal_usergroup()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data) 
+            {
+                $.getJSON("campaigns/fetch_camp_goal.php", { name: $("#goal_select option:selected").text(), camp_id: data.id }, function (cdata) 
+                {
+                    if ($("#group_b").hasClass("active"))
+                    {
+                        $.getJSON("points/fetch_groups_add.php", function (data)
+                        {
+                            
+                            $("#group_id").val(data.id);
+                            $("#group_goal_id").val(cdata.id);
+                            $("#add_group_m").modal("show");
+                        });
+                    }
+                    else if ($("#users_b").hasClass("active"))
+                    {
+                        $.getJSON("points/fetch_users_add.php", function (data)
+                        {
+
+                            $("#user_id").val(data.cpf);
+                            $("user_goal_id").val(cdata.id);
+                            $("#add_user_m").modal("show");
+                        });
+                    }
+                });
+            });
+        }
+
+
+        function set_goal()
+        {
+            $.getJSON("campaigns/fetch_camp.php", { name: $("#camp_select option:selected").text() }, function (data) 
+            {
+                $.getJSON("campaigns/fetch_camp_goal.php", { name: $("#goal_select option:selected").text(), camp_id: data.id }, function (cdata) 
+                {
+                    if ($("#group_b").hasClass("active"))
+                    {
+                        $("#grouplist tbody tr").each(function (key, value)
+                        {
+                            if ($(this).hasClass("table-active"))
+                            {
+                                var $td = $(this).find('td');
+
+                                $.getJSON("teams/fetch_group.php", { name: $td[0].innerHTML }, function (data)
+                                {
+                                    $("#group_id").val(data.id);
+                                    $("#group_goal_id").val(cdata.id);
+                                    $("#add_group_m").modal("show");
+                                });
+                            }
+                        });
+                    }
+                    else if ($("#users_b").hasClass("active"))
+                    {
+                        $("#userlist tbody tr").each(function (key, value)
+                        {
+                            if ($(this).hasClass("table-active"))
+                            {
+                                var $td = $(this).find('td');
+
+                                $.getJSON("teams/users/fetch_user.php", { cpf: $td[2].innerHTML }, function (data)
+                                {
+                                    $("#user_id").val(data.data.id);
+                                    $("user_goal_id").val(cdata.id);
+                                    $("#add_user_m").modal("show");
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+
         // group list
 
         function select_group(key)
@@ -234,7 +362,7 @@
         function unselect_groups() 
         {
             var $list = $("#grouplist tbody tr").removeClass("table-active");
-            //$("#button_goal").attr("disabled", true);
+            $("#button_goal").attr("disabled", true);
         }
 
         function makelist_group_b()
@@ -347,14 +475,14 @@
             $list.removeClass("table-active");
             $list.eq(key).addClass("table-active");
 
-            $("#button_remove_user").attr("disabled", false);
+            $("#button_goal").attr("disabled", false);
         }
 
 
         function unselect_users() 
         {
             var $list = $("#userlist tbody tr").removeClass("table-active");
-            $("#button_remove_user").attr("disabled", true);
+            $("#button_goal").attr("disabled", true);
         }
 
 
